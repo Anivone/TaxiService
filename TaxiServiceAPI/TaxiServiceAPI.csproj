@@ -5,35 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200505173521_InitialDriverPhones.cs" />
-    <Compile Remove="Migrations\20200505173521_InitialDriverPhones.Designer.cs" />
-    <Compile Remove="Migrations\20200505174404_InitialCars.cs" />
-    <Compile Remove="Migrations\20200505174404_InitialCars.Designer.cs" />
-    <Compile Remove="Migrations\20200505174556_PhonesLengthFix.cs" />
-    <Compile Remove="Migrations\20200505174556_PhonesLengthFix.Designer.cs" />
-    <Compile Remove="Migrations\20200505183108_InitialOrder.cs" />
-    <Compile Remove="Migrations\20200505183108_InitialOrder.Designer.cs" />
-    <Compile Remove="Migrations\20200505183644_CurrencyOrder.cs" />
-    <Compile Remove="Migrations\20200505183644_CurrencyOrder.Designer.cs" />
-    <Compile Remove="Migrations\20200505184043_MoneyStaff.cs" />
-    <Compile Remove="Migrations\20200505184043_MoneyStaff.Designer.cs" />
-    <Compile Remove="Migrations\20200505185211_MaxLengthCreditCard.cs" />
-    <Compile Remove="Migrations\20200505185211_MaxLengthCreditCard.Designer.cs" />
+    <Compile Remove="Migrations\20200507092031_RequiredCarId.cs" />
+    <Compile Remove="Migrations\20200507092031_RequiredCarId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Models\ClientData\" />
-    <Folder Include="Data\Models\DepartmentData\" />
-    <Folder Include="Data\Models\DriverPhonesData\" />
   </ItemGroup>
 
 

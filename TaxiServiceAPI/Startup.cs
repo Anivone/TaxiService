@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TaxiServiceAPI.Data;
-using TaxiServiceAPI.Repositories.HttpRepository;
 
 namespace TaxiServiceAPI
 {
@@ -32,7 +31,6 @@ namespace TaxiServiceAPI
             services.AddDbContext<ApplicationDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
 
-            services.AddScoped<DepartmentHttpRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,45 +12,45 @@ namespace TaxiServiceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartmentsController : ControllerBase
+    public class CarsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public DepartmentsController(ApplicationDbContext context)
+        public CarsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
         {
-            return await _context.Departments.FromSqlRaw("SELECT * FROM Departments").ToListAsync();
+            return await _context.Cars.FromSqlRaw("SELECT * FROM Cars").ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetDepartment(int id)
+        public async Task<ActionResult<Car>> GetCar(string id)
         {
-            var department = await _context.Departments.FromSqlInterpolated(
-                $"SELECT * FROM Departments WHERE DepartmentId = {id}").FirstOrDefaultAsync();
+            var car = await _context.Cars.FromSqlInterpolated(
+                $"SELECT * FROM Cars WHERE CarId = {id}").FirstOrDefaultAsync();
 
-            if (department == null)
+            if (car == null)
             {
                 return NotFound();
             }
 
-            return department;
+            return car;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDepartment(int id, Department department)
+        public async Task<IActionResult> PutCar(string id, Car car)
         {
-            if (id != department.DepartmentId)
+            if (id != car.CarId)
             {
                 return BadRequest();
             }
-
+            
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Departments SET City = {department.City} WHERE DepartmentId = {id}");
+                $"UPDATE Cars SET TypeOfCar = {car.TypeOfCar}, NumberOfSeats = {car.NumberOfSeats} WHERE CarId = {id}");
 
             try
             {
@@ -58,7 +58,7 @@ namespace TaxiServiceAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DepartmentExists(id))
+                if (!CarExists(id))
                 {
                     return NotFound();
                 }
@@ -72,33 +72,33 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Department>> PostDepartment(Department department)
+        public async Task<ActionResult<Car>> PostCar(Car car)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Departments (City) VALUES ({department.City})");
+                $"INSERT INTO Cars (CarId, TypeOfCar, NumberOfSeats) VALUES ({car.CarId}, {car.TypeOfCar}, {car.NumberOfSeats})");
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
+            return CreatedAtAction("GetCar", new { id = car.CarId }, car);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Department>> DeleteDepartment(int id)
+        public async Task<ActionResult<Car>> DeleteCar(string id)
         {
-            var department = await _context.Departments.FindAsync(id);
-            if (department == null)
+            var car = await _context.Cars.FindAsync(id);
+            if (car == null)
             {
                 return NotFound();
             }
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM Departments WHERE DepartmentId = {id}");
+               $"DELETE FROM Cars WHERE CarId = {id}");
             await _context.SaveChangesAsync();
 
-            return department;
+            return car;
         }
 
-        private bool DepartmentExists(int id)
+        private bool CarExists(string id)
         {
-            return _context.Departments.Any(e => e.DepartmentId == id);
+            return _context.Cars.Any(e => e.CarId == id);
         }
     }
 }

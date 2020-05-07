@@ -44,7 +44,7 @@ namespace TaxiServiceAPI.Data.Models
         [Required]
         [StringLength(5)] 
         public string Building { get; set; }
-        public int Flat { get; set; }
+        public int? Flat { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]

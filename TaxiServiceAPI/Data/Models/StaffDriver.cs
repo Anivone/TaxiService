@@ -10,6 +10,7 @@ namespace TaxiServiceAPI.Data.Models
         [Required]
         public int DepartmentId { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string CarId { get; set; }
 
@@ -45,7 +46,7 @@ namespace TaxiServiceAPI.Data.Models
         [Required]
         [StringLength(5)]
         public string Building { get; set; }
-        public int Flat { get; set; }
+        public int? Flat { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]

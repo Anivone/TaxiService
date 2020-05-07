@@ -49,6 +49,7 @@ namespace TaxiServiceAPI.Data
             modelBuilder.Entity<OperatorPhones>(e =>
             {
                 e.HasKey(p => p.PhoneNumber);
+                e.Property(p => p.PhoneNumber).ValueGeneratedNever();
                 e.HasOne<StaffOperator>().WithMany()
                     .HasForeignKey(o => o.OperatorId).IsRequired();
                 e.ToTable("OperatorPhones");
@@ -57,6 +58,7 @@ namespace TaxiServiceAPI.Data
             modelBuilder.Entity<DriverPhones>(e =>
             {
                 e.HasKey(p => p.PhoneNumber);
+                e.Property(p => p.PhoneNumber).ValueGeneratedNever();
                 e.HasOne<StaffDriver>().WithMany()
                     .HasForeignKey(o => o.DriverId).IsRequired();
                 e.ToTable("DriverPhones");
@@ -65,6 +67,7 @@ namespace TaxiServiceAPI.Data
             modelBuilder.Entity<Car>(e =>
             {
                 e.HasKey(p => p.CarId);
+                e.Property(p => p.CarId).ValueGeneratedNever();
                 e.HasMany<StaffDriver>().WithOne().
                     HasForeignKey(d => d.CarId).OnDelete(DeleteBehavior.SetNull);
                 e.ToTable("Cars");
