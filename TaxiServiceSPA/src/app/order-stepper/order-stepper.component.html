@@ -1,0 +1,131 @@
+<mat-vertical-stepper
+  *ngIf="!finish"
+  class="order-stepper"
+  linear="true"
+  #stepper
+>
+  <mat-step [stepControl]="firstFormGroup">
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      [formGroup]="firstFormGroup"
+    >
+      <ng-template matStepLabel
+        >Choose departure and arrival points</ng-template
+      >
+      <div fxLayout="row" fxLayoutGap="10px" class="route-form">
+        <mat-form-field>
+          <mat-label>Departure</mat-label>
+          <input
+            matInput
+            placeholder="Departure point"
+            formControlName="firstCtrl"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Arrival</mat-label>
+          <input
+            matInput
+            placeholder="Arrival point"
+            formControlName="firstCtrl"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup" [completed]="group.selected">
+    <ng-template matStepLabel>Choose type of car</ng-template>
+    <mat-button-toggle-group
+      gdAreas="first second | third fourth"
+      gdGap="25px"
+      #group="matButtonToggleGroup"
+    >
+      <mat-button-toggle gdArea="first" value="business-sedan">
+        <div class="car-type-1"></div>
+      </mat-button-toggle>
+      <mat-button-toggle gdArea="second" value="sedan">
+        <div class="car-type-2"></div>
+      </mat-button-toggle>
+      <mat-button-toggle gdArea="third" value="economy">
+        <div class="car-type-3"></div>
+      </mat-button-toggle>
+      <mat-button-toggle gdArea="fourth" value="minivan">
+        <div class="car-type-4"></div>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div fxLayoutAlign="center center" class="car-buttons">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup" [completed]="wayOfPayment">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="16px"
+      class="payment-radio"
+    >
+      <ng-template matStepLabel>Choose way of payment</ng-template>
+      <label id="payment">You will pay by: </label>
+      <mat-radio-group
+        aria-labelledby="payment"
+        fxLayout="column"
+        fxLayoutGap="14px"
+        class="example-radio-group"
+        [(ngModel)]="wayOfPayment"
+      >
+        <mat-radio-button
+          class="example-radio-button"
+          *ngFor="let way of ways"
+          [value]="way"
+        >
+          {{ way }}
+        </mat-radio-button>
+      </mat-radio-group>
+      <div fxLayoutAlign="center center">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Finish</ng-template>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <p>You are now done.</p>
+      <div>
+        <button mat-button color="warn" (click)="stepper.reset()">Reset</button>
+        <button mat-button color="primary" (click)="stepper.reset(); toggleFinish()">
+          Finish
+        </button>
+      </div>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
+
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="finish"
+  class="container finish-display"
+>
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <i class="material-icons md-48 finish-icon">check_circle_outline</i>
+    <div class="finish-text">Your order has been submitted !</div>
+  </div>
+  <a
+    #finishButton
+    mat-raised-button
+    class="finish-button"
+    [routerLink]=""
+    (click)="toggleFinish()"
+  >
+    Return to main page
+  </a>
+</div>

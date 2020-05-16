@@ -1,0 +1,50 @@
+.order-stepper button {
+    font-size: 18px;
+}
+
+div[class^="car-type"] {
+    width: 364px;
+    height: 138px;
+}
+
+.car-type-1 {
+    background-image: url("../../assets/img/business-sedan.png");
+    background-size: contain;
+}
+.car-type-2 {
+    background-image: url("../../assets/img/economy.png");
+    background-size: contain;
+}
+.car-type-3 {
+    background-image: url("../../assets/img/minivan.png");
+    background-size: contain;
+}
+.car-type-4 {
+    background-image: url("../../assets/img/sedan.png");
+    background-size: contain;
+}
+
+.car-buttons {
+    margin-top: 40px;
+}
+
+.payment-radio {
+    font-size: 16px;
+}
+
+.finish-display {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.finish-icon {
+    margin-right: 40px;
+}
+
+.finish-text {
+    font-size: 18px;
+}
+
+.finish-button {
+    margin-top: 40px;
+}

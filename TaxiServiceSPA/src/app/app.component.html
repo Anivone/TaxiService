@@ -1,0 +1,10 @@
+<app-operator-side-bar *ngIf="userRole == 2"></app-operator-side-bar>
+<div fxLayout="column" class="root container">
+  <app-nav-bar class="navigation" (role)="setUserRole($event)"></app-nav-bar>
+  <div fxLayout="column" fxLayoutAlign="center center" class="main">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    
+  </div>
+</div>

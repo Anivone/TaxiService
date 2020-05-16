@@ -21,6 +21,14 @@ namespace TaxiServiceAPI.Controllers
             _context = context;
         }
 
+        [HttpGet("new")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetNewOrders()
+        {
+            return await _context.Orders.FromSqlRaw("SELECT * FROM Orders WHERE OperatorId IS NULL").ToListAsync();
+        }
+
+        #region CRUD
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
@@ -99,5 +107,6 @@ namespace TaxiServiceAPI.Controllers
         {
             return _context.Orders.Any(e => e.OrderId == id);
         }
+        #endregion
     }
 }

@@ -10,8 +10,8 @@ namespace TaxiServiceAPI.Data.Models
         [Required]
         [StringLength(15)]
         public string WayOfOrder { get; set; }
-        public int OperatorId { get; set; }
-        public int DriverId { get; set; }
+        public int? OperatorId { get; set; }
+        public int? DriverId { get; set; }
 
         public int ClientId { get; set; }
 
@@ -30,21 +30,21 @@ namespace TaxiServiceAPI.Data.Models
         public DateTime OrderDate { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime AppointedTime { get; set; }
+        public DateTime? AppointedTime { get; set; }
 
         [StringLength(15)]
         public string TypeOfCar { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime TimeOfAcceptance { get; set; }
+        public DateTime? TimeOfAcceptance { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime TimeOfCompletion { get; set; }
+        public DateTime? TimeOfCompletion { get; set; }
 
         [Required]
         [StringLength(15)]
         public string TypeOfPayment { get; set; }
 
-        public int FinalPrice { get; set; }
+        public int? FinalPrice { get; set; }
     }
 }

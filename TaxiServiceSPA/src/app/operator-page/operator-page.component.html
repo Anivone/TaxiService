@@ -1,0 +1,26 @@
+<div fxLayout="column" fxLayoutAlign=". center" fxLayoutGap="20px" class="operator-page">
+  <div fxLayout="row" fxLayoutGap="15px" class="operator-buttons">
+    <a mat-raised-button routerLink="clients-list" (click)="setButtonName('Add Client')">Clients</a>
+    <a mat-raised-button routerLink="operators-list" (click)="setButtonName('Add Operator')">Operators</a>
+    <a mat-raised-button routerLink="drivers-list" (click)="setButtonName('Add Driver')">Drivers</a>
+    <a mat-raised-button routerLink="orders-list" (click)="setButtonName('Add Order')">Orders</a>
+    <a mat-raised-button routerLink="cars-list" (click)="setButtonName('Add Car')">Cars</a>
+    <a mat-raised-button routerLink="departments-list" (click)="setButtonName('Add Department')">Departments</a>
+    <a mat-raised-button routerLink="operator-phones-list" (click)="setButtonName('Add Operator Phone')">Operator Phones</a>
+    <a mat-raised-button routerLink="driver-phones-list" (click)="setButtonName('Add Driver Phone')">Driver Phones</a>
+  </div>
+
+  <a
+    mat-raised-button
+    *ngIf="buttonName"
+    routerLink="add"
+    class="add-button"
+    color="accent"
+    (click)="setButtonName('')"
+    >{{ buttonName }}</a
+  >
+
+  <div class="operator-page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
