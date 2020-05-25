@@ -48,3 +48,21 @@ div[class^="car-type"] {
 .finish-button {
     margin-top: 40px;
 }
+
+.value-name {
+    font-size: 20px;
+}
+
+.order-information {
+    width: 600px;
+}
+
+.order-information mat-card{
+    width: 80%;
+}
+
+.last-step-buttons {
+    margin-top: 20px;
+}
+
+.wd-100 { width: 100%; }

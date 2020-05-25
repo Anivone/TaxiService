@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
+using TaxiServiceAPI.Data.dto;
 using TaxiServiceAPI.Data.Models;
 
 namespace TaxiServiceAPI.Controllers
@@ -86,6 +87,16 @@ namespace TaxiServiceAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
+        }
+
+        [HttpPost("new")]
+        public async Task<ActionResult<Order>> PostNewOrder(NewOrderDto orderDto)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({orderDto.WayOfOrder}, NULL, NULL, {orderDto.ClientId}, {orderDto.DeparturePoint}, {orderDto.ArrivalPoint}, {orderDto.NumberOfKm}, {orderDto.ApproximatePrice}, {orderDto.OrderDate}, {orderDto.AppointedTime}, {orderDto.TypeOfCar}, NULL, NULL, {orderDto.TypeOfPayment}, NULL)");
+            await _context.SaveChangesAsync();
+
+            return StatusCode(201);
         }
 
         [HttpDelete("{id}")]

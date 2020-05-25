@@ -12,6 +12,7 @@ import { DepartmentsListComponent } from './lists/departments-list/departments-l
 import { DriverPhonesListComponent } from './lists/driver-phones-list/driver-phones-list.component';
 import { OperatorPhonesListComponent } from './lists/operator-phones-list/operator-phones-list.component';
 import { AddPageComponent } from './add-page/add-page.component';
+import { DriverPageComponent } from './driver-page/driver-page.component';
 
 const routes: Routes = [
   {
@@ -21,14 +22,15 @@ const routes: Routes = [
       { path: 'clients-list', component: ClientsListComponent },
       { path: 'operators-list', component: OperatorsListComponent },
       { path: 'drivers-list', component: DriversListComponent },
-      { path: 'orders-list', component: OrdersListComponent},
+      { path: 'orders-list', component: OrdersListComponent },
       { path: 'cars-list', component: CarsListComponent },
       { path: 'departments-list', component: DepartmentsListComponent },
-      { path: 'operator-phones-list', component: OperatorPhonesListComponent},
-      { path: 'driver-phones-list', component: DriverPhonesListComponent},
+      { path: 'operator-phones-list', component: OperatorPhonesListComponent },
+      { path: 'driver-phones-list', component: DriverPhonesListComponent },
       { path: 'add', component: AddPageComponent },
     ],
   },
+  { path: 'driver', component: DriverPageComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
 ];
 

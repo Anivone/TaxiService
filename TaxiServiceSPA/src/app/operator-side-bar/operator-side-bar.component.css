@@ -34,3 +34,7 @@
 .new-order-route {
     font-size: 14px;
 }
+
+.route-value {
+    text-align: right;
+}

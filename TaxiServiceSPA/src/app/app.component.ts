@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 
 enum UserRoles {
   Client = 1,
@@ -11,7 +11,7 @@ enum UserRoles {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'Taxi Service';
 
   userRole: UserRoles;

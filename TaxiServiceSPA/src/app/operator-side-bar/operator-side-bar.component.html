@@ -10,6 +10,7 @@
       fxLayoutAlign="center center"
       class="side-bar-header-title"
       ><span
+        *ngIf="newOrders"
         [matBadge]="newOrders.length"
         matBadgeOverlap="false"
         matBadgeColor="warn"
@@ -80,7 +81,9 @@
             </div>
           </mat-card-content>
           <mat-card-actions fxLayoutAlign="center center">
-            <button mat-raised-button color="primary">Assign Driver</button>
+            <button mat-raised-button color="primary" (click)="openDialog()">
+              Assign Driver
+            </button>
           </mat-card-actions>
         </mat-card>
       </mat-expansion-panel>

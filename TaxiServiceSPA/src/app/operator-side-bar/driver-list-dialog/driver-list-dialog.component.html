@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>List of Available Drivers</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-card *ngFor="let driver of availableDrivers">
+    <mat-card-content>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="15px"
+      >
+        <mat-icon class="available-icon">check_circle</mat-icon>
+        <div>{{ driver.firstName }}</div>
+        <div>{{ driver.lastName }}</div>
+        <div>{{ driver.typeOfCar }}</div>
+        <button mat-raised-button color="primary">Assign</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>

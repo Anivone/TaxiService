@@ -4,7 +4,7 @@
   linear="true"
   #stepper
 >
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step editable="false" [stepControl]="firstFormGroup">
     <form
       fxLayout="column"
       fxLayoutAlign="center center"
@@ -18,18 +18,22 @@
           <mat-label>Departure</mat-label>
           <input
             matInput
+            matGoogleMapsAutocomplete
+            country="ua"
             placeholder="Departure point"
             formControlName="firstCtrl"
-            required
+            (onAutocompleteSelected)="setDeparture($event)"
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Arrival</mat-label>
           <input
             matInput
+            matGoogleMapsAutocomplete
+            country="ua"
             placeholder="Arrival point"
-            formControlName="firstCtrl"
-            required
+            formControlName="secondCtrl"
+            (onAutocompleteSelected)="setArrival($event)"
           />
         </mat-form-field>
       </div>
@@ -39,69 +43,179 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="secondFormGroup" [completed]="group.selected">
-    <ng-template matStepLabel>Choose type of car</ng-template>
-    <mat-button-toggle-group
-      gdAreas="first second | third fourth"
-      gdGap="25px"
-      #group="matButtonToggleGroup"
-    >
-      <mat-button-toggle gdArea="first" value="business-sedan">
-        <div class="car-type-1"></div>
-      </mat-button-toggle>
-      <mat-button-toggle gdArea="second" value="sedan">
-        <div class="car-type-2"></div>
-      </mat-button-toggle>
-      <mat-button-toggle gdArea="third" value="economy">
-        <div class="car-type-3"></div>
-      </mat-button-toggle>
-      <mat-button-toggle gdArea="fourth" value="minivan">
-        <div class="car-type-4"></div>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-    <div fxLayoutAlign="center center" class="car-buttons">
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
+  <mat-step
+    editable="false"
+    [stepControl]="secondFormGroup"
+    [completed]="group.selected"
+  >
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Choose type of car</ng-template>
+      <mat-button-toggle-group
+        gdAreas="first second | third fourth"
+        gdGap="25px"
+        formControlName="secondCtrl"
+        #group="matButtonToggleGroup"
+      >
+        <mat-button-toggle gdArea="first" value="Business-Sedan">
+          <div class="car-type-1"></div>
+        </mat-button-toggle>
+        <mat-button-toggle gdArea="second" value="Sedan">
+          <div class="car-type-2"></div>
+        </mat-button-toggle>
+        <mat-button-toggle gdArea="third" value="Econom">
+          <div class="car-type-3"></div>
+        </mat-button-toggle>
+        <mat-button-toggle gdArea="fourth" value="Minivan">
+          <div class="car-type-4"></div>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <div fxLayoutAlign="center center" class="car-buttons">
+        <button mat-button matStepperNext (click)="setTypeOfCar(secondFormGroup.value.secondCtrl)">
+          Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step editable="false" [stepControl]="fourthFormGroup">
+    <ng-template matStepLabel>Appoint time</ng-template>
+    <form [formGroup]="fourthFormGroup" fxLayoutAlign="center center">
+      <mat-form-field>
+        <div>
+          <input matInput
+            aria-label="time-picker"
+            [ngxTimepicker]="appointTime"
+            formControlName="fourthCtrl"
+            [format]="24"
+            readonly
+            style="text-align: center;"
+          />
+          <ngx-material-timepicker #appointTime></ngx-material-timepicker>
+        </div>
+      </mat-form-field>
+    </form>
+    <div fxLayoutAlign="center center">
+      <button mat-button matStepperNext (click)="setAppointedTime(fourthFormGroup.value.fourthCtrl)">
+        Next
+      </button>
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="thirdFormGroup" [completed]="wayOfPayment">
+  <mat-step
+    editable="false"
+    [stepControl]="thirdFormGroup"
+    [completed]="wayOfPayment"
+  >
     <div
       fxLayout="column"
       fxLayoutAlign="center center"
       fxLayoutGap="16px"
+      
       class="payment-radio"
     >
       <ng-template matStepLabel>Choose way of payment</ng-template>
       <label id="payment">You will pay by: </label>
-      <mat-radio-group
-        aria-labelledby="payment"
-        fxLayout="column"
-        fxLayoutGap="14px"
-        class="example-radio-group"
-        [(ngModel)]="wayOfPayment"
-      >
-        <mat-radio-button
-          class="example-radio-button"
-          *ngFor="let way of ways"
-          [value]="way"
-        >
-          {{ way }}
-        </mat-radio-button>
-      </mat-radio-group>
+      <mat-form-field>
+        <mat-label>Choose an option:</mat-label>
+        <mat-select [(ngModel)]="wayOfPayment">
+          <mat-option *ngFor="let way of ways" [value]="way">{{way}}</mat-option>
+        </mat-select>
+      </mat-form-field>
       <div fxLayoutAlign="center center">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="setPaymentMethod(wayOfPayment)">
+          Next
+        </button>
       </div>
     </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Finish</ng-template>
     <div fxLayout="column" fxLayoutAlign="center center">
-      <p>You are now done.</p>
-      <div>
+      <mat-card
+        fxLayout="column"
+        fxLayoutGap="20px"
+        fxLayoutAlign="center center"
+        class="order-information"
+      >
+        <mat-card-title fxLayoutAlign="center center" fxLayoutGap="15px">
+          <mat-icon class="md-24">list_alt</mat-icon>
+          <div>Order information</div>
+        </mat-card-title>
+        <mat-card-content
+          fxLayout="column"
+          fxLayoutGap="20px"
+          fxLayoutAlign=". center"
+          class="wd-100"
+        >
+          <div fxLayout="row" fxLayoutGap="15px" class="wd-100">
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Departure point:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">
+                  {{ departurePoint }}
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Arrival point:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">
+                  {{ arrivalPoint }}
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="15px" class="wd-100">
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Distance:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">
+                  {{ numberOfKm }} km
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Appointed time:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">{{ appointedTime }}</div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="15px" class="wd-100">
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Type of Car:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">
+                  {{ typeOfCar }}
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card>
+              <mat-card-content fxLayout="column" fxLayoutGap="15px">
+                <div>Payment method:</div>
+                <div fxLayoutAlign="flex-end" class="value-name">
+                  {{ wayOfPayment }}
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div class="approximate-price">
+            <div>Approximate price: {{approximatePrice}}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <div class="last-step-buttons">
         <button mat-button color="warn" (click)="stepper.reset()">Reset</button>
-        <button mat-button color="primary" (click)="stepper.reset(); toggleFinish()">
+        <button
+          mat-button
+          color="primary"
+          (click)="stepper.reset(); createNewOrder()"
+        >
           Finish
         </button>
       </div>

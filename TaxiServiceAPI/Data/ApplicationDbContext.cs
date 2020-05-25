@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Data
 {
@@ -86,6 +87,8 @@ namespace TaxiServiceAPI.Data
                 e.Property(p => p.FinalPrice).HasColumnType("money");
                 e.ToTable("Orders");
             });
+
+            modelBuilder.Entity<DriverCarQueryObject>(entity => entity.HasNoKey());
         }
 
         public DbSet<Department> Departments { get; set; }
@@ -96,5 +99,7 @@ namespace TaxiServiceAPI.Data
         public DbSet<DriverPhones> DriverPhones { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<DriverCarQueryObject> DriverCarQueryObjects { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

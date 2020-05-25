@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
 using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Controllers
 {
@@ -21,6 +22,13 @@ namespace TaxiServiceAPI.Controllers
             _context = context;
         }
 
+        [HttpGet("available")]
+        public async Task<ActionResult<IEnumerable<DriverCarQueryObject>>> GetAvailableDrivers()
+        {
+            return await _context.DriverCarQueryObjects.FromSqlRaw("SELECT D.FirstName, D.LastName, C.TypeOfCar FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId WHERE Available = 'true';").ToListAsync();
+        }
+
+        #region CRUD
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StaffDriver>>> GetDrivers()
         {
@@ -101,5 +109,6 @@ namespace TaxiServiceAPI.Controllers
         {
             return _context.Drivers.Any(e => e.DriverId == id);
         }
+        #endregion
     }
 }

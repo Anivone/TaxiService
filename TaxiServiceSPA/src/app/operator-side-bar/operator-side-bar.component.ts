@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/interfaces/models/order';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { DriverListDialogComponent } from './driver-list-dialog/driver-list-dialog.component';
 
 @Component({
   selector: 'app-operator-side-bar',
@@ -11,7 +13,12 @@ import { environment } from 'src/environments/environment';
 export class OperatorSideBarComponent implements OnInit {
   newOrders: Order[];
 
-  constructor(public http: HttpClient) {}
+  public dialogRef: MatDialogRef<DriverListDialogComponent>;
+
+  constructor(
+    public http: HttpClient,
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit() {
     this.getNewOrders();
@@ -38,5 +45,11 @@ export class OperatorSideBarComponent implements OnInit {
         this.newOrders = result;
         console.log(this.newOrders);
       });
+  }
+
+  openDialog() {
+    this.dialogRef = this.dialog.open(DriverListDialogComponent, {
+      autoFocus: false
+    });
   }
 }

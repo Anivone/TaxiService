@@ -26,6 +26,11 @@ import { DriverPhonesListComponent } from './lists/driver-phones-list/driver-pho
 import { OperatorPhonesListComponent } from './lists/operator-phones-list/operator-phones-list.component';
 import { AddPageComponent } from './add-page/add-page.component';
 import { OperatorSideBarComponent } from './operator-side-bar/operator-side-bar.component';
+import { DriverListDialogComponent } from './operator-side-bar/driver-list-dialog/driver-list-dialog.component';
+import { DriverPageComponent } from './driver-page/driver-page.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
    declarations: [
@@ -44,7 +49,9 @@ import { OperatorSideBarComponent } from './operator-side-bar/operator-side-bar.
       DriverPhonesListComponent,
       OperatorPhonesListComponent,
       AddPageComponent,
-      OperatorSideBarComponent
+      OperatorSideBarComponent,
+      DriverListDialogComponent,
+      DriverPageComponent,
    ],
    imports: [
       BrowserModule,
@@ -54,14 +61,21 @@ import { OperatorSideBarComponent } from './operator-side-bar/operator-side-bar.
       MaterialModule,
       FormsModule,
       ReactiveFormsModule,
-      HttpClientModule
+      HttpClientModule,
+      AgmCoreModule.forRoot({
+         apiKey: 'AIzaSyDKKnmD4wIWNHzDsvNeQkgpIEdCKa_7o_k',
+         libraries: ['places']
+      }),
+      MatGoogleMapsAutocompleteModule,
+      NgxMaterialTimepickerModule
    ],
    providers: [],
    bootstrap: [
       AppComponent
    ],
    entryComponents: [
-      LoginDialogComponent
+      LoginDialogComponent,
+      DriverListDialogComponent,
    ]
 })
 export class AppModule { }

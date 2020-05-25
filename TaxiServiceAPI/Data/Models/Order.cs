@@ -16,15 +16,13 @@ namespace TaxiServiceAPI.Data.Models
         public int ClientId { get; set; }
 
         [Required]
-        [StringLength(20)]
         public string DeparturePoint { get; set; }
 
         [Required]
-        [StringLength(20)]
         public string ArrivalPoint { get; set; }
-        public int NumberOfKm { get; set; }
+        public double NumberOfKm { get; set; }
 
-        public int ApproximatePrice { get; set; }
+        public double ApproximatePrice { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
@@ -45,6 +43,6 @@ namespace TaxiServiceAPI.Data.Models
         [StringLength(15)]
         public string TypeOfPayment { get; set; }
 
-        public int? FinalPrice { get; set; }
+        public double? FinalPrice { get; set; }
     }
 }

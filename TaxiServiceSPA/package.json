@@ -11,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^1.1.0",
+    "@angular-material-extensions/google-maps-autocomplete": "^4.0.1",
     "@angular/animations": "^9.1.4",
     "@angular/cdk": "^9.2.3",
     "@angular/common": "^9.1.4",
@@ -22,6 +24,9 @@
     "@angular/platform-browser": "^9.1.4",
     "@angular/platform-browser-dynamic": "^9.1.4",
     "@angular/router": "^9.1.4",
+    "@types/googlemaps": "^3.39.5",
+    "google-distance-matrix": "^1.1.1",
+    "ngx-material-timepicker": "^5.5.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
