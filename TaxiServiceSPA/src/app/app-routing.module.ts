@@ -13,11 +13,12 @@ import { DriverPhonesListComponent } from './lists/driver-phones-list/driver-pho
 import { OperatorPhonesListComponent } from './lists/operator-phones-list/operator-phones-list.component';
 import { AddPageComponent } from './add-page/add-page.component';
 import { DriverPageComponent } from './driver-page/driver-page.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: 'operator',
-    component: OperatorPageComponent,
+    path: 'home',
+    component: HomeComponent,
     children: [
       { path: 'clients-list', component: ClientsListComponent },
       { path: 'operators-list', component: OperatorsListComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
     ],
   },
   { path: 'driver', component: DriverPageComponent },
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: LoginComponent },
+  { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

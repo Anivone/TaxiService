@@ -31,51 +31,48 @@ import { DriverPageComponent } from './driver-page/driver-page.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      HomeComponent,
-      NavBarComponent,
-      LoginDialogComponent,
-      OrderStepperComponent,
-      ClientsListComponent,
-      OperatorsListComponent,
-      OperatorPageComponent,
-      DriversListComponent,
-      OrdersListComponent,
-      CarsListComponent,
-      DepartmentsListComponent,
-      DriverPhonesListComponent,
-      OperatorPhonesListComponent,
-      AddPageComponent,
-      OperatorSideBarComponent,
-      DriverListDialogComponent,
-      DriverPageComponent,
-   ],
-   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      BrowserAnimationsModule,
-      FlexLayoutModule,
-      MaterialModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      AgmCoreModule.forRoot({
-         apiKey: 'AIzaSyDKKnmD4wIWNHzDsvNeQkgpIEdCKa_7o_k',
-         libraries: ['places']
-      }),
-      MatGoogleMapsAutocompleteModule,
-      NgxMaterialTimepickerModule
-   ],
-   providers: [],
-   bootstrap: [
-      AppComponent
-   ],
-   entryComponents: [
-      LoginDialogComponent,
-      DriverListDialogComponent,
-   ]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavBarComponent,
+    LoginDialogComponent,
+    OrderStepperComponent,
+    ClientsListComponent,
+    OperatorsListComponent,
+    OperatorPageComponent,
+    DriversListComponent,
+    OrdersListComponent,
+    CarsListComponent,
+    DepartmentsListComponent,
+    DriverPhonesListComponent,
+    OperatorPhonesListComponent,
+    AddPageComponent,
+    OperatorSideBarComponent,
+    DriverListDialogComponent,
+    DriverPageComponent,
+    LoginComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDKKnmD4wIWNHzDsvNeQkgpIEdCKa_7o_k',
+      libraries: ['places'],
+    }),
+    MatGoogleMapsAutocompleteModule,
+    NgxMaterialTimepickerModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  entryComponents: [LoginDialogComponent, DriverListDialogComponent],
 })
-export class AppModule { }
+export class AppModule {}
