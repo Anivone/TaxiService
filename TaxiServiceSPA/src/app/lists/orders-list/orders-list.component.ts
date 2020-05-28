@@ -13,6 +13,7 @@ export class OrdersListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   orders: MatTableDataSource<Order>;
+  item = 'Order';
 
   displayedColumns = [
     'Id',

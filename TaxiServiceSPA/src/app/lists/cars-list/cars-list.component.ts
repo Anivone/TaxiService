@@ -13,6 +13,7 @@ export class CarsListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   cars: MatTableDataSource<Car>;
+  item = 'Car';
 
   displayedColumns = ['Car Id', 'Type of Car', 'Number of Seats', 'Actions'];
 

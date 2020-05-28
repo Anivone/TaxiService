@@ -82,7 +82,9 @@
     </ng-container>
 
     <ng-container matColumnDef="Actions" stickyEnd>
-      <th mat-header-cell *matHeaderCellDef class="action-column"></th>
+      <th mat-header-cell *matHeaderCellDef class="action-column">
+        <app-add-button [item]="item"></app-add-button>
+      </th>
       <td mat-cell *matCellDef="let order" class="action-column">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
           <button mat-icon-button (click)="onRowClicked(order)">

@@ -16,7 +16,7 @@ export class DriverListDialogComponent implements OnInit {
   constructor(
     public http: HttpClient,
     public dialogRef: MatDialogRef<DriverListDialogComponent>
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getAvailableDrivers();

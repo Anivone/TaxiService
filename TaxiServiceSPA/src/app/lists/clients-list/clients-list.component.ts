@@ -24,6 +24,7 @@ export class ClientsListComponent implements OnInit {
     'Actions'
   ];
   clients: MatTableDataSource<Client>;
+  item = 'Client';
 
   ngOnInit() {
     this.getClients();

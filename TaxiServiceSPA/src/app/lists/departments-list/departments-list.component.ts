@@ -13,6 +13,7 @@ export class DepartmentsListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   departments: MatTableDataSource<Department>;
+  item = 'Department';
 
   displayedColumns = ['Department Id', 'City', 'Actions'];
 

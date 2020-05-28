@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderStepperComponent } from './order-stepper/order-stepper.component';
@@ -32,13 +32,13 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
 import { AgmCoreModule } from '@agm/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LoginComponent } from './login/login.component';
+import { AddButtonComponent } from './lists/add-button/add-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavBarComponent,
-    LoginDialogComponent,
     OrderStepperComponent,
     ClientsListComponent,
     OperatorsListComponent,
@@ -54,6 +54,7 @@ import { LoginComponent } from './login/login.component';
     DriverListDialogComponent,
     DriverPageComponent,
     LoginComponent,
+    AddButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +74,9 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialogComponent, DriverListDialogComponent],
+  entryComponents: [
+    DriverListDialogComponent,
+    AddPageComponent,
+  ],
 })
-export class AppModule {}
+export class AppModule { }

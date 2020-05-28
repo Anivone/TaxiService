@@ -9,13 +9,7 @@ export class OperatorPageComponent implements OnInit {
 
   constructor() { }
 
-  buttonName: string;
-
   ngOnInit() {
-  }
-
-  setButtonName(name: string) {
-    this.buttonName = name;
   }
 
 }

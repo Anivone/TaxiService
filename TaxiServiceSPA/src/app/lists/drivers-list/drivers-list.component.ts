@@ -13,6 +13,7 @@ export class DriversListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   drivers: MatTableDataSource<Driver>;
+  item = 'Driver';
 
   displayedColumns = [
     'Id',

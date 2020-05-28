@@ -33,6 +33,7 @@ export class OperatorsListComponent implements OnInit {
   ];
 
   operators: MatTableDataSource<Operator>;
+  item = 'Operator';
 
   ngOnInit() {
     this.getOperators();

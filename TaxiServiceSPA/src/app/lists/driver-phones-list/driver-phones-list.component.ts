@@ -14,6 +14,7 @@ export class DriverPhonesListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   phones: MatTableDataSource<DriverPhones>;
+  item = 'Driver Phone';
 
   displayedColumns = ['Phone Number', 'Driver Id', 'Actions'];
 
