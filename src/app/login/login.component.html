@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Login</h1>
+<form [formGroup]="loginForm" fxLayout="column">
+  <mat-form-field>
+    <input formControlName="username" matInput placeholder="Enter username" />
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" formControlName="password" matInput placeholder="Enter password" />
+  </mat-form-field>
+<div fxLayout="row" fxLayoutAlign="space-around">
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Login</button>
+  <button mat-mat-stroked-button>Cancel</button>
+</div>
+</form>

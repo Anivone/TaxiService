@@ -1,0 +1,26 @@
+<app-operator-side-bar></app-operator-side-bar>
+
+<mat-sidenav fxLayout="column" opened mode="over" class="operator-buttons" disableClose="true">
+  <mat-drawer-container class="operator-buttons-content">
+    <mat-drawer-content fxLayoutAlign="center center" class="operator-buttons-header">
+      <div>Actions</div>
+    </mat-drawer-content>
+    <mat-drawer-content fxLayout="column" fxLayoutAlign=". center" fxLayoutGap="15px">
+      <a mat-raised-button routerLink="clients-list" class="buttons">Clients</a>
+      <a mat-raised-button routerLink="operators-list" class="buttons">Operators</a>
+      <a mat-raised-button routerLink="drivers-list" class="buttons">Drivers</a>
+      <a mat-raised-button routerLink="orders-list" class="buttons">Orders</a>
+      <a mat-raised-button routerLink="cars-list" class="buttons">Cars</a>
+      <a mat-raised-button routerLink="departments-list" class="buttons">Departments</a>
+      <a mat-raised-button routerLink="operator-phones-list" class="buttons">Operator Phones</a>
+      <a mat-raised-button routerLink="driver-phones-list" class="buttons">Driver Phones</a>
+      <mat-divider></mat-divider>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</mat-sidenav>
+
+<div fxLayout="column" fxLayoutAlign=". center" fxLayoutGap="20px" class="operator-page">
+  <div class="operator-page-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
