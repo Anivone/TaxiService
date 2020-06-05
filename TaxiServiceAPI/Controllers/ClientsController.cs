@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
+using TaxiServiceAPI.Data.dto;
 using TaxiServiceAPI.Data.Models;
 
 namespace TaxiServiceAPI.Controllers
@@ -37,6 +38,17 @@ namespace TaxiServiceAPI.Controllers
             {
                 return NotFound();
             }
+
+            return client;
+        }
+
+        [HttpPost("phone")]
+        public async Task<ActionResult<Client>> GetClientByPhone(GetPersonByPhone phone)
+        {
+            var client = await _context.Clients.FromSqlInterpolated(
+                $"SELECT * FROM Clients WHERE PhoneNumber = {phone.Phone}").FirstOrDefaultAsync();
+
+            if (client == null) return NotFound();
 
             return client;
         }

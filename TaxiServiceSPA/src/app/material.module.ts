@@ -19,6 +19,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatBadgeModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatButtonModule,
@@ -61,7 +65,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatBadgeModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
   ]
 })
 export class MaterialModule { }

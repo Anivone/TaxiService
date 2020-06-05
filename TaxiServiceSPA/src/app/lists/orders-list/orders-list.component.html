@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8 table-container">
+<div #ordersList class="mat-elevation-z8 table-container">
   <table mat-table [dataSource]="orders">
     
     <ng-container matColumnDef="Id">
@@ -90,7 +90,7 @@
           <button mat-icon-button (click)="onRowClicked(order)">
             <mat-icon>create</mat-icon>
           </button>
-          <button mat-icon-button color="warn">
+          <button mat-icon-button color="warn" (click)="deleteOrder(order)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -101,4 +101,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
+
 </div>
+<mat-paginator [pageSize]="5"></mat-paginator>

@@ -1,3 +1,92 @@
-<p>
-  driver-page works!
-</p>
+<div fxLayoutAlign="center" class="container">
+  <mat-spinner [diameter]="30" *ngIf="isLoading"></mat-spinner>
+  <mat-card *ngIf="!isLoading" class="order">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon>info</mat-icon>
+      </div>
+      <mat-card-title>Замовлення</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Інформація про клієнта
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="firstName">
+            <span class="key">Ім'я: </span>
+            <span class="value">{{order.firstName}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="lastName">
+            <span class="key">Прізвище:</span>
+            <span class="value">{{order.lastName}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" *ngIf="order.middleName" class="middleName">
+            <span class="key">По-батькові:</span>
+            <span class="value">{{order.middleName}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="phone-number">
+            <span class="key">Телефон:</span>
+            <span class="value">{{order.phoneNumber}}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Маршрут
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="departure-point">
+            <span class="key">Місце відправлення:</span>
+            <span class="value">{{order.departurePoint}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="arrival-point">
+            <span class="key">Місце прибуття:</span>
+            <span class="value">{{order.arrivalPoint}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="number-of-km">
+            <span class="key">Відстань:</span>
+            <span class="value">{{order.numberOfKm}} км</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="appointed-time">
+            <span class="key">Призначений час:</span>
+            <span class="value">{{getTime(order.appointedTime)}}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Оплата
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="appointed-time">
+            <span class="key">Спосіб оплати:</span>
+            <span class="value">{{order.typeOfPayment}}</span>
+          </div>
+          <div fxLayout="row nowrap" fxLayoutAlign="space-between" class="appointed-time">
+            <span class="key">Приблизна ціна:</span>
+            <span class="value">{{order.approximatePrice}} грн.</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="final-price" fxLayoutAlign="space-around">
+        <span class="key">Остаточна ціна:</span>
+        <span class="value">666 грн</span>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions fxLayoutAlign="center">
+      <button mat-raised-button color="primary">Прийняти</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

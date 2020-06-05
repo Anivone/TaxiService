@@ -32,7 +32,7 @@ const routes: Routes = [
     ],
   },
   { path: 'driver', component: DriverPageComponent },
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 

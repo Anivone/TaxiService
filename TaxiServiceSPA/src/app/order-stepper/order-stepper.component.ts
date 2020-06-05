@@ -11,6 +11,11 @@ import { HttpClient } from '@angular/common/http';
 import { Order } from 'src/interfaces/models/order';
 import { environment } from 'src/environments/environment';
 import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
+import { AuthService } from '../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+import { User } from 'src/models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-order-stepper',
@@ -36,12 +41,20 @@ export class OrderStepperComponent implements OnInit {
   fourthFormGroup: FormGroup;
 
   wayOfPayment: string;
-  ways: string[] = ['Cash', 'Credit Card'];
+  ways: string[] = ['Готівкою', 'Кредитною картою'];
+
+  user: User;
+
+  @ViewChild('stepper') stepper: any;
 
   constructor(
     public formBuilder: FormBuilder,
-    public http: HttpClient
-  ) {}
+    public http: HttpClient,
+    public auth: AuthService,
+    public dialog: MatDialog
+  ) {
+    auth.currentUser.subscribe(user => this.user = user);
+  }
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
@@ -68,6 +81,7 @@ export class OrderStepperComponent implements OnInit {
 
   setDeparture(value: any) {
     this.departurePoint = value.formatted_address;
+    console.log(value);
     console.log(this.departurePoint);
     if (this.departurePoint && this.arrivalPoint) {
       this.getDistance(
@@ -110,7 +124,7 @@ export class OrderStepperComponent implements OnInit {
       },
       (result) => {
         this.numberOfKm = result.rows[0].elements[0].distance.value / 1000;
-        this.approximatePrice = 40 + this.numberOfKm * 4.5;
+        this.approximatePrice = Math.ceil(40 + this.numberOfKm * 4.5);
         console.log('Number of km: ', this.numberOfKm);
       }
     );
@@ -147,4 +161,12 @@ export class OrderStepperComponent implements OnInit {
       console.log(result);
     }, err => console.log(err));
   }
+
+  loginToCreateOrder() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      autoFocus: false,
+      data: 'Login'
+    });
+  }
+
 }

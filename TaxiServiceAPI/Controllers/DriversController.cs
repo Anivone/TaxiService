@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
+using TaxiServiceAPI.Data.dto;
 using TaxiServiceAPI.Data.Models;
 using TaxiServiceAPI.Data.QueryObjects;
 
@@ -25,7 +26,18 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<DriverCarQueryObject>>> GetAvailableDrivers()
         {
-            return await _context.DriverCarQueryObjects.FromSqlRaw("SELECT D.FirstName, D.LastName, C.TypeOfCar FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId WHERE Available = 'true';").ToListAsync();
+            return await _context.DriverCarQueryObjects.FromSqlRaw("SELECT D.DriverId, D.FirstName, D.LastName, C.TypeOfCar FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId WHERE Available = 'true';").ToListAsync();
+        }
+
+        [HttpPost("phone")]
+        public async Task<ActionResult<StaffDriver>> GetDriverFromPhone(GetPersonByPhone phone)
+        {
+            var staffDriver = await _context.Drivers.FromSqlInterpolated(
+                $"SELECT * FROM Drivers AS O WHERE EXISTS(SELECT * FROM DriverPhones AS OP WHERE O.DriverId = OP.DriverId AND OP.PhoneNumber = {phone.Phone})").FirstOrDefaultAsync();
+
+            if (staffDriver == null) return NotFound();
+
+            return staffDriver;
         }
 
         #region CRUD

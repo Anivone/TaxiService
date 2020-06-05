@@ -1,24 +1,15 @@
-<mat-sidenav
-  fxLayout="column"
-  opened
-  mode="over"
-  class="side-bar"
-  disableClose="true"
->
+<mat-sidenav fxLayout="column" fxLayoutAlign="center center" opened mode="over" class="side-bar" disableClose="true">
   <mat-drawer-container fxLayoutAlign="center center" class="side-bar-header">
-    <mat-drawer-content
-      fxLayoutAlign="center center"
-      class="side-bar-header-title"
-      ><span
-        *ngIf="newOrders"
-        [matBadge]="newOrders.length"
-        matBadgeOverlap="false"
-        matBadgeColor="warn"
-        >New Orders</span
-      ></mat-drawer-content
-    >
+    <mat-drawer-content fxLayoutAlign="center center" class="side-bar-header-title"><span *ngIf="!isLoading && newOrders.length > 0"
+        [matBadge]="newOrders.length" matBadgeOverlap="false" matBadgeColor="warn">New Orders</span>
+      <span *ngIf="isLoading || newOrders.length == 0">New Orders</span></mat-drawer-content>
   </mat-drawer-container>
-  <mat-drawer-container fxLayout="column" fxLayoutAlign="center center">
+
+  <div *ngIf="isLoading" fxLayoutAlign="center center" class="spinner">
+    <mat-spinner fxLayoutAlign="center center" diameter="30"></mat-spinner>
+  </div>
+
+  <mat-drawer-container *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="center center">
     <mat-drawer-content *ngFor="let order of newOrders" class="new-order">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -33,47 +24,26 @@
         </mat-expansion-panel-header>
 
         <mat-card fxLayout="column" class="new-order-info">
-          <mat-card-content
-            fxLayout="column"
-            fxLayoutAlign="space-around"
-            fxLayoutGap="5px"
-            class="new-order-route"
-          >
-            <div
-              fxLayout="row"
-              fxLayoutAlign="space-between center"
-              fxLayoutGap="10px"
-            >
+          <mat-card-content fxLayout="column" fxLayoutAlign="space-around" fxLayoutGap="5px" class="new-order-route">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
               <div>Departure:</div>
               <div class="route-value">
                 {{ order.departurePoint }}
               </div>
             </div>
-            <div
-              fxLayout="row"
-              fxLayoutAlign="space-between center"
-              fxLayoutGap="10px"
-            >
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
               <div>Arrival:</div>
               <div class="route-value">
                 {{ order.arrivalPoint }}
               </div>
             </div>
-            <div
-              fxLayout="row"
-              fxLayoutAlign="space-between center"
-              fxLayoutGap="10px"
-            >
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
               <div>Appointed time:</div>
               <div class="route-value">
                 {{ getTime(order.appointedTime) }}
               </div>
             </div>
-            <div
-              fxLayout="row"
-              fxLayoutAlign="space-between center"
-              fxLayoutGap="10px"
-            >
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
               <div>Type of car:</div>
               <div class="route-value">
                 {{ order.typeOfCar }}
@@ -81,7 +51,7 @@
             </div>
           </mat-card-content>
           <mat-card-actions fxLayoutAlign="center center">
-            <button mat-raised-button color="primary" (click)="openDialog()">
+            <button mat-raised-button color="primary" (click)="openDialog(order)">
               Assign Driver
             </button>
           </mat-card-actions>

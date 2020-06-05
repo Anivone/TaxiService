@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
       window.atob(localStorage.getItem('authToken').split('.')[1])
     );
     if (Date.now() > token.exp * 1000) {
-      localStorage.removeItem('authToken');
+      this.auth.logout();
     }
 
     const timeLeft = token.exp * 1000 - Date.now();

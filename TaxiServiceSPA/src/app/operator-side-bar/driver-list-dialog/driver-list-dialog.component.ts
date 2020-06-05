@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AvailableDrivers } from 'src/interfaces/queryObjects/availableDrivers';
@@ -13,9 +13,12 @@ export class DriverListDialogComponent implements OnInit {
 
   availableDrivers: AvailableDrivers[];
 
+  @Output() public updateNewOrders = new EventEmitter();
+
   constructor(
     public http: HttpClient,
-    public dialogRef: MatDialogRef<DriverListDialogComponent>
+    public dialogRef: MatDialogRef<DriverListDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit() {
@@ -33,5 +36,15 @@ export class DriverListDialogComponent implements OnInit {
         this.availableDrivers = result;
         console.log(this.availableDrivers);
       });
+  }
+
+  updateOrderInformation(driver: any) {
+    this.http.put(environment.baseUrl + `api/orders/sendToDriver/${this.data.orderId}`, {
+      operatorId: this.data.operatorId,
+      driverId: driver.driverId
+    }).subscribe(result => {
+      this.updateNewOrders.emit(true);
+      this.close();
+    });
   }
 }

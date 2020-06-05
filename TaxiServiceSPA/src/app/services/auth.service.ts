@@ -46,7 +46,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authToken');
-    this.router.navigate([environment.baseUrl + 'login']);
+    this.router.navigate(['/home']);
     this.currentUserSubject.next(new User());
   }
 }

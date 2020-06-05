@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-home',
@@ -18,16 +19,16 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   container: HTMLElement;
-  role: string;
+  user: User;
   @Output() roleEmitter = new EventEmitter<boolean>();
 
   constructor(
     private auth: AuthService,
-    private router: Router) {}
+    private router: Router) {
+      auth.currentUser.subscribe(x => this.user = x);
+    }
 
   ngOnInit() {
-    this.role = this.auth.currentUserSubject.value.role;
-    if (this.role === 'Operator') { this.roleEmitter.emit(true); }
-    if (!localStorage.getItem('authToken')) { this.router.navigate(['']); }
+    this.user.role = this.auth.currentUserSubject.value.role;
   }
 }

@@ -40,7 +40,7 @@ namespace TaxiServiceAPI.Data.Models
         public DateTime? TimeOfCompletion { get; set; }
 
         [Required]
-        [StringLength(15)]
+        [StringLength(20)]
         public string TypeOfPayment { get; set; }
 
         public double? FinalPrice { get; set; }

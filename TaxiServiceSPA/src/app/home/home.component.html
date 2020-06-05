@@ -1,2 +1,3 @@
-<app-order-stepper *ngIf="role === 'Client'"></app-order-stepper>
-<app-operator-page *ngIf="role === 'Operator'"></app-operator-page>
+<app-order-stepper *ngIf="!user.role || user.role === 'Client'"></app-order-stepper>
+<app-operator-page *ngIf="user.role === 'Operator'"></app-operator-page>
+<app-driver-page *ngIf="user.role === 'Driver'"></app-driver-page>

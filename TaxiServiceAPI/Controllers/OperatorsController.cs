@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
+using TaxiServiceAPI.Data.dto;
 using TaxiServiceAPI.Data.Models;
 
 namespace TaxiServiceAPI.Controllers
@@ -79,6 +80,17 @@ namespace TaxiServiceAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOperator", new { id = staffOperator.OperatorId }, staffOperator);
+        }
+
+        [HttpPost("phone")]
+        public async Task<ActionResult<StaffOperator>> GetOperatorFromPhone(GetPersonByPhone phone)
+        {
+            var staffOperator = await _context.Operators.FromSqlInterpolated(
+            $"SELECT * FROM Operators AS O WHERE EXISTS(SELECT * FROM OperatorPhones AS OP WHERE O.OperatorId = OP.OperatorId AND OP.PhoneNumber = {phone.Phone})").FirstOrDefaultAsync();
+
+            if (staffOperator == null) return NotFound();
+
+            return staffOperator;
         }
 
         [HttpDelete("{id}")]

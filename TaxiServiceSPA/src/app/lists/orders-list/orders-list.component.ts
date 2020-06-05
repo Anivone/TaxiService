@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from 'src/interfaces/models/order';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-orders-list',
@@ -10,10 +11,16 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
-  constructor(public http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    ) { }
+
 
   orders: MatTableDataSource<Order>;
   item = 'Order';
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('ordersList') ordersList: ElementRef;
 
   displayedColumns = [
     'Id',
@@ -44,6 +51,7 @@ export class OrdersListComponent implements OnInit {
       .get<Order[]>(environment.baseUrl + 'api/orders')
       .subscribe((result) => {
         this.orders = new MatTableDataSource<Order>(result);
+        this.orders.paginator = this.paginator;
         console.log(this.orders);
       });
   }
@@ -64,5 +72,13 @@ export class OrdersListComponent implements OnInit {
 
   onRowClicked(row: any) {
     console.log('Row clicked: ', row);
+  }
+
+  deleteOrder(order: Order) {
+    this.http.delete(environment.baseUrl + `api/orders/${order.orderId}`)
+      .subscribe(() => {
+        this.getOrders();
+        console.log('deleted !');
+      });
   }
 }

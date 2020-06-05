@@ -89,6 +89,11 @@ namespace TaxiServiceAPI.Data
             });
 
             modelBuilder.Entity<DriverCarQueryObject>(entity => entity.HasNoKey());
+            modelBuilder.Entity<DriverReceivedOrder>(entity =>
+            {
+                entity.HasNoKey();
+                entity.Property(p => p.ApproximatePrice).HasColumnType("money");
+            });
         }
 
         public DbSet<Department> Departments { get; set; }
@@ -101,5 +106,6 @@ namespace TaxiServiceAPI.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<DriverCarQueryObject> DriverCarQueryObjects { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<DriverReceivedOrder> DriverReceivedOrders { get; set; }
     }
 }

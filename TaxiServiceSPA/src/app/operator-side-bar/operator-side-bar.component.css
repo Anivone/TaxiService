@@ -39,3 +39,7 @@
 .route-value {
     text-align: right;
 }
+
+.spinner {
+    margin-top: 30px;
+}

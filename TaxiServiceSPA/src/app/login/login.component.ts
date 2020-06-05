@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { environment } from 'src/environments/environment';
 import { first } from 'rxjs/operators';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +17,19 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
 
+  private title: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    public dialogRef: MatDialogRef<LoginComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit() {
+    this.title = this.data;
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -48,6 +54,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         () => {
           this.router.navigate([returnUrl]);
+          this.close();
         },
         () => {
           this.loading = false;
@@ -57,5 +64,9 @@ export class LoginComponent implements OnInit {
           });
         }
       );
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 }

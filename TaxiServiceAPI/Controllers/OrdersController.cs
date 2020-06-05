@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
 using TaxiServiceAPI.Data.dto;
 using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Controllers
 {
@@ -50,6 +51,20 @@ namespace TaxiServiceAPI.Controllers
             return order;
         }
 
+        [HttpGet("driver/received/{id}")]
+        public async Task<ActionResult<DriverReceivedOrder>> GetReceivedOrders(int id)
+        {
+            var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.FinalPrice IS NULL").FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
@@ -60,6 +75,30 @@ namespace TaxiServiceAPI.Controllers
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
                 $"UPDATE Orders SET WayOfOrder = {order.WayOfOrder}, DeparturePoint = {order.DeparturePoint}, ArrivalPoint = {order.ArrivalPoint}, NumberOfKm = {order.NumberOfKm}, ApproximatePrice = {order.ApproximatePrice}, OrderDate = {order.OrderDate}, AppointedTime = {order.AppointedTime}, TypeOfCar = {order.TypeOfCar}, TimeOfAcceptance = {order.TimeOfAcceptance}, TimeOfCompletion = {order.TimeOfCompletion}, TypeOfPayment = {order.TypeOfPayment}, FinalPrice = {order.FinalPrice} WHERE OrderId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("sendToDriver/{id}")]
+        public async Task<IActionResult> SendToDriver(int id, SendOrderToDriverDto sendOrder)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Orders SET OperatorId = {sendOrder.OperatorId}, DriverId = {sendOrder.DriverId} WHERE OrderId = {id}");
             try
             {
                 await _context.SaveChangesAsync();

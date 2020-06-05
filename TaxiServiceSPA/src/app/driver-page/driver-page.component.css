@@ -1,0 +1,25 @@
+.order {
+    width: 100%;
+}
+
+.key, .value {
+    width: 50%;
+}
+
+.value {
+    text-align: start;
+}
+
+.final-price {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.final-price .key {
+    text-align: end;
+}
+
+.final-price .value {
+    text-align: center;
+}
