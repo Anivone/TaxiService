@@ -1,0 +1,9 @@
+.submit-btn{
+    width: 20%;
+
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.dialog-content{
+    overflow: hidden;
+}
