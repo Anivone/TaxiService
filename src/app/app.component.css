@@ -8,3 +8,8 @@
     backface-visibility: hidden;
     margin-bottom: 5%;
 }
+.container{
+    background-image:url("../assets/img/background/4.jpg") ;
+        background-size: contain;
+
+}
