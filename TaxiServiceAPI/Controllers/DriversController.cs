@@ -23,6 +23,12 @@ namespace TaxiServiceAPI.Controllers
             _context = context;
         }
 
+        [HttpGet("productive")]
+        public async Task<ActionResult<IEnumerable<StaffDriver>>> GetProductiveDrivers()
+        {
+            return await _context.Drivers.FromSqlRaw("SELECT * FROM Drivers AS D WHERE D.DriverId IN (SELECT O1.DriverId FROM Orders AS O1 INNER JOIN Orders AS O2 ON O1.DriverId = O2.DriverId WHERE O1.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O2.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O1.ClientId <> O2.ClientId)").ToListAsync();
+        }
+
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<DriverCarQueryObject>>> GetAvailableDrivers()
         {
@@ -40,6 +46,29 @@ namespace TaxiServiceAPI.Controllers
             return staffDriver;
         }
 
+        [HttpPut("available/{id}")]
+        public async Task<IActionResult> UpdateDriverAvailability(int id, AvailableDriverDto available)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Drivers SET Available = {available.Available} WHERE DriverId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DriverExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
         #region CRUD
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StaffDriver>>> GetDrivers()
@@ -62,7 +91,7 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOperator(int id, StaffDriver staffDriver)
+        public async Task<IActionResult> PutDriver(int id, StaffDriver staffDriver)
         {
             if (id != staffDriver.DriverId)
             {
@@ -92,7 +121,7 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<StaffDriver>> PostOperator(StaffDriver staffDriver)
+        public async Task<ActionResult<StaffDriver>> PostDriver(StaffDriver staffDriver)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync($"INSERT INTO Drivers (CarId, DepartmentId, LastName, FirstName, MiddleName, DateOfBirth, Region, City, Street, Building, Flat, Beginning, Ending, Salary, Available) VALUES ({staffDriver.CarId}, {staffDriver.DepartmentId}, {staffDriver.LastName}, {staffDriver.FirstName}, {staffDriver.MiddleName}, {staffDriver.DateOfBirth}, {staffDriver.Region}, {staffDriver.City}, {staffDriver.Street}, {staffDriver.Building}, {staffDriver.Flat}, {staffDriver.Beginning}, {staffDriver.Ending}, {staffDriver.Salary}, {staffDriver.Available})");
 
@@ -102,7 +131,7 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<StaffDriver>> DeleteOperator(int id)
+        public async Task<ActionResult<StaffDriver>> DeleteDriver(int id)
         {
             var staffDriver = await _context.Drivers.FindAsync(id);
             if (staffDriver == null)

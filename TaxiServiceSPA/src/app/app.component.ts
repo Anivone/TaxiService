@@ -1,5 +1,6 @@
 import { Component, AfterViewChecked, OnInit, Input } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,12 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'Taxi Service';
-
+  user: User;
   constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
     this.validateToken();
+    this.auth.currentUser.subscribe(user => this.user = user);
   }
 
   validateToken() {
@@ -27,5 +29,12 @@ export class AppComponent implements OnInit {
 
     const timeLeft = token.exp * 1000 - Date.now();
     console.log('time left: ', timeLeft);
+  }
+
+  getImage() {
+    if (this.user.role === 'Operator') { return 'url("../assets/img/5.jpg")'; }
+    else {
+      return 'none';
+    }
   }
 }

@@ -38,13 +38,20 @@ export class DriverListDialogComponent implements OnInit {
       });
   }
 
-  updateOrderInformation(driver: any) {
-    this.http.put(environment.baseUrl + `api/orders/sendToDriver/${this.data.orderId}`, {
+  updateOrderInformation(driver: AvailableDrivers) {
+    this.http.put(environment.baseUrl + `api/orders/sendToDriver/${this.data.orderId}`,
+    {
       operatorId: this.data.operatorId,
       driverId: driver.driverId
     }).subscribe(result => {
+      this.setDriverAvailability(false, driver);
       this.updateNewOrders.emit(true);
       this.close();
     });
+  }
+
+  setDriverAvailability(available: boolean, driver: AvailableDrivers) {
+    this.http.put(environment.baseUrl + `api/drivers/available/${driver.driverId}`, { available })
+      .subscribe(() => console.log('Availability status has been updated !'));
   }
 }

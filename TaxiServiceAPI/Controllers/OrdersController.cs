@@ -52,15 +52,28 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpGet("driver/received/{id}")]
-        public async Task<ActionResult<DriverReceivedOrder>> GetReceivedOrders(int id)
+        public async Task<ActionResult<DriverReceivedOrder>> GetReceivedOrder(int id)
         {
             var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
-                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.FinalPrice IS NULL").FirstOrDefaultAsync();
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NULL").FirstOrDefaultAsync();
 
-            if (order == null)
-            {
-                return NotFound();
-            }
+            return order;
+        }
+
+        [HttpGet("driver/accepted/{id}")]
+        public async Task<ActionResult<DriverReceivedOrder>> GetAcceptedOrder(int id)
+        {
+            var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NOT NULL AND O.TimeOfCompletion IS NULL").FirstOrDefaultAsync();
+
+            return order;
+        }
+
+        [HttpGet("driver/completed/{id}")]
+        public async Task<ActionResult<DriverReceivedOrder>> GetCompletedOrder(int id)
+        {
+            var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfCompletion IS NOT NULL AND O.FinalPrice IS NULL").FirstOrDefaultAsync();
 
             return order;
         }
@@ -99,6 +112,78 @@ namespace TaxiServiceAPI.Controllers
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
                 $"UPDATE Orders SET OperatorId = {sendOrder.OperatorId}, DriverId = {sendOrder.DriverId} WHERE OrderId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("driver/acceptance/{id}")]
+        public async Task<IActionResult> SetTimeOfAcceptance(int id, TimeOfAcceptanceDTo time)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Orders SET TimeOfAcceptance = { time.TimeOfAcceptance } WHERE OrderId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("driver/completion/{id}")]
+        public async Task<IActionResult> SetTimeOfCompletion(int id, TimeOfCompletionDto time)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Orders SET TimeOfCompletion = { time.TimeOfCompletion } WHERE OrderId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("driver/paid/{id}")]
+        public async Task<IActionResult> SetFinalPrice(int id, FinalPriceDto price)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Orders SET FinalPrice = { price.FinalPrice } WHERE OrderId = {id}");
             try
             {
                 await _context.SaveChangesAsync();

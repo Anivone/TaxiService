@@ -4,14 +4,16 @@
       <i class="material-icons md-96 logo-icon">local_taxi</i>
     </a>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-around baseline" class="nav-menu">
+  <div fxLayout="row" fxLayoutAlign="space-between baseline" class="nav-menu">
     <div fxLayout="row" fxLayoutAlign="center center" class="directives">
-      <a mat-button fxLayoutAlign="none center" class="nav-button" routerLink="/home">Головна</a>
-      <a mat-button fxLayoutAlign="none center" class="nav-button" routerLink="/contacts">Контакти</a>
+      <a mat-icon-button fxLayoutAlign="center center" class="nav-button home-button" routerLink="/home">
+        <mat-icon>home</mat-icon>
+      </a>
+      <a *ngIf="user.role === 'Operator'" mat-button fxLayoutAlign="center center" class="nav-button report-button" routerLink="home/report">Звіт</a>
     </div>
 
-    <button *ngIf="!user.isLoggedIn" mat-raised-button color="primary" (click)="openDialog()">Login</button>
-    <div *ngIf="user.isLoggedIn" fxLayout="row" fxLayoutAlign=". center">
+    <button *ngIf="!user.isLoggedIn" mat-raised-button class="login" color="primary" (click)="openDialog()">Увійти</button>
+    <div *ngIf="user.isLoggedIn" fxLayout="row" fxLayoutAlign=". center" class="login">
       <div *ngIf="client" fxLayoutAlign=". center" class="welcome">
         <span *ngIf="client">Вітаємо, {{client.lastName}} {{client.firstName}}</span>
       </div>
@@ -20,12 +22,12 @@
       </button>
       <mat-menu fxLayout="column" fxLayoutAlign="center center" #menu="matMenu">
         <div *ngIf="client" mat-menu-item>
-          <a mat-stroked-button>My Orders</a>
+          <a mat-stroked-button>Мої замовлення</a>
         </div>
         <div fxLayout="column" fxLayoutAlign="center center" class="user-menu" mat-menu-item>
 
           <button mat-raised-button color="warn" (click)="logout()">
-            Logout
+            Вийти
           </button>
         </div>
       </mat-menu>

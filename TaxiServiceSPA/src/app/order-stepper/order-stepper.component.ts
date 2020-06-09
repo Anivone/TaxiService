@@ -135,17 +135,19 @@ export class OrderStepperComponent implements OnInit {
   }
 
   getCurrentDate(): string {
-    const today = new Date();
-    const dd = String(today.getDay()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
+    const date = new Date();
+    const year = date.getFullYear().toString();
+    const month = date.getMonth().toString().length === 1 ? `0${date.getMonth()}` : `${date.getMonth()}`;
+    const day = date.getDate().toString().length === 1 ? `0${date.getDate()}` : `${date.getDate()}`;
 
-    return year + '-' + mm + '-' + dd;
+
+    return year + '-' + month + '-' + day;
   }
 
   createNewOrder() {
     this.toggleFinish();
     console.log('payment: ', this.paymentMethod);
+    console.log('current date: ', this.getCurrentDate());
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/orders/new', {
       wayOfOrder: 'Website',
       clientId: 2,
@@ -153,7 +155,7 @@ export class OrderStepperComponent implements OnInit {
       arrivalPoint: this.arrivalPoint,
       numberOfKm: this.numberOfKm,
       orderDate: this.getCurrentDate(),
-      appointedTime: this.appointedTime,
+      appointedTime: `1900-01-01T${this.appointedTime}:00`,
       typeOfCar: this.typeOfCar,
       typeOfPayment: this.paymentMethod,
       approximatePrice: this.approximatePrice

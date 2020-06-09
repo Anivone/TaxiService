@@ -14,6 +14,7 @@ import { OperatorPhonesListComponent } from './lists/operator-phones-list/operat
 import { AddPageComponent } from './add-page/add-page.component';
 import { DriverPageComponent } from './driver-page/driver-page.component';
 import { LoginComponent } from './login/login.component';
+import { ReportComponent } from './operator-page/report/report.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'operator-phones-list', component: OperatorPhonesListComponent },
       { path: 'driver-phones-list', component: DriverPhonesListComponent },
       { path: 'add', component: AddPageComponent },
+      { path: 'report', component: ReportComponent }
     ],
   },
   { path: 'driver', component: DriverPageComponent },
@@ -40,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

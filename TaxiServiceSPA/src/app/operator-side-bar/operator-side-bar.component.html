@@ -1,8 +1,8 @@
 <mat-sidenav fxLayout="column" fxLayoutAlign="center center" opened mode="over" class="side-bar" disableClose="true">
   <mat-drawer-container fxLayoutAlign="center center" class="side-bar-header">
     <mat-drawer-content fxLayoutAlign="center center" class="side-bar-header-title"><span *ngIf="!isLoading && newOrders.length > 0"
-        [matBadge]="newOrders.length" matBadgeOverlap="false" matBadgeColor="warn">New Orders</span>
-      <span *ngIf="isLoading || newOrders.length == 0">New Orders</span></mat-drawer-content>
+        [matBadge]="newOrders.length" matBadgeOverlap="false" matBadgeColor="warn">Нові Замовлення</span>
+      <span *ngIf="isLoading || newOrders.length == 0">Нові Замовлення</span></mat-drawer-content>
   </mat-drawer-container>
 
   <div *ngIf="isLoading" fxLayoutAlign="center center" class="spinner">
@@ -18,7 +18,7 @@
               <mat-icon color="warn">fiber_new</mat-icon>
             </div>
             <div fxLayoutAlign="center center" class="new-order-title">
-              Order {{ order.orderId }}
+              Замовлення {{ order.orderId }}
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -26,25 +26,25 @@
         <mat-card fxLayout="column" class="new-order-info">
           <mat-card-content fxLayout="column" fxLayoutAlign="space-around" fxLayoutGap="5px" class="new-order-route">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Departure:</div>
+              <div>Відправлення:</div>
               <div class="route-value">
                 {{ order.departurePoint }}
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Arrival:</div>
+              <div>Прибуття:</div>
               <div class="route-value">
                 {{ order.arrivalPoint }}
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Appointed time:</div>
+              <div>Призначений час:</div>
               <div class="route-value">
                 {{ getTime(order.appointedTime) }}
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Type of car:</div>
+              <div>Тип машини:</div>
               <div class="route-value">
                 {{ order.typeOfCar }}
               </div>
@@ -52,7 +52,7 @@
           </mat-card-content>
           <mat-card-actions fxLayoutAlign="center center">
             <button mat-raised-button color="primary" (click)="openDialog(order)">
-              Assign Driver
+              Призначити водія
             </button>
           </mat-card-actions>
         </mat-card>

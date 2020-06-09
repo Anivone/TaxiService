@@ -25,7 +25,9 @@ namespace TaxiServiceAPI.Data.QueryObjects
 
         public double ApproximatePrice { get; set; }
 
-        public DateTime AppointedTime { get; set; }
+        public DateTime? AppointedTime { get; set; }
+        public DateTime? TimeOfAcceptance { get; set; }
+        public DateTime? TimeOfCompletion { get; set; }
 
         public string TypeOfPayment { get; set; }
 

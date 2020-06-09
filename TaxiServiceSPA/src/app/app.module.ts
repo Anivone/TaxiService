@@ -33,6 +33,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LoginComponent } from './login/login.component';
 import { AddButtonComponent } from './lists/add-button/add-button.component';
+import { ReportComponent } from './operator-page/report/report.component';
 import { ProfileService } from './services/profile.service';
 
 @NgModule({
@@ -56,6 +57,7 @@ import { ProfileService } from './services/profile.service';
     DriverPageComponent,
     LoginComponent,
     AddButtonComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

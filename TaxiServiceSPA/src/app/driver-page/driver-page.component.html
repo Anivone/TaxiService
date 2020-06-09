@@ -1,6 +1,9 @@
 <div fxLayoutAlign="center" class="container">
   <mat-spinner [diameter]="30" *ngIf="isLoading"></mat-spinner>
-  <mat-card *ngIf="!isLoading" class="order">
+  <div *ngIf="!isLoading && empty" class="empty">
+    <span class="empty-message">There are currently no orders</span>
+  </div>
+  <mat-card *ngIf="!isLoading && !empty && order" class="order">
     <mat-card-header>
       <div mat-card-avatar>
         <mat-icon>info</mat-icon>
@@ -33,9 +36,7 @@
             <span class="value">{{order.phoneNumber}}</span>
           </div>
         </mat-card-content>
-      </mat-card>
 
-      <mat-card>
         <mat-card-header>
           <mat-card-title>
             Маршрут
@@ -58,10 +59,18 @@
             <span class="key">Призначений час:</span>
             <span class="value">{{getTime(order.appointedTime)}}</span>
           </div>
+          <div *ngIf="order.timeOfAcceptance" fxLayout="row nowrap" fxLayoutAlign="space-between"
+            class="appointed-time">
+            <span class="key">Час прийняття:</span>
+            <span class="value">{{getTime(order.timeOfAcceptance)}}</span>
+          </div>
+          <div *ngIf="order.timeOfCompletion" fxLayout="row nowrap" fxLayoutAlign="space-between"
+            class="appointed-time">
+            <span class="key">Час завершення:</span>
+            <span class="value">{{getTime(order.timeOfCompletion)}}</span>
+          </div>
         </mat-card-content>
-      </mat-card>
 
-      <mat-card>
         <mat-card-header>
           <mat-card-title>
             Оплата
@@ -79,14 +88,16 @@
         </mat-card-content>
       </mat-card>
 
-      <div class="final-price" fxLayoutAlign="space-around">
+      <div *ngIf="finalPrice" class="final-price" fxLayoutAlign="space-around">
         <span class="key">Остаточна ціна:</span>
-        <span class="value">666 грн</span>
+        <span class="value">{{finalPrice}} грн</span>
       </div>
     </mat-card-content>
 
     <mat-card-actions fxLayoutAlign="center">
-      <button mat-raised-button color="primary">Прийняти</button>
+      <button *ngIf="!isAccepted && !isCompleted" mat-raised-button color="primary" (click)="acceptOrder()">Прийняти</button>
+      <button *ngIf="isAccepted && !isCompleted" mat-raised-button color="primary" (click)="completeOrder()">Завершити</button>
+      <button *ngIf="!isAccepted && isCompleted" mat-raised-button color="primary" (click)="makeOrderPaid()">Оплачено</button>
     </mat-card-actions>
   </mat-card>
 </div>
