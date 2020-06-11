@@ -37,6 +37,7 @@ import { OperatorAddingFormComponent } from './operator-adding-form/operator-add
 
 import { AddOrderFormComponent } from './add-order-form/add-order-form.component';
 import { AddCarFormComponent } from './add-car-form/add-car-form.component';
+import { DriverAddingFormComponent } from './driver-adding-form/driver-adding-form.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { AddCarFormComponent } from './add-car-form/add-car-form.component';
     OperatorAddingFormComponent,
     AddOrderFormComponent,
     AddCarFormComponent,
+    DriverAddingFormComponent,
 
   ],
   imports: [
