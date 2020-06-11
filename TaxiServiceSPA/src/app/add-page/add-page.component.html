@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add {{item}}</h2>
-<mat-dialog-content>
- 
-</mat-dialog-content>
+<h2 mat-dialog-title>Додати {{item}}</h2>
+<app-driver-app-page *ngIf="item === 'Водія'"></app-driver-app-page>
+<app-client-add-page *ngIf="item === 'Клієнта'"></app-client-add-page>
+<app-operator-add-page *ngIf="item === 'Оператора'"></app-operator-add-page>

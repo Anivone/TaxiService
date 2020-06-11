@@ -93,7 +93,7 @@ export class DriverPageComponent implements OnInit {
     console.log(this.getCurrentTime());
     console.log(this.order.orderId);
     this.http.put(environment.baseUrl + `api/orders/driver/acceptance/${this.order.orderId}`,
-      { timeOfAcceptance: `1900-01-01T${this.getCurrentTime()}`}).subscribe(() => {
+      { timeOfAcceptance: this.getCurrentTime() }).subscribe(() => {
         this.isAccepted = true;
         this.initOrder();
         console.log('Time of Acceptance is sent !');
@@ -108,7 +108,7 @@ export class DriverPageComponent implements OnInit {
   completeOrder() {
     console.log(this.getCurrentTime());
     this.http.put(environment.baseUrl + `api/orders/driver/completion/${this.order.orderId}`,
-      { timeOfCompletion: `1900-01-01T${this.getCurrentTime()}` }).subscribe(res => {
+      { timeOfCompletion: this.getCurrentTime() }).subscribe(res => {
         this.isAccepted = true;
         this.initOrder();
         console.log('Time of Completion is sent !');
@@ -121,6 +121,7 @@ export class DriverPageComponent implements OnInit {
       .subscribe(() => {
         console.log('Final Price is set !');
         this.setDriverAvailability(true);
+        this.initOrder();
       });
   }
 

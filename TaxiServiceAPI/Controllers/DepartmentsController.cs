@@ -24,7 +24,7 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet("productive")]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartmentsWithProductiveOperators()
         {
-            return await _context.Departments.FromSqlRaw("SELECT * FROM Departments AS D WHERE D.DepartmentId IN (SELECT O.DepartmentId FROM Operators AS O WHERE O.OperatorId IN (SELECT Ord.OperatorId FROM Orders AS Ord GROUP BY Ord.OperatorId HAVING COUNT(*) >= 3) GROUP BY Ord.DepartmentId HAVING COUNT(*) >= 2)").ToListAsync();
+            return await _context.Departments.FromSqlRaw("SELECT * FROM Departments AS D WHERE D.DepartmentId IN (SELECT O.DepartmentId FROM Operators AS O WHERE O.OperatorId IN (SELECT Ord.OperatorId FROM Orders AS Ord GROUP BY Ord.OperatorId HAVING COUNT(*) >= 3) GROUP BY O.DepartmentId HAVING COUNT(*) >= 2)").ToListAsync();
         }
 
         [HttpGet]

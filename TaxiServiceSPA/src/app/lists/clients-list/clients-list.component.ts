@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { Client } from 'src/interfaces/models/client';
 import { environment } from 'src/environments/environment';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-clients-list',
@@ -24,7 +25,8 @@ export class ClientsListComponent implements OnInit {
     'Actions'
   ];
   clients: MatTableDataSource<Client>;
-  item = 'Client';
+  item = 'Клієнта';
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.getClients();
@@ -35,6 +37,7 @@ export class ClientsListComponent implements OnInit {
       .get<Client[]>(environment.baseUrl + 'api/clients')
       .subscribe((result) => {
         this.clients = new MatTableDataSource<Client>(result);
+        this.clients.paginator = this.paginator;
         console.log(this.clients);
       });
   }

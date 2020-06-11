@@ -1,6 +1,7 @@
 <div fxLayoutAlign="center" class="container">
   <mat-spinner [diameter]="30" *ngIf="isLoading"></mat-spinner>
-  <div *ngIf="!isLoading && empty" class="empty">
+  <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="!isLoading && empty" class="empty container">
+    <mat-icon>info</mat-icon>
     <span class="empty-message">There are currently no orders</span>
   </div>
   <mat-card *ngIf="!isLoading && !empty && order" class="order">
@@ -97,7 +98,7 @@
     <mat-card-actions fxLayoutAlign="center">
       <button *ngIf="!isAccepted && !isCompleted" mat-raised-button color="primary" (click)="acceptOrder()">Прийняти</button>
       <button *ngIf="isAccepted && !isCompleted" mat-raised-button color="primary" (click)="completeOrder()">Завершити</button>
-      <button *ngIf="!isAccepted && isCompleted" mat-raised-button color="primary" (click)="makeOrderPaid()">Оплачено</button>
+      <button *ngIf="isCompleted" mat-raised-button color="primary" (click)="makeOrderPaid()">Оплачено</button>
     </mat-card-actions>
   </mat-card>
 </div>

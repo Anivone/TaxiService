@@ -24,27 +24,27 @@
         </mat-expansion-panel-header>
 
         <mat-card fxLayout="column" class="new-order-info">
-          <mat-card-content fxLayout="column" fxLayoutAlign="space-around" fxLayoutGap="5px" class="new-order-route">
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Відправлення:</div>
+          <mat-card-content fxLayout="column" fxLayoutAlign="space-around" fxLayoutGap="15px" class="new-order-route">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div class="card-header">Відправлення:</div>
               <div class="route-value">
                 {{ order.departurePoint }}
               </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Прибуття:</div>
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div class="card-header">Прибуття:</div>
               <div class="route-value">
                 {{ order.arrivalPoint }}
               </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Призначений час:</div>
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div class="card-header">Призначений час:</div>
               <div class="route-value">
                 {{ getTime(order.appointedTime) }}
               </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-              <div>Тип машини:</div>
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div class="card-header">Тип машини:</div>
               <div class="route-value">
                 {{ order.typeOfCar }}
               </div>

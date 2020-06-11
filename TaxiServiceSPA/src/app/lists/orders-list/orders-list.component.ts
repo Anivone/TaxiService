@@ -17,10 +17,9 @@ export class OrdersListComponent implements OnInit {
 
 
   orders: MatTableDataSource<Order>;
-  item = 'Order';
+  item = 'Замовлення';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild('ordersList') ordersList: ElementRef;
 
   displayedColumns = [
     'Id',

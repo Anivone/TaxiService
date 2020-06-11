@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { Operator } from 'src/interfaces/models/operator';
 import { environment } from 'src/environments/environment';
 import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-operators-list',
@@ -33,7 +34,8 @@ export class OperatorsListComponent implements OnInit {
   ];
 
   operators: MatTableDataSource<Operator>;
-  item = 'Operator';
+  item = 'Оператора';
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.getOperators();
@@ -44,6 +46,7 @@ export class OperatorsListComponent implements OnInit {
       .get<Operator[]>(environment.baseUrl + 'api/operators')
       .subscribe((result) => {
         this.operators = new MatTableDataSource<Operator>(result);
+        this.operators.paginator = this.paginator;
         console.log(result);
       });
   }

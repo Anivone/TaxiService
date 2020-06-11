@@ -9,7 +9,9 @@
       <a mat-icon-button fxLayoutAlign="center center" class="nav-button home-button" routerLink="/home">
         <mat-icon>home</mat-icon>
       </a>
-      <a *ngIf="user.role === 'Operator'" mat-button fxLayoutAlign="center center" class="nav-button report-button" routerLink="home/report">Звіт</a>
+      <a *ngIf="user.role === 'Operator'" mat-icon-button fxLayoutAlign="center center" class="nav-button report-button" routerLink="home/report">
+        <mat-icon>analytics</mat-icon>
+      </a>
     </div>
 
     <button *ngIf="!user.isLoggedIn" mat-raised-button class="login" color="primary" (click)="openDialog()">Увійти</button>

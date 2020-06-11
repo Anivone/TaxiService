@@ -35,6 +35,10 @@ import { LoginComponent } from './login/login.component';
 import { AddButtonComponent } from './lists/add-button/add-button.component';
 import { ReportComponent } from './operator-page/report/report.component';
 import { ProfileService } from './services/profile.service';
+import { DriverAppPageComponent } from './add-page/driver-app-page/driver-app-page.component';
+import { ClientAddPageComponent } from './add-page/client-add-page/client-add-page.component';
+import { OperatorAddPageComponent } from './add-page/operator-add-page/operator-add-page.component';
+import { OperatorActionBarComponent } from './operator-page/operator-action-bar/operator-action-bar.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +62,10 @@ import { ProfileService } from './services/profile.service';
     LoginComponent,
     AddButtonComponent,
     ReportComponent,
+    DriverAppPageComponent,
+    ClientAddPageComponent,
+    OperatorAddPageComponent,
+    OperatorActionBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@
     height: 100%;
     overflow-y: auto;
     left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .side-bar-header {
@@ -37,9 +38,13 @@
 }
 
 .route-value {
-    text-align: right;
+    text-align: center;
 }
 
 .spinner {
     margin-top: 30px;
+}
+
+.card-header {
+    font-weight: 600;
 }

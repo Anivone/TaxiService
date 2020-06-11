@@ -9,7 +9,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet, ActivationStart } from '@angular/router';
 import { User } from 'src/models/user';
 
 @Component({

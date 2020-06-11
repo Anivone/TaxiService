@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Driver } from 'src/interfaces/models/driver';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-drivers-list',
@@ -13,7 +14,8 @@ export class DriversListComponent implements OnInit {
   constructor(public http: HttpClient) {}
 
   drivers: MatTableDataSource<Driver>;
-  item = 'Driver';
+  item = 'Водія';
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns = [
     'Id',
@@ -44,6 +46,7 @@ export class DriversListComponent implements OnInit {
       .get<Driver[]>(environment.baseUrl + 'api/drivers')
       .subscribe((result) => {
         this.drivers = new MatTableDataSource<Driver>(result);
+        this.drivers.paginator = this.paginator;
         console.log(result);
       });
   }

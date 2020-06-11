@@ -1,0 +1,54 @@
+<div class="inner-container">
+  <div mat-dialog-content class="dialog-content">
+    <h3> Персональна інформація </h3>
+    <div class="personal-details" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px"
+      [formGroup]="userForm">
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label>Ім'я</mat-label>
+          <input matInput formControlName="firstName" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label> По-батькові </mat-label>
+          <input matInput formControlName="middleName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Email:</mat-label>
+          <input  matInput [class.is-invalid]="primEmail.invalid && primEmail.touched" 
+            formControlName="primaryEmail" placeholder="Ex.pat@example.com">
+            <mat-error *ngIf="primEmail.errors?.required" >Primary email is required</mat-error>
+            
+            <mat-error *ngIf="primEmail.errors?.pattern" >Please provide a valid email address</mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> Прізвище </mat-label>
+          <input matInput formControlName="lastName" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label> Номер телефону </mat-label>
+          <input matInput formControlName="personalPhone" required>
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Номер кредитної карти </mat-label>
+          <input matInput formControlName="creditCard">
+          <mat-icon matSuffix>credit_card</mat-icon>
+
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+    <button mat-raised-button color="primary" class="submit-btn" mat-dialog-close>Додати</button>
+  </div>
+</div>

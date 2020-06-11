@@ -1,3 +1,6 @@
+<app-operator-side-bar></app-operator-side-bar>
+<app-operator-action-bar></app-operator-action-bar>
+
 <div class="mat-elevation-z8 table-container">
   <table mat-table [dataSource]="phones">
 
@@ -36,3 +39,5 @@
 
   </div>
 </div>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10]"></mat-paginator>

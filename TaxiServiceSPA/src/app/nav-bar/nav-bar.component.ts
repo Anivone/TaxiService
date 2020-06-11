@@ -7,6 +7,7 @@ import { Client } from 'src/interfaces/models/client';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -23,6 +24,7 @@ export class NavBarComponent implements OnInit {
     private dialog: MatDialog,
     private auth: AuthService,
     private http: HttpClient,
+    private router: Router
   ) {
     auth.currentUser.subscribe(user => this.user = user);
   }
@@ -36,6 +38,7 @@ export class NavBarComponent implements OnInit {
   }
 
   logout() {
+    this.router.navigateByUrl(environment.baseUrl + 'home');
     this.auth.logout();
   }
 

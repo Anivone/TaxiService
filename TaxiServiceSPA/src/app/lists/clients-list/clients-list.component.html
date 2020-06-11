@@ -1,3 +1,6 @@
+<app-operator-side-bar></app-operator-side-bar>
+<app-operator-action-bar></app-operator-action-bar>
+
 <div class="mat-elevation-z8 table-container">
   <table mat-table [dataSource]="clients">
     <ng-container matColumnDef="Id">
@@ -60,3 +63,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10]"></mat-paginator>

@@ -1,0 +1,23 @@
+.operator-buttons {
+    position: fixed;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.right-bar-content {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.operator-buttons-header {
+    width: 100%;
+    height: 15%;
+    font-size: 20px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+    width: 75%;
+}

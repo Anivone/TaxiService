@@ -1,0 +1,105 @@
+<div class="inner-container">
+  <div mat-dialog-content class="dialog-content" [formGroup]="operatorForm">
+    <h3>Персональна інформація</h3>
+    <div class="personal-details" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label>Ім'я </mat-label>
+          <input matInput formControlName="firstName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Дата народження </mat-label>
+          <input matInput formControlName="birthDate" [matDatepicker]="BirthDatePicker" (focus)="BirthDatePicker.open()">
+          <mat-datepicker-toggle matSuffix [for]="BirthDatePicker" required></mat-datepicker-toggle>
+          <mat-datepicker #BirthDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> По-батькові </mat-label>
+          <input matInput formControlName="middleName" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Номер телефону </mat-label>
+          <span matPrefix>+380 &nbsp;</span>
+          <input matInput formControlName="personalPhone" required>
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> Прізвище </mat-label>
+          <input matInput formControlName="lastName" required>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <mat-label>Робочий номер телефону </mat-label>
+          <input matInput formControlName="workingPhone" required>
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <h3>Місце проживання</h3>
+
+    <div class="adress-details" fxLayout="row" fxLayoutGap="10px">
+
+      <div fxLayout="column" fxFlex="200.99px" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> Область </mat-label>
+          <input matInput formControlName="region" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label> Будинок </mat-label>
+          <input matInput formControlName="building" required>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="column" fxFlex="200.99px" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> Місто </mat-label>
+          <input matInput formControlName="city" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label> Квартира </mat-label>
+          <input matInput formControlName="flat">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxFlex="200.99px" fxLayoutGap="10px">
+        <mat-form-field>
+          <mat-label> Вулиця </mat-label>
+          <input matInput formControlName="street" required>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+
+    <h3>Зміна</h3>
+
+    <mat-radio-group fxLayout="row" fxLayoutGap="20px">
+      <div>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="08:00 - 20:00"><span>08:00 -
+          20:00</span>
+      </div>
+      <div>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="20:00 - 8:00"> <span>20:00 -
+          8:00</span>
+      </div>
+    </mat-radio-group>
+  </div>
+  <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+    <button mat-raised-button color="primary" class="submit-btn" mat-dialog-close >
+      Додати</button>
+  </div>
+</div>
