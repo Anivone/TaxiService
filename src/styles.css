@@ -18,3 +18,11 @@ body { margin: 0; font-family: Roboto , "Helvetica Neue", sans-serif; }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 .container { padding-right: 15%; padding-left: 15%; }
+
+.timepicker-overlay {
+  z-index: 1100 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 1100 !important;
+}

@@ -33,6 +33,9 @@ import { AgmCoreModule } from '@agm/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LoginComponent } from './login/login.component';
 import { AddButtonComponent } from './lists/add-button/add-button.component';
+import { OperatorAddingFormComponent } from './operator-adding-form/operator-adding-form.component';
+
+import { AddOrderFormComponent } from './add-order-form/add-order-form.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { AddButtonComponent } from './lists/add-button/add-button.component';
     DriverPageComponent,
     LoginComponent,
     AddButtonComponent,
+    OperatorAddingFormComponent,
+    AddOrderFormComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -77,6 +83,7 @@ import { AddButtonComponent } from './lists/add-button/add-button.component';
   entryComponents: [
     DriverListDialogComponent,
     AddPageComponent,
+    OperatorAddingFormComponent,
   ],
 })
 export class AppModule { }

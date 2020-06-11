@@ -19,6 +19,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from "@angular/material/checkbox";
+
+
 
 @NgModule({
   imports: [
@@ -40,7 +45,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatBadgeModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+
   ],
   exports: [
     MatButtonModule,
@@ -61,7 +70,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatBadgeModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
   ]
 })
 export class MaterialModule { }

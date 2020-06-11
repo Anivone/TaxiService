@@ -13,6 +13,8 @@
 
 .directives {
     height: 100%;
+    width: 100%;
+    color: white;
 }
 
 .nav-button {
@@ -32,4 +34,9 @@
 
 .login-button {
     margin-right: 2%;
+}
+.material-icons{
+    color: white;
+    /* color: rgb(243, 170, 13); */
+    font-size: 70px;
 }

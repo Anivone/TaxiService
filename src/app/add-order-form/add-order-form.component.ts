@@ -1,27 +1,19 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-  AfterViewInit,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Order } from 'src/interfaces/models/order';
 import { environment } from 'src/environments/environment';
 import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
 
 @Component({
-  selector: 'app-order-stepper',
-  templateUrl: './order-stepper.component.html',
-  styleUrls: ['./order-stepper.component.css'],
+  selector: 'app-add-order-form',
+  templateUrl: './add-order-form.component.html',
+  styleUrls: ['./add-order-form.component.css']
 })
-export class OrderStepperComponent implements OnInit {
+export class AddOrderFormComponent implements OnInit {
+  orderForm: FormGroup
   finish = false;
-
-  radio: any;
-
+  wayOfPayment: string;
+  ways: string[] = ['Готівка', 'Картка'];
   departurePoint: string;
   arrivalPoint: string;
   typeOfCar: string;
@@ -29,38 +21,23 @@ export class OrderStepperComponent implements OnInit {
   appointedTime: string;
   paymentMethod: string;
   approximatePrice: number;
-
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
-
-  wayOfPayment: string;
-  ways: string[] = ['Cash', 'Credit Card'];
-
   constructor(
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     public http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required],
-      secondCtrl: ['', Validators.required],
+    this.orderForm = this.formBuilder.group({
+      departure: ['', Validators.required],
+      arrival: ['', Validators.required],
+      numberOfKm: [{ value: "", disabled: true }, '', Validators.required],
+      approximatePrice: [{ value: "", disabled: true }, '', Validators.required],
+      appointedTime: ['', Validators.required],
+      carType: ['', Validators.required]
+
     });
 
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-
-    this.thirdFormGroup = this.formBuilder.group({
-      thirdCtrl: ['', Validators.required],
-    });
-    this.fourthFormGroup = this.formBuilder.group({
-      fourthCtrl: ['', Validators.required]
-    });
   }
-
   toggleFinish(): void {
     this.finish = !this.finish;
     this.wayOfPayment = null;
@@ -130,11 +107,10 @@ export class OrderStepperComponent implements OnInit {
   }
 
   createNewOrder() {
-    
     this.toggleFinish();
     console.log('payment: ', this.paymentMethod);
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/orders/new', {
-      wayOfOrder: 'Website',
+      wayOfOrder: 'Телефон',
       clientId: 2,
       departurePoint: this.departurePoint,
       arrivalPoint: this.arrivalPoint,
@@ -144,8 +120,15 @@ export class OrderStepperComponent implements OnInit {
       typeOfCar: this.typeOfCar,
       typeOfPayment: this.paymentMethod,
       approximatePrice: this.approximatePrice
+
     }).subscribe(result => {
       console.log(result);
+
     }, err => console.log(err));
+
+   
   }
+
+
+
 }
