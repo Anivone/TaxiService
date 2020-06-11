@@ -1,4 +1,18 @@
+::ng-deep .mat-dialog-container {
+    overflow-y: scroll !important;
+}
 .add-button {
     width: 100%;
     height: 100%;
+}
+.phones-contaiter{
+    width: 100%;
+}
+mat-form-field{
+      width: 100%;
+
+    /* display: block !important; */
+}
+.input .mat-chip-input{
+    width: 100% !important;
 }

@@ -6,7 +6,7 @@
     <div class="car-info" fxLayout="column"  fxLayoutGap="15px">
         <mat-form-field [formGroup]="carForm">
             <mat-label>VIN код</mat-label>
-            <input matInput formControlName="vinCode">
+            <input matInput formControlName="vinCode" (blur)="setVINcode(carForm.value.vinCode)">
             <mat-icon matSuffix>drive_eta</mat-icon>
         </mat-form-field>
     <mat-form-field >
@@ -18,7 +18,7 @@
     </mat-form-field>
     <mat-form-field [formGroup]="carForm">
         <mat-label>Кількість сидінь</mat-label>
-        <input matInput formControlName="numOfSeats" >
+        <input matInput formControlName="numOfSeats" (blur)="setNumOfSeats(carForm.value.numOfSeats)">
     </mat-form-field>
     </div>
     <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">

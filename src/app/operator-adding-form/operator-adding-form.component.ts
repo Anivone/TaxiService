@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-operator-adding-form',
@@ -8,8 +12,15 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class OperatorAddingFormComponent  implements OnInit{
   operatorForm : FormGroup;
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  phones: string[] = [];
 constructor(
   private formBuilder: FormBuilder,
+  public http : HttpClient,
 
 ){}
 
@@ -30,7 +41,28 @@ ngOnInit(){
   });
   
 }
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our phone
+    if ((value || '').trim()) {
+      this.phones.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+  remove(phone: string): void {
+    const index = this.phones.indexOf(phone);
+
+    if (index >= 0) {
+      this.phones.splice(index, 1);
+    }
+  }
 onSubmit(){
-  console.log(this.operatorForm.value);
+  
 }
 }

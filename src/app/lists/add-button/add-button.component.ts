@@ -20,9 +20,7 @@ export class AddButtonComponent implements OnInit {
   }
 
   openAddPage() {
-    const dialogRef = this.dialog.open(AddCarFormComponent, {
-      // autoFocus: true,
-      // data: this.item
+    const dialogRef = this.dialog.open(OperatorAddingFormComponent, {
 });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed: ');
