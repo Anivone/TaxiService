@@ -3,6 +3,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AddPageComponent } from 'src/app/add-page/add-page.component';
 import { OperatorAddingFormComponent } from 'src/app/operator-adding-form/operator-adding-form.component';
 import { AddOrderFormComponent } from 'src/app/add-order-form/add-order-form.component';
+import { AddCarFormComponent } from 'src/app/add-car-form/add-car-form.component';
 
 @Component({
   selector: 'app-add-button',
@@ -10,7 +11,7 @@ import { AddOrderFormComponent } from 'src/app/add-order-form/add-order-form.com
   styleUrls: ['./add-button.component.css']
 })
 export class AddButtonComponent implements OnInit {
-  // public dialogRef: MatDialogRef<OperatorAddingFormComponent>;
+  // public dialogRef: MatDialogRef<AddCarFormComponent>;
   @Input() public item: string;
 
   constructor(private dialog: MatDialog) { }
@@ -19,7 +20,7 @@ export class AddButtonComponent implements OnInit {
   }
 
   openAddPage() {
-    const dialogRef = this.dialog.open(AddOrderFormComponent, {
+    const dialogRef = this.dialog.open(AddCarFormComponent, {
       // autoFocus: true,
       // data: this.item
 });

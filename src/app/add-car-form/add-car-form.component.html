@@ -1,0 +1,27 @@
+<div class="inner-container">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="center">
+        <h1 mat-dialog-title class="gialog-title">Додати автомобіль</h1>
+    </div>
+
+    <div class="car-info" fxLayout="column"  fxLayoutGap="15px">
+        <mat-form-field [formGroup]="carForm">
+            <mat-label>VIN код</mat-label>
+            <input matInput formControlName="vinCode">
+            <mat-icon matSuffix>drive_eta</mat-icon>
+        </mat-form-field>
+    <mat-form-field >
+        <mat-label>Тип </mat-label>
+        <mat-select [(ngModel)]="carType">
+            <mat-option (blur)="setTypeOfCar(carType)" *ngFor="let type of carTypes" [value]="type">{{type}}</mat-option>
+            
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field [formGroup]="carForm">
+        <mat-label>Кількість сидінь</mat-label>
+        <input matInput formControlName="numOfSeats" >
+    </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+        <button mat-raised-button color="primary" mat-dialog-close (click)="onSubmit()"> Додати</button>
+    </div>
+    </div>

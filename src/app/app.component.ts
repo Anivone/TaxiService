@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OperatorAddingFormComponent } from './operator-adding-form/operator-adding-form.component';
 import { AddOrderFormComponent } from './add-order-form/add-order-form.component';
+import { AddCarFormComponent } from './add-car-form/add-car-form.component';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
 
   Add(): void {
 
-    const dialogRef = this.dialog.open(AddOrderFormComponent, {
+    const dialogRef = this.dialog.open(AddCarFormComponent, {
     });
 
     dialogRef.afterClosed().subscribe(result => {

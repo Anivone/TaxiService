@@ -36,6 +36,7 @@ import { AddButtonComponent } from './lists/add-button/add-button.component';
 import { OperatorAddingFormComponent } from './operator-adding-form/operator-adding-form.component';
 
 import { AddOrderFormComponent } from './add-order-form/add-order-form.component';
+import { AddCarFormComponent } from './add-car-form/add-car-form.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AddOrderFormComponent } from './add-order-form/add-order-form.component
     AddButtonComponent,
     OperatorAddingFormComponent,
     AddOrderFormComponent,
+    AddCarFormComponent,
 
   ],
   imports: [
