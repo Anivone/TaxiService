@@ -50,15 +50,15 @@
       <mat-form-field [style.width.px]=650>
         <mat-label>Номер телефону </mat-label>
         <mat-chip-list #chipList aria-label="Phone selection">
-          <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable"
-            (removed)="remove(phone)">
+          <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable" (removed)="remove(phone)">
             {{phone}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
-          <input [matChipInputFor]="chipList" formControlName="personalPhone" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" class="phone-input">
-
-        </mat-chip-list>
+          <input [matChipInputFor]="chipList" formControlName="personalPhone"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)" class="phone-input" (blur)="isValid()">
+            <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error>
+          </mat-chip-list>
 
         <!-- <span matPrefix>+380 &nbsp;</span>
                 <input matInput formControlName="personalPhone" required>
