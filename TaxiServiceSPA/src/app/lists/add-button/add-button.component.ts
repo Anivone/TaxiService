@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AddPageComponent } from 'src/app/add-page/add-page.component';
 
@@ -11,6 +11,8 @@ export class AddButtonComponent implements OnInit {
   public dialogRef: MatDialogRef<AddPageComponent>;
   @Input() public item: string;
 
+  @Output() public emitter = new EventEmitter();
+
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -19,7 +21,14 @@ export class AddButtonComponent implements OnInit {
   openAddPage() {
     this.dialogRef = this.dialog.open(AddPageComponent, {
       autoFocus: true,
-      data: this.item
+      data: {
+        item: this.item,
+        edit: false
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.emitter.emit('closed');
     });
   }
 }

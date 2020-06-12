@@ -9,7 +9,7 @@
       <a mat-icon-button fxLayoutAlign="center center" class="nav-button home-button" routerLink="/home">
         <mat-icon>home</mat-icon>
       </a>
-      <a *ngIf="user.role === 'Operator'" mat-icon-button fxLayoutAlign="center center" class="nav-button report-button" routerLink="home/report">
+      <a *ngIf="user.role === 'Operator'" mat-icon-button fxLayoutAlign="center center" class="nav-button report-button" routerLink="/report">
         <mat-icon>analytics</mat-icon>
       </a>
     </div>
@@ -23,9 +23,9 @@
         <mat-icon>person</mat-icon>
       </button>
       <mat-menu fxLayout="column" fxLayoutAlign="center center" #menu="matMenu">
-        <div *ngIf="client" mat-menu-item>
+        <!-- <div *ngIf="client" mat-menu-item>
           <a mat-stroked-button>Мої замовлення</a>
-        </div>
+        </div> -->
         <div fxLayout="column" fxLayoutAlign="center center" class="user-menu" mat-menu-item>
 
           <button mat-raised-button color="warn" (click)="logout()">

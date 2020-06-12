@@ -1,0 +1,54 @@
+<div class="inner-container">
+  <div mat-dialog-content class="dialog-content" fxLayout="column" fxLayoutGap="15px">
+    <div class="route route-info" [formGroup]="orderForm" fxLaoyut="row" fxLayoutGap="10px">
+      <mat-form-field>
+        <mat-label>Місце відправлення</mat-label>
+        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="departure"
+          (onAutocompleteSelected)="setDeparture($event)" placeholder="Введіть місце відправлення">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Місце прибуття</mat-label>
+        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="arrival"
+          (onAutocompleteSelected)="setArrival($event)" placeholder="Введіть місце прибуття">
+      </mat-form-field>
+
+    </div>
+    <div class="car-type" [formGroup]="orderForm" fxLayout="row" fxLayoutGap="20px">
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
+          value="Econom" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+        <span>Економ</span></div>
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
+          value="Sedan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+        <span>Седан</span></div>
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
+          value="Business-Sedan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+        <span>Бізнес</span></div>
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
+          value="Minivan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio" value="Minivan">
+        <span>Мінівен</span></div>
+    </div>
+
+    <div class="date-info price-info time-info" fxLayout="row" fxLayoutGap="10px">
+      <div [formGroup]="orderForm">
+        <mat-form-field>
+          <mat-label>Час відправлення</mat-label>
+          <input matInput aria-label="time-picker" [ngxTimepicker]="appointTime" formControlName="appointedTime"
+            (blur)="setAppointedTime(orderForm.value.appointedTime)" [format]="24" readonly />
+          <ngx-material-timepicker class="timePicker" #appointTime></ngx-material-timepicker>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>Тип оплати</mat-label>
+        <mat-select [(ngModel)]="wayOfPayment">
+          <mat-option (blur)="setPaymentMethod(wayOfPayment)" *ngFor="let way of ways" [value]="way">{{way}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+    <button fxLayoutAlign="center center" mat-raised-button color="primary" class="submit-btn" mat-dialog-close
+      (click)="createNewOrder()"> Додати</button>
+  </div>
+</div>

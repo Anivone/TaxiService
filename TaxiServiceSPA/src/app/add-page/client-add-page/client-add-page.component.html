@@ -49,6 +49,7 @@
   </div>
 
   <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
-    <button mat-raised-button color="primary" class="submit-btn" mat-dialog-close>Додати</button>
+    <button fxLayoutAlign="center center" *ngIf="!editClient" mat-raised-button color="primary" class="submit-btn" mat-dialog-close (click)="createClient()">Додати</button>
+    <button fxLayoutAlign="center center" *ngIf="editClient" mat-raised-button color="primary" class="submit-btn" mat-dialog-close (click)="updateClient()">Оновити</button>
   </div>
 </div>

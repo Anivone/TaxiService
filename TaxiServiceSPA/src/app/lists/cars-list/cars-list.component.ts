@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Car } from 'src/interfaces/models/car';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPageComponent } from 'src/app/add-page/add-page.component';
 
 @Component({
   selector: 'app-cars-list',
@@ -11,7 +13,10 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./cars-list.component.css'],
 })
 export class CarsListComponent implements OnInit {
-  constructor(public http: HttpClient) {}
+  constructor(
+    public http: HttpClient,
+    private dialog: MatDialog
+  ) { }
 
   cars: MatTableDataSource<Car>;
   item = 'Автомобіль';
@@ -31,6 +36,17 @@ export class CarsListComponent implements OnInit {
         this.cars.paginator = this.paginator;
         console.log(this.cars);
       });
+  }
+
+  edit(car: Car) {
+    const dialogRef = this.dialog.open(AddPageComponent, {
+      autoFocus: true,
+      data: {
+        item: this.item,
+        car,
+        edit: true
+      }
+    });
   }
 
   onRowClicked(row: any) {

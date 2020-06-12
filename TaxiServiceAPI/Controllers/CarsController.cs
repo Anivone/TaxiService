@@ -27,6 +27,12 @@ namespace TaxiServiceAPI.Controllers
             return await _context.Cars.FromSqlRaw("SELECT * FROM Cars").ToListAsync();
         }
 
+        [HttpGet("available")]
+        public async Task<ActionResult<IEnumerable<Car>>> GetAvailableCars()
+        {
+            return await _context.Cars.FromSqlRaw("SELECT C.CarId, C.NumberOfSeats, C.TypeOfCar FROM Cars AS C LEFT JOIN Drivers AS D ON C.CarId = D.CarId GROUP BY C.CarId, C.NumberOfSeats, C.TypeOfCar HAVING COUNT(*) < 2").ToListAsync();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(string id)
         {

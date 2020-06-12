@@ -4,6 +4,8 @@ import { Driver } from 'src/interfaces/models/driver';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddPageComponent } from 'src/app/add-page/add-page.component';
 
 @Component({
   selector: 'app-drivers-list',
@@ -11,7 +13,10 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./drivers-list.component.css'],
 })
 export class DriversListComponent implements OnInit {
-  constructor(public http: HttpClient) {}
+  constructor(
+    public http: HttpClient,
+    private dialog: MatDialog,
+  ) { }
 
   drivers: MatTableDataSource<Driver>;
   item = 'Водія';
@@ -61,5 +66,18 @@ export class DriversListComponent implements OnInit {
 
   onRowClicked(row: any) {
     console.log('Row clicked: ', row);
+  }
+
+  edit(driver: Driver) {
+    const dialogRef = this.dialog.open(AddPageComponent, {
+      autoFocus: true,
+      data: {
+        item: this.item,
+        driver,
+        edit: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => this.getDrivers());
   }
 }

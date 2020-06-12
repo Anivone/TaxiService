@@ -5,6 +5,8 @@ import { Operator } from 'src/interfaces/models/operator';
 import { environment } from 'src/environments/environment';
 import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPageComponent } from 'src/app/add-page/add-page.component';
 
 @Component({
   selector: 'app-operators-list',
@@ -12,7 +14,10 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./operators-list.component.css'],
 })
 export class OperatorsListComponent implements OnInit {
-  constructor(public http: HttpClient) {}
+  constructor(
+    public http: HttpClient,
+    public dialog: MatDialog
+    ) {}
 
   displayedColumns = [
     'Id',
@@ -63,4 +68,24 @@ export class OperatorsListComponent implements OnInit {
     console.log('Row clicked: ', row);
   }
 
+  edit(operator: Operator) {
+    const dialogRef = this.dialog.open(AddPageComponent, {
+      autoFocus: true,
+      data: {
+        item: this.item,
+        operator,
+        edit: true
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => this.getOperators());
+  }
+
+  delete(operator: Operator) {
+    this.http.delete(environment.baseUrl + `api/operators/${operator.operatorId}`)
+      .subscribe(() => {
+        this.getOperators();
+        console.log('operator deleted');
+      });
+  }
 }

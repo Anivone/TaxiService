@@ -39,6 +39,7 @@ import { DriverAppPageComponent } from './add-page/driver-app-page/driver-app-pa
 import { ClientAddPageComponent } from './add-page/client-add-page/client-add-page.component';
 import { OperatorAddPageComponent } from './add-page/operator-add-page/operator-add-page.component';
 import { OperatorActionBarComponent } from './operator-page/operator-action-bar/operator-action-bar.component';
+import { OrderAddPageComponent } from './add-page/order-add-page/order-add-page.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { OperatorActionBarComponent } from './operator-page/operator-action-bar/
     ClientAddPageComponent,
     OperatorAddPageComponent,
     OperatorActionBarComponent,
+    OrderAddPageComponent,
   ],
   imports: [
     BrowserModule,

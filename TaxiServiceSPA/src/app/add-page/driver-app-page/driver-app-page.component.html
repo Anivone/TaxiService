@@ -1,6 +1,5 @@
-<div class="dialog">
-
-  <mat-dialog-content class="dialog-content" [formGroup]="driverForm">
+<div class="inner-container">
+  <div mat-dialog-content class="dialog-content" [formGroup]="driverForm">
 
     <h3> Персональна інформація</h3>
     <div class="personal-details" fxLayout="row" fxLayoutGap="10px">
@@ -12,9 +11,9 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Дата народження </mat-label>
-          <input matInput formControlName="birthDate" [matDatepicker]="picker" (focus)="picker.open()">
-          <mat-datepicker-toggle matSuffix [for]="picker" required></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput formControlName="birthDate" [matDatepicker]="BirthDatePicker" (focus)="BirthDatePicker.open()">
+          <mat-datepicker-toggle matSuffix [for]="BirthDatePicker" required></mat-datepicker-toggle>
+          <mat-datepicker #BirthDatePicker></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -24,15 +23,12 @@
           <mat-label> По-батькові </mat-label>
           <input matInput formControlName="middleName" required>
         </mat-form-field>
-
-
         <mat-form-field>
-          <mat-label>Номер телефону </mat-label>
-          <input matInput formControlName="personalPhone" required>
-          <mat-icon matSuffix>phone</mat-icon>
+          <mat-label>Відділення</mat-label>
+          <mat-select formControlName="departmentId">
+            <mat-option *ngFor="let department of departments" [value]="department.departmentId">{{department.departmentId}} - {{department.city}}</mat-option>
+          </mat-select>
         </mat-form-field>
-
-
       </div>
 
 
@@ -44,13 +40,29 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Водійське посвідчення</mat-label>
-          <input matInput formControlName="drivingLicense">
-          <mat-icon matSuffix>assignment_ind</mat-icon>
+          <mat-label>Автомобіль</mat-label>
+          <mat-select formControlName="carId">
+            <mat-option *ngFor="let car of cars" [value]="car.carId">{{car.carId}} - {{car.typeOfCar}}</mat-option>
+          </mat-select>
         </mat-form-field>
-
-
       </div>
+    </div>
+    <div class="phones-container">
+      <mat-form-field [style.width.px]=650>
+        <mat-label>Номер телефону </mat-label>
+        <mat-chip-list #chipList aria-label="Phone selection">
+          <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(phone)">
+            {{phone}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" formControlName="personalPhone"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)" class="phone-input">
+    
+        </mat-chip-list>
+    
+      </mat-form-field>
     </div>
 
 
@@ -95,17 +107,20 @@
 
     <mat-radio-group fxLayout="row" fxLayoutGap="20px">
       <div>
-        <input type="radio" formControlName="shiftTime" class="shift-radio"  value="08:00 - 20:00">
-        <span>08:00 - 20:00</span>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="08:00 - 20:00"><span>08:00 -
+          20:00</span>
       </div>
       <div>
-      <input type="radio" formControlName="shiftTime" class="shift-radio"  value="20:00 - 8:00"> <span>20:00 -
-        8:00</span>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="20:00 - 08:00"> <span>20:00 -
+          8:00</span>
       </div>
     </mat-radio-group>
 
-  </mat-dialog-content>
-  <mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
-    <button mat-raised-button color="primary" mat-dialog-close class="submit-btn"> Додати</button>
-  </mat-dialog-actions>
+
+
+  </div>
+  <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+    <button *ngIf="!editDriver" [disabled]="driverForm.invalid" mat-raised-button color="primary" mat-dialog-close (click)="addDriver()">Додати</button>
+    <button *ngIf="editDriver" [disabled]="driverForm.invalid" mat-raised-button color="primary" mat-dialog-close (click)="updateDriver()">Оновити</button>
+  </div>
 </div>
