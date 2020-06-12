@@ -40,6 +40,8 @@ import { AddCarFormComponent } from './add-car-form/add-car-form.component';
 import { DriverAddingFormComponent } from './driver-adding-form/driver-adding-form.component';
 import { UserAddingFormComponent } from './user-adding-form/user-adding-form.component';
 import { PrintButtonComponent } from './lists/print-button/print-button.component';
+import { DriverPhonesComponentComponent } from './driver-phones-component/driver-phones-component.component';
+import { OperatorPhonesComponentComponent } from './operator-phones-component/operator-phones-component.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { PrintButtonComponent } from './lists/print-button/print-button.componen
     DriverAddingFormComponent,
     UserAddingFormComponent,
     PrintButtonComponent,
+    DriverPhonesComponentComponent,
+    OperatorPhonesComponentComponent,
     
   ],
   imports: [

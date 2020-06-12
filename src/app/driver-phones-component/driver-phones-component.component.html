@@ -1,0 +1,30 @@
+<div class="inner-container">
+    <h1 mat-dialog-title class="gialog-title">Редагувати номери водія</h1>
+
+    <div mat-dialog-content class="dialog-content" fxLayout="column" fxLayoutAling="space-between center" [formGroup]="driverPhonesForm">
+    <mat-form-field>
+        <mat-label>Табельний номер водія</mat-label>
+        <input matInput formControlName="tNumber">
+    </mat-form-field>
+       
+    <mat-form-field [style.width.px]=350>
+        <mat-label>Номер телефону </mat-label>
+        <mat-chip-list #chipList aria-label="Phone selection">
+            <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(phone)">
+                {{phone}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" formControlName="personalPhone"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" class="phone-input" (blur)="isValid()">
+            <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error>
+        </mat-chip-list>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+        <button type="submit" [disabled]="driverPhonesForm.invalid" mat-raised-button color="primary" (click)="onSubmit()"
+            class="submit-btn">Додати</button>
+    </div>
+</div>
