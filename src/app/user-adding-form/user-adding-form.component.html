@@ -28,14 +28,14 @@
             E-mail <strong>обов'язковий</strong>
           </mat-error> -->
 
-          <mat-label>Email:</mat-label>
+          <mat-label>E-mail:</mat-label>
           <input  matInput [class.is-invalid]="primEmail.invalid && primEmail.touched" 
-            formControlName="primaryEmail" placeholder="Ex.pat@example.com">
+            formControlName="primaryEmail"  placeholder="Ex.pat@example.com">
 
           <!-- <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty"> -->
-            <mat-error *ngIf="primEmail.errors?.required" >Primary email is required</mat-error>
+            <!-- <mat-error *ngIf="primEmail.errors?.required" >E-mail</mat-error> -->
             
-            <mat-error *ngIf="primEmail.errors?.pattern" >Please provide a valid email address</mat-error>
+            <mat-error *ngIf="primEmail.errors?.pattern" >Введіть коректний e-mail</mat-error>
           <!-- </div> -->
         </mat-form-field>
       </div>
@@ -67,6 +67,6 @@
   </div>
 
   <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
-    <button mat-raised-button color="primary" (click)="onSubmit()" class="submit-btn" mat-dialog-close>Додати</button>
+    <button  type="submit" [disabled]="userForm.invalid" mat-raised-button color="primary" (click)="onSubmit()" class="submit-btn" >Додати</button>
   </div>
 </div>

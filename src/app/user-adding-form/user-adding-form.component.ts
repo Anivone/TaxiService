@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
+import { environment } from 'src/environments/environment';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -21,6 +24,7 @@ export class UserAddingFormComponent implements OnInit {
   userForm: FormGroup;
   constructor(
     private forrmBuilder: FormBuilder,
+    private http: HttpClient
   ) { }
   // emailFormControl = new FormControl('', [
   //   Validators.required,
@@ -28,17 +32,19 @@ export class UserAddingFormComponent implements OnInit {
   // ]);
 
   matcher = new MyErrorStateMatcher();
+  isSubmitted(value: any) {
+    console.log(" is valid: ", value)
+  }
 
   ngOnInit() {
     this.userForm = this.forrmBuilder.group({
 
       firstName: ['', Validators.required],
-      middleName: ['', Validators.required],
+      middleName: [''],
       lastName: ['', Validators.required],
       personalPhone: ['', Validators.required],
-      creditCard: ['', Validators.required],
+      creditCard: [''],
       primaryEmail: new FormControl('', [
-        Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       // emailFormControl: ['', Validators.required, Validators.email],
 
@@ -51,7 +57,18 @@ export class UserAddingFormComponent implements OnInit {
 
   }
   onSubmit() {
-    console.log(this.userForm.value);
+    console.log(this.userForm.valid);
+    this.http.post<NewOrderDto>(environment.baseUrl + 'api/users/new', {
+      firstName: this.userForm.value.firstName,
+      middleName: this.userForm.value.middleName,
+      lastName: this.userForm.value.lastName,
+      personalPhone: this.userForm.value.personalPhone,
+      creditCard: this.userForm.value.creditCard,
+      Email: this.userForm.value.primaryEmail,
+    }).subscribe(result => {
+      console.log("");
+    }), err => console.log(err);
+
   }
 
 }

@@ -118,6 +118,6 @@
 
   </div>
   <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
-    <button mat-raised-button color="primary" mat-dialog-close (click)="onSubmit()"> Додати</button>
+    <button [disabled]="driverForm.invalid" mat-raised-button color="primary" mat-dialog-close (click)="onSubmit()"> Додати</button>
   </div>
 </div>

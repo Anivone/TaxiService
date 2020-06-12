@@ -71,7 +71,7 @@ export class DriverAddingFormComponent implements OnInit {
     }
   }
   onSubmit() {
-    console.log(this.phones[0]);
+    console.log(this.phones);
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/drivers/new', {
       firstName: this.driverForm.value.firstName,
       middleName: this.driverForm.value.middleName,
