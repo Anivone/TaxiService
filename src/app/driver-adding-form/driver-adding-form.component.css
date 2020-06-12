@@ -5,7 +5,7 @@
     margin-bottom: 10px;
 }
 .dialog-content{
-    overflow: hidden;
+    overflow-y: scroll;
 }
 .shift-radio{
     margin-right: 3px;

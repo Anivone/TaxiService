@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder, FormControlName } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
 import { environment } from 'src/environments/environment';
@@ -42,7 +42,7 @@ export class UserAddingFormComponent implements OnInit {
       firstName: ['', Validators.required],
       middleName: [''],
       lastName: ['', Validators.required],
-      personalPhone: ['', Validators.required],
+      personalPhone: (['', Validators.pattern(/^[0-9]{10,10}$/)]),
       creditCard: [''],
       primaryEmail: new FormControl('', [
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),

@@ -49,8 +49,9 @@
 
         <mat-form-field>
           <mat-label> Номер телефону </mat-label>
-          <input matInput formControlName="personalPhone" required>
+          <input [errorStateMatcher]="matcher" matInput formControlName="personalPhone" required>
           <mat-icon matSuffix>phone</mat-icon>
+          <mat-error *ngIf="userForm.get('personalPhone').hasError('pattern')">Введіть коректний номер</mat-error>
         </mat-form-field>
 
         <mat-form-field>

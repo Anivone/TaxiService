@@ -39,6 +39,8 @@ import { AddOrderFormComponent } from './add-order-form/add-order-form.component
 import { AddCarFormComponent } from './add-car-form/add-car-form.component';
 import { DriverAddingFormComponent } from './driver-adding-form/driver-adding-form.component';
 import { UserAddingFormComponent } from './user-adding-form/user-adding-form.component';
+import { PrintButtonComponent } from './lists/print-button/print-button.component';
+import { SignupDialogComponent } from 'src/signup-dialog/signup-dialog.component';
 
 @NgModule({
   declarations: [
@@ -65,8 +67,9 @@ import { UserAddingFormComponent } from './user-adding-form/user-adding-form.com
     AddOrderFormComponent,
     AddCarFormComponent,
     DriverAddingFormComponent,
-    UserAddingFormComponent
-
+    UserAddingFormComponent,
+    PrintButtonComponent,
+    SignupDialogComponent,
   ],
   imports: [
     BrowserModule,

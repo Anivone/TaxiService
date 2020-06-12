@@ -17,13 +17,14 @@ export class DriverAddingFormComponent implements OnInit {
 
   // firstName: string
   // middleNmae: string
-
+  valid = true;
   visible = true;
   selectable = true;
   removable = true;
-  addOnBlur = true;
+  addOnBlur = true; 
+  num: number;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  phones: string[] = [];
+  phones: any[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient
@@ -51,27 +52,46 @@ export class DriverAddingFormComponent implements OnInit {
   }
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
+    const value = event.value;  
 
-    // Add our phone
     if ((value || '').trim()) {
-      this.phones.push(value.trim());
+      this.phones.push(value);
+
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
   }
-  remove(phone: string): void {
+ 
+  remove(phone: any): void {
+
+    
     const index = this.phones.indexOf(phone);
 
     if (index >= 0) {
       this.phones.splice(index, 1);
     }
   }
+
+  isValid(){
+     var reg = /^\d+$/;
+
+    for(let index in this.phones){
+      if(reg.test(this.phones[index]) || this.phones.length == 0){
+        this.valid = true;
+      } else{
+        this.valid = false;
+      }
+    }
+    if(this.phones.length ==0){
+      this.valid = true;
+    }
+  }
   onSubmit() {
-    console.log(this.phones);
+    console.log(this.phones.length);
+    // console.log(this.phones[0] === "string" );
+    // console.log(this.phones);
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/drivers/new', {
       firstName: this.driverForm.value.firstName,
       middleName: this.driverForm.value.middleName,

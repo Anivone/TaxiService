@@ -6,6 +6,7 @@ import { AddOrderFormComponent } from 'src/app/add-order-form/add-order-form.com
 import { AddCarFormComponent } from 'src/app/add-car-form/add-car-form.component';
 import { DriverAddingFormComponent } from 'src/app/driver-adding-form/driver-adding-form.component';
 import { UserAddingFormComponent } from 'src/app/user-adding-form/user-adding-form.component';
+import { SignupDialogComponent } from 'src/signup-dialog/signup-dialog.component';
 
 @Component({
   selector: 'app-add-button',
@@ -22,7 +23,7 @@ export class AddButtonComponent implements OnInit {
   }
 
   openAddPage() {
-    const dialogRef = this.dialog.open(UserAddingFormComponent, {
+    const dialogRef = this.dialog.open(SignupDialogComponent, {
 });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed: ');

@@ -56,8 +56,8 @@
           </mat-chip>
           <input [matChipInputFor]="chipList" formControlName="personalPhone"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="add($event)" class="phone-input">
-    
+            (matChipInputTokenEnd)="add($event)" class="phone-input"  (blur)="isValid()">
+            <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error>
         </mat-chip-list>
     
       </mat-form-field>
@@ -118,6 +118,6 @@
 
   </div>
   <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
-    <button [disabled]="driverForm.invalid" mat-raised-button color="primary" mat-dialog-close (click)="onSubmit()"> Додати</button>
+    <button  mat-raised-button color="primary" mat-dialog-close (click)="onSubmit()"> Додати</button>
   </div>
 </div>
