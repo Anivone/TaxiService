@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { User } from 'src/models/user';
 import { Observable } from 'rxjs';
+import { Client } from 'src/interfaces/models/client';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-order-stepper',
@@ -39,11 +41,15 @@ export class OrderStepperComponent implements OnInit {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
+  fifthFromGroup: FormGroup;
 
   wayOfPayment: string;
   ways: string[] = ['Готівкою', 'Кредитною картою'];
+  childSeatTypes: string[] = ['Потрібно', 'Не потрібно'];
+  childSeat: boolean;
 
   user: User;
+  client: Client;
 
   @ViewChild('stepper') stepper: any;
 
@@ -51,9 +57,15 @@ export class OrderStepperComponent implements OnInit {
     public formBuilder: FormBuilder,
     public http: HttpClient,
     public auth: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private profile: ProfileService
   ) {
-    auth.currentUser.subscribe(user => this.user = user);
+    auth.currentUser.subscribe(user => {
+      this.user = user;
+      if (user.isLoggedIn && user.role === 'Client') {
+        this.profile.getClient().subscribe(res => this.client = res);
+      }
+    });
   }
 
   ngOnInit() {
@@ -71,6 +83,9 @@ export class OrderStepperComponent implements OnInit {
     });
     this.fourthFormGroup = this.formBuilder.group({
       fourthCtrl: ['', Validators.required]
+    });
+    this.fifthFromGroup = this.formBuilder.group({
+      childSeat: ['', Validators.required]
     });
   }
 
@@ -115,6 +130,11 @@ export class OrderStepperComponent implements OnInit {
     this.paymentMethod = way;
   }
 
+  setChildSeat(seat: string) {
+    console.log('Child seat: ', seat);
+    this.childSeat = seat === 'true' ? true : false;
+  }
+
   getDistance(id1: string, id2: string) {
     return new google.maps.DistanceMatrixService().getDistanceMatrix(
       {
@@ -137,7 +157,7 @@ export class OrderStepperComponent implements OnInit {
   getCurrentDate(): string {
     const date = new Date();
     const year = date.getFullYear().toString();
-    const month = date.getMonth().toString().length === 1 ? `0${date.getMonth()}` : `${date.getMonth()}`;
+    const month = (date.getMonth() + 1).toString().length === 1 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
     const day = date.getDate().toString().length === 1 ? `0${date.getDate()}` : `${date.getDate()}`;
 
 
@@ -150,12 +170,13 @@ export class OrderStepperComponent implements OnInit {
     console.log('current date: ', this.getCurrentDate());
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/orders/new', {
       wayOfOrder: 'Website',
-      clientId: 2,
+      clientId: this.client.clientId,
       departurePoint: this.departurePoint,
       arrivalPoint: this.arrivalPoint,
       numberOfKm: this.numberOfKm,
       orderDate: this.getCurrentDate(),
       appointedTime: `1900-01-01T${this.appointedTime}:00`,
+      childSeat: this.childSeat,
       typeOfCar: this.typeOfCar,
       typeOfPayment: this.paymentMethod,
       approximatePrice: this.approximatePrice

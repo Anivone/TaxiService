@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
 using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Controllers
 {
@@ -19,6 +20,12 @@ namespace TaxiServiceAPI.Controllers
         public DepartmentsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("number")]
+        public async Task<ActionResult<IEnumerable<NumberOfOrdersDepartment>>> CountDepartments()
+        {
+            return await _context.NumberOfOrdersDepartments.FromSqlRaw("SELECT COUNT(*) AS Number, D.DepartmentId, D.City FROM (Departments AS D INNER JOIN Operators AS OP ON D.DepartmentId = OP.DepartmentId) INNER JOIN Orders AS O ON OP.OperatorId = O.OperatorId WHERE DATEPART(MONTH, O.OrderDate) = DATEPART(MONTH, GETDATE()) GROUP BY D.DepartmentId, D.City").ToListAsync();
         }
 
         [HttpGet("productive")]

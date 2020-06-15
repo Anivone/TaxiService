@@ -3,4 +3,6 @@ export interface AvailableDrivers {
     firstName: string;
     lastName: string;
     typeOfCar: string;
+    childSeat: boolean;
+    beginning: string;
 }

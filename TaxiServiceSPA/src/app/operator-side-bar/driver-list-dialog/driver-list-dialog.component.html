@@ -12,6 +12,11 @@
         <div>{{ driver.firstName }}</div>
         <div>{{ driver.lastName }}</div>
         <div>{{ driver.typeOfCar }}</div>
+        <div>{{ driver.childSeat ? 'Для дитини' : 'Не для дитини'}}</div>
+        <div>
+          <span *ngIf="getTime(driver.beginning) === '08:00:00'"><mat-icon>wb_sunny</mat-icon></span>
+          <span *ngIf="getTime(driver.beginning) === '20:00:00'">brightness_3</span>
+        </div>
         <button mat-raised-button color="primary" (click)="updateOrderInformation(driver)">Призначити</button>
       </div>
     </mat-card-content>

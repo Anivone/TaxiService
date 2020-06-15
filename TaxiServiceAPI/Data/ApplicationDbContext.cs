@@ -100,6 +100,13 @@ namespace TaxiServiceAPI.Data
             });
             modelBuilder.Entity<DriverPhoneQueryObject>(entity => entity.HasNoKey().ToView(null));
             modelBuilder.Entity<AvailableCar>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<ProductiveDriversQueryObject>(entity =>
+            {
+                entity.HasNoKey().ToView(null);
+                entity.Property(p => p.Salary).HasColumnType("money");
+            });
+            modelBuilder.Entity<NumberOfOrdersDepartment>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<NumberOfOrders>(entity => entity.HasNoKey().ToView(null));
 
         }
 
@@ -117,6 +124,10 @@ namespace TaxiServiceAPI.Data
         public DbSet<OperatorPhoneQueryObject> OperatorQueryPhones { get; set; }
         public DbSet<DriverPhoneQueryObject> DriverQueryPhones { get; set; }
         public DbSet<AvailableCar> AvailableCars { get; set; }
+        public DbSet<ProductiveDriversQueryObject> ProductiveDrivers { get; set; }
+
+        public DbSet<NumberOfOrdersDepartment> NumberOfOrdersDepartments { get; set; }
+        public DbSet<NumberOfOrders> NumberOfOrders { get; set; }
 
     }
 }

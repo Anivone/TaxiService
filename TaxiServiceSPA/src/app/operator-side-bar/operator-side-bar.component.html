@@ -49,6 +49,12 @@
                 {{ order.typeOfCar }}
               </div>
             </div>
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div class="card-header">Дитяче крісло:</div>
+              <div class="route-value">
+                {{ order.childSeat ? "Потрібне" : "Не потрібне" }}
+              </div>
+            </div>
           </mat-card-content>
           <mat-card-actions fxLayoutAlign="center center">
             <button mat-raised-button color="primary" (click)="openDialog(order)">

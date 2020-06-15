@@ -31,13 +31,15 @@ export class NavBarComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {
-    auth.currentUser.subscribe(user => this.user = user);
+    auth.currentUser.subscribe(user => {
+      this.user = user;
+      if (this.user.role === 'Client') { this.getClient(); }
+      if (this.user.role === 'Operator') { this.getOperator(); }
+      if (this.user.role === 'Driver') { this.getDriver(); }
+    });
   }
 
   ngOnInit() {
-    if (this.user.role === 'Client') { this.getClient(); }
-    if (this.user.role === 'Operator') { this.getOperator(); }
-    if (this.user.role === 'Driver') { this.getDriver(); }
   }
 
   openDialog() {

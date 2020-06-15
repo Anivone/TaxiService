@@ -119,6 +119,11 @@ export class DriverPageComponent implements OnInit {
     this.http.put(environment.baseUrl + `api/orders/driver/paid/${this.order.orderId}`,
       { finalPrice: this.finalPrice })
       .subscribe(() => {
+        this.http.put(environment.baseUrl + `api/drivers/salary/${this.driver.driverId}`,
+          { finalPrice: this.driver.salary + this.finalPrice * 0.6 })
+          .subscribe(() => {
+            console.log('Salary has been updated !');
+          });
         console.log('Final Price is set !');
         this.setDriverAvailability(true);
         this.initOrder();

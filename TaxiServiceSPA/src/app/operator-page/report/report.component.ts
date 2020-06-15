@@ -4,6 +4,9 @@ import { Department } from 'src/interfaces/models/department';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Driver } from 'src/interfaces/models/driver';
+import { ProductiveDrivers } from 'src/interfaces/queryObjects/productiveDrivers';
+import { NumberOfOrdersDepartment } from 'src/interfaces/queryObjects/numberOfOrdersDepartment';
+import { NumberOfOrders } from 'src/interfaces/queryObjects/numberOfOrders';
 
 @Component({
   selector: 'app-report',
@@ -11,67 +14,59 @@ import { Driver } from 'src/interfaces/models/driver';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
-  showDepartment = false;
-  showDriver = false;
+  drivers: MatTableDataSource<ProductiveDrivers>;
+  departments: NumberOfOrdersDepartment[];
 
-  departments: MatTableDataSource<Department>;
-
-  drivers: MatTableDataSource<Driver>;
+  numberOfOrders: number;
 
   driverDisplayedColumns = [
     'Id',
-    'Department Id',
-    'Car Id',
+    'Department',
     'Last Name',
     'First Name',
     'Middle Name',
     'Date of Birth',
-    'Region',
-    'City',
-    'Street',
-    'Building',
-    'Flat',
-    'Beginning',
-    'Ending',
     'Salary',
-    'Available'
+    'Shift'
   ];
 
-  departmentDisplayedColumns = ['Department Id', 'City'];
   constructor(
     private http: HttpClient
   ) { }
 
   ngOnInit() {
-    this.getDepartments();
+    this.getNumberOfOrders();
     this.getDrivers();
-  }
-
-  getDepartments() {
-    this.http
-      .get<Department[]>(environment.baseUrl + 'api/departments/productive')
-      .subscribe((result) => {
-        this.departments = new MatTableDataSource<Department>(result);
-        console.log(this.departments);
-      });
+    this.getDepartmentsNumberOfOrders();
   }
 
   getDrivers() {
-    this.http.get<Driver[]>(environment.baseUrl + 'api/drivers/productive')
+    this.http.get<ProductiveDrivers[]>(environment.baseUrl + 'api/drivers/productive')
       .subscribe(result => {
-        this.drivers = new MatTableDataSource<Driver>(result);
+        console.log(result);
+        this.drivers = new MatTableDataSource<ProductiveDrivers>(result);
         console.log(this.drivers);
       });
   }
 
-  showDeparments() {
-    this.showDepartment = true;
-    this.showDriver = false;
+  getDepartmentsNumberOfOrders() {
+    this.http.get<NumberOfOrdersDepartment[]>(environment.baseUrl + 'api/departments/number')
+      .subscribe(result => {
+        console.log(result);
+        this.departments = result;
+        console.log(this.drivers);
+      });
   }
 
-  showDrivers() {
-    this.showDepartment = false;
-    this.showDriver = true;
+  getNumberOfOrders() {
+    this.http.get<NumberOfOrders>(environment.baseUrl + 'api/orders/count')
+    .subscribe(res => {
+      this.numberOfOrders = res.number;
+    });
+  }
+
+  countPercent(department: NumberOfOrdersDepartment) {
+    return (department.number / this.numberOfOrders * 100).toPrecision(3);
   }
 
   getTime(dt: string) {

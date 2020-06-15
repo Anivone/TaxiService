@@ -23,10 +23,17 @@ namespace TaxiServiceAPI.Controllers
             _context = context;
         }
 
+
         [HttpGet("new")]
         public async Task<ActionResult<IEnumerable<Order>>> GetNewOrders()
         {
             return await _context.Orders.FromSqlRaw("SELECT * FROM Orders WHERE OperatorId IS NULL").ToListAsync();
+        }
+
+        [HttpGet("count")]
+        public async Task<ActionResult<NumberOfOrders>> CountOrders()
+        {
+            return await _context.NumberOfOrders.FromSqlRaw("SELECT COUNT(*) AS Number FROM Orders").FirstOrDefaultAsync();
         }
 
         #region CRUD
@@ -207,7 +214,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({order.WayOfOrder}, {order.OperatorId}, {order.DriverId}, {order.ClientId}, {order.DeparturePoint}, {order.ArrivalPoint}, {order.NumberOfKm}, {order.ApproximatePrice}, {order.OrderDate}, {order.AppointedTime}, {order.ChildSeat} {order.TypeOfCar}, {order.TimeOfAcceptance}, {order.TimeOfCompletion}, {order.TypeOfPayment}, {order.FinalPrice})");
+                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({order.WayOfOrder}, {order.OperatorId}, {order.DriverId}, {order.ClientId}, {order.DeparturePoint}, {order.ArrivalPoint}, {order.NumberOfKm}, {order.ApproximatePrice}, {order.OrderDate}, {order.AppointedTime}, {order.ChildSeat}, {order.TypeOfCar}, {order.TimeOfAcceptance}, {order.TimeOfCompletion}, {order.TypeOfPayment}, {order.FinalPrice})");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
@@ -217,7 +224,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Order>> PostNewOrder(NewOrderDto orderDto)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({orderDto.WayOfOrder}, NULL, NULL, {orderDto.ClientId}, {orderDto.DeparturePoint}, {orderDto.ArrivalPoint}, {orderDto.NumberOfKm}, {orderDto.ApproximatePrice}, {orderDto.OrderDate}, {orderDto.AppointedTime}, {orderDto.ChildSeat} {orderDto.TypeOfCar}, NULL, NULL, {orderDto.TypeOfPayment}, NULL)");
+                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({orderDto.WayOfOrder}, NULL, NULL, {orderDto.ClientId}, {orderDto.DeparturePoint}, {orderDto.ArrivalPoint}, {orderDto.NumberOfKm}, {orderDto.ApproximatePrice}, {orderDto.OrderDate}, {orderDto.AppointedTime}, {orderDto.ChildSeat}, {orderDto.TypeOfCar}, NULL, NULL, {orderDto.TypeOfPayment}, NULL)");
             await _context.SaveChangesAsync();
 
             return StatusCode(201);

@@ -20,9 +20,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    children: [
-
-    ],
   },
   { path: 'clients-list', component: ClientsListComponent, pathMatch: 'full' },
   { path: 'operators-list', component: OperatorsListComponent, pathMatch: 'full' },

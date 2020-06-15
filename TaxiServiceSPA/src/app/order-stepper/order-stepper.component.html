@@ -46,6 +46,22 @@
     </form>
   </mat-step>
 
+  <mat-step editable="false" [stepControl]="fifthFromGroup">
+    <ng-template matStepLabel>Дитяче сидіння</ng-template>
+    <mat-form-field [formGroup]="fifthFromGroup" fxLayoutAlign="center center">
+      <mat-select formControlName="childSeat">
+        <mat-option *ngFor="let childSeat of childSeatTypes" [value]="childSeat">
+          {{ childSeat }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div fxLayoutAlign="center center">
+      <button mat-button matStepperNext (click)="setChildSeat(fifthFromGroup.value.childSeat)">
+        Далі
+      </button>
+    </div> 
+  </mat-step>
+
   <mat-step editable="false" [stepControl]="fourthFormGroup">
     <ng-template matStepLabel>Призначте час</ng-template>
     <form [formGroup]="fourthFormGroup" fxLayoutAlign="center center">

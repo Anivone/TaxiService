@@ -54,4 +54,11 @@ export class DriverListDialogComponent implements OnInit {
     this.http.put(environment.baseUrl + `api/drivers/available/${driver.driverId}`, { available })
       .subscribe(() => console.log('Availability status has been updated !'));
   }
+
+  getTime(dt: string) {
+    if (dt) {
+      return dt.substr(11);
+    }
+    return dt;
+  }
 }

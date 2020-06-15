@@ -1,8 +1,21 @@
-.mat-header-cell {
-    padding-right: 20px;
+.root-container {
+    width: 1300px;
 }
 
-.mat-cell {
+.root-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+}
+
+.productive-drivers {
+    width: 60%;
+}
+
+.department-popularity {
+    width: 40%;
+}
+
+.mat-header-cell, .mat-cell{
     padding-right: 20px;
 }
 
@@ -11,23 +24,6 @@
     padding-left: 5px;
 }
 
-.mat-cell.action-column {
-    border-left: solid 1px rgba(0, 0, 0, 0.2);
-}
-
-.add-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.drivers-table {
-    width: 1000px;
-    overflow-x: scroll;
-}
-
-.report-header {
-    width: 300px;
-    height: 150px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
+.department-name {
+    font-size: 18px;
 }

@@ -23,22 +23,27 @@ namespace TaxiServiceAPI.Controllers
             _context = context;
         }
 
+
+
+        [HttpGet("productive")]
+        public async Task<ActionResult<IEnumerable<ProductiveDriversQueryObject>>> GetProductiveDrivers()
+        {
+            return await _context.ProductiveDrivers.FromSqlRaw("SELECT TOP 10 DR.DriverId, D.City, DR.LastName, DR.FirstName, DR.MiddleName, DR.DateOfBirth, DR.Salary, DR.Beginning FROM Drivers AS DR INNER JOIN Departments AS D ON DR.DepartmentId = D.DepartmentId ORDER BY Salary DESC").ToListAsync();
+        }
+
+
+
+
         [HttpGet("recent")]
         public async Task<ActionResult<StaffDriver>> GetRecentDriver()
         {
             return await _context.Drivers.FromSqlRaw("SELECT * FROM Drivers WHERE DriverId = (SELECT MAX(DriverId) FROM Drivers)").FirstOrDefaultAsync();
         }
 
-        [HttpGet("productive")]
-        public async Task<ActionResult<IEnumerable<StaffDriver>>> GetProductiveDrivers()
-        {
-            return await _context.Drivers.FromSqlRaw("SELECT * FROM Drivers AS D WHERE D.DriverId IN (SELECT O1.DriverId FROM Orders AS O1 INNER JOIN Orders AS O2 ON O1.DriverId = O2.DriverId WHERE O1.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O2.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O1.ClientId <> O2.ClientId)").ToListAsync();
-        }
-
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<DriverCarQueryObject>>> GetAvailableDrivers()
         {
-            return await _context.DriverCarQueryObjects.FromSqlRaw("SELECT D.DriverId, D.FirstName, D.LastName, C.TypeOfCar FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId WHERE Available = 'true';").ToListAsync();
+            return await _context.DriverCarQueryObjects.FromSqlRaw("SELECT D.DriverId, D.FirstName, D.LastName, C.TypeOfCar, C.ChildSeat, D.Beginning FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId WHERE Available = 'true';").ToListAsync();
         }
 
         [HttpPost("phone")]
@@ -57,6 +62,30 @@ namespace TaxiServiceAPI.Controllers
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
                 $"UPDATE Drivers SET Available = {available.Available} WHERE DriverId = {id}");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DriverExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("salary/{id}")]
+        public async Task<IActionResult> UpdateDriverSalary(int id, FinalPriceDto price)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"UPDATE Drivers SET Salary = { price.FinalPrice } WHERE DriverId = {id}");
             try
             {
                 await _context.SaveChangesAsync();
