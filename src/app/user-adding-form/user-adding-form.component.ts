@@ -9,7 +9,9 @@ import { environment } from 'src/environments/environment';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted) && (invalidCtrl || invalidParent));
   }
 }
 @Component({
@@ -26,15 +28,12 @@ export class UserAddingFormComponent implements OnInit {
     private forrmBuilder: FormBuilder,
     private http: HttpClient
   ) { }
-  // emailFormControl = new FormControl('', [
-  //   Validators.required,
-  //   Validators.email,
-  // ]);
-
+ 
   matcher = new MyErrorStateMatcher();
-  isSubmitted(value: any) {
-    console.log(" is valid: ", value)
-  }
+
+  // isSubmitted(value: any) {
+  //   console.log(" is valid: ", value)
+  // }
 
   ngOnInit() {
     this.userForm = this.forrmBuilder.group({

@@ -5,10 +5,14 @@
         [formGroup]="operatorPhonesForm">
         <mat-form-field>
             <mat-label>Табельний номер оператора</mat-label>
-            <input matInput formControlName="tNumber">
+            <mat-select formControlName="tNumber">
+                <mat-option *ngFor="let operator of operators" [value]="operator.operatorId">
+                    {{ operator.operatorId }} - {{ operator.lastName }} {{ operator.firstName }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
 
-        <mat-form-field [style.width.px]=350>
+        <!-- <mat-form-field [style.width.px]=350>
             <mat-label>Номер телефону </mat-label>
             <mat-chip-list #chipList aria-label="Phone selection">
                 <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable"
@@ -21,7 +25,14 @@
                     (matChipInputTokenEnd)="add($event)" class="phone-input" (blur)="isValid()">
                 <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error>
             </mat-chip-list>
-        </mat-form-field>
+        </mat-form-field> -->
+        <mat-form-field [style.width.px]=350>
+            <mat-label>Номер телефону </mat-label>
+            <!-- <mat-form-field> -->
+            <input matInput formControlName="personalPhone">
+            <mat-error *ngIf="operatorPhonesForm.get('personalPhone').hasError('pattern')">Введіть коректний номер
+            </mat-error>
+            </mat-form-field>
     </div>
 
     <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">

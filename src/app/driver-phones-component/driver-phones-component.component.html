@@ -4,22 +4,32 @@
     <div mat-dialog-content class="dialog-content" fxLayout="column" fxLayoutAling="space-between center" [formGroup]="driverPhonesForm">
     <mat-form-field>
         <mat-label>Табельний номер водія</mat-label>
-        <input matInput formControlName="tNumber">
+    <mat-select formControlName="tNumber">
+        <mat-option *ngFor="let driver of drivers" [value]="driver.driverId">
+            {{ driver.driverId }} - {{ driver.lastName }} {{ driver.firstName }}
+        </mat-option>
+    </mat-select>
     </mat-form-field>
        
     <mat-form-field [style.width.px]=350>
         <mat-label>Номер телефону </mat-label>
-        <mat-chip-list #chipList aria-label="Phone selection">
+        <!-- <mat-form-field> -->
+            <input matInput formControlName="personalPhone">
+            <mat-error *ngIf="driverPhonesForm.get('personalPhone').hasError('pattern')">Введіть коректний номер
+            </mat-error>
+        <!-- </mat-form-field> -->
+        <!-- <mat-chip-list #chipList aria-label="Phone selection">
             <mat-chip *ngFor="let phone of phones" [selectable]="selectable" [removable]="removable"
                 (removed)="remove(phone)">
                 {{phone}}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input [matChipInputFor]="chipList" formControlName="personalPhone"
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon> -->
+
+            <!-- </mat-chip> -->
+            <!-- <input [matChipInputFor]="chipList" formControlName="personalPhone"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                (matChipInputTokenEnd)="add($event)" class="phone-input" (blur)="isValid()">
-            <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error>
-        </mat-chip-list>
+                (matChipInputTokenEnd)="add($event)" class="phone-input" (blur)="isValid()"> -->
+            <!-- <mat-error *ngIf="!valid"> Введіть коректний номер телефону</mat-error> -->
+        <!-- </mat-chip-list> -->
         </mat-form-field>
     </div>
 

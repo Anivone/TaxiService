@@ -6,8 +6,9 @@ import { AddOrderFormComponent } from 'src/app/add-order-form/add-order-form.com
 import { AddCarFormComponent } from 'src/app/add-car-form/add-car-form.component';
 import { DriverAddingFormComponent } from 'src/app/driver-adding-form/driver-adding-form.component';
 import { UserAddingFormComponent } from 'src/app/user-adding-form/user-adding-form.component';
-import { DriverPhonesComponentComponent } from 'src/app/driver-phones-component/driver-phones-component.component';
 import { OperatorPhonesComponentComponent } from 'src/app/operator-phones-component/operator-phones-component.component';
+import { SignUpFormComponent } from 'src/app/sign-up-form/sign-up-form.component';
+import { DriverPhonesComponentComponent } from 'src/app/driver-phones-component/driver-phones-component.component';
 
 @Component({
   selector: 'app-add-button',

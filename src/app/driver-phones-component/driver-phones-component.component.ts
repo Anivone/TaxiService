@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { DriverPhones } from 'src/interfaces/models/driver-phones';
+import { Driver } from 'src/interfaces/models/driver';
 @Component({
   selector: 'app-driver-phones-component',
   templateUrl: './driver-phones-component.component.html',
@@ -22,7 +23,8 @@ export class DriverPhonesComponentComponent implements OnInit {
   addOnBlur = true;
   num: number;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  phones: any[] = [];
+  // phones: any[] = [];
+  public drivers: Driver[];
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient
@@ -32,58 +34,63 @@ export class DriverPhonesComponentComponent implements OnInit {
   ngOnInit() {
     this.driverPhonesForm = this.formBuilder.group({
       tNumber: ['', Validators.required],
-      personalPhone: ['',Validators.required]
+      personalPhone: [null, [Validators.required, Validators.pattern("^[0-9]{10,10}$")]]
 
 
     });
-
+    this.http.get<Driver[]>(environment.baseUrl + 'api/drivers')
+    .subscribe(result => {
+      this.drivers = result;
+    });
 
   }
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
 
-    if ((value || '').trim()) {
-      this.phones.push(value);
+  
+  // add(event: MatChipInputEvent): void {
+  //   const input = event.input;
+  //   const value = event.value;
 
-    }
+  //   if ((value || '').trim()) {
+  //     this.phones.push(value);
 
-    if (input) {
-      input.value = '';
-    }
-  }
+  //   }
 
-  remove(phone: any): void {
+  //   if (input) {
+  //     input.value = '';
+  //   }
+  // }
+
+  // remove(phone: any): void {
 
 
-    const index = this.phones.indexOf(phone);
+  //   const index = this.phones.indexOf(phone);
 
-    if (index >= 0) {
-      this.phones.splice(index, 1);
-    }
-  }
+  //   if (index >= 0) {
+  //     this.phones.splice(index, 1);
+  //   }
+  // }
 
-  isValid() {
-    var reg = /^\d+$/;
+  // isValid() {
+  //   var reg = /^\d+$/;
 
-    for (let index in this.phones) {
-      if (reg.test(this.phones[index]) || this.phones.length == 0) {
-        this.valid = true;
-      } else {
-        this.valid = false;
-      }
-    }
-    if (this.phones.length == 0) {
-      this.valid = true;
-    }
-  }
+  //   for (let index in this.phones) {
+  //     if (reg.test(this.phones[index]) || this.phones.length == 0) {
+  //       this.valid = true;
+  //     } else {
+  //       this.valid = false;
+  //     }
+  //   }
+  //   if (this.phones.length == 0) {
+  //     this.valid = true;
+  //   }
+  // }
   onSubmit() {
-    console.log(this.phones.length);
+    // console.log(this.phones.length);
     // console.log(this.phones[0] === "string" );
     // console.log(this.phones);
     this.http.post<DriverPhones>(environment.baseUrl + 'api/driversPhones/new', {
       driverId: this.driverPhonesForm.value.tNumber,
-      phoneNumber: this.phones
+      phoneNumber: this.driverPhonesForm.value.personalPhone
 
 
     }).subscribe(result => {

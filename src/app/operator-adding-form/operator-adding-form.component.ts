@@ -41,6 +41,7 @@ export class OperatorAddingFormComponent implements OnInit {
       shiftTime: ['', Validators.required],
     });
 
+    
   } add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;

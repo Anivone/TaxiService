@@ -1,0 +1,29 @@
+  ::ng-deep .mat-dialog-container {
+    height: 440px !important;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+.mat-icon{
+    cursor: pointer;
+}
+.inner-container{
+    height: 100%;
+}
+.submit-container{
+    /* height: 50px; */
+    margin-bottom: 0;
+}
+.submit-btn{
+
+    /* margin-top: 5px; */
+    height: 45px;
+    margin-bottom: 10px;
+}
+.dialog-content{
+    overflow-y: hidden;
+    /* height: 72%; */
+}
+ /* ::ng-deep .mat-error{
+    overflow-y: scroll;
+}  */
