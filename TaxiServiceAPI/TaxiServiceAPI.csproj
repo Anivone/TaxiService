@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200507092031_RequiredCarId.cs" />
-    <Compile Remove="Migrations\20200507092031_RequiredCarId.Designer.cs" />
+    <Compile Remove="Migrations\20200614190437_Init.cs" />
+    <Compile Remove="Migrations\20200614190437_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

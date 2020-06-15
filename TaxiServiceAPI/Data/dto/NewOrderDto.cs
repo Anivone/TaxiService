@@ -15,6 +15,7 @@ namespace TaxiServiceAPI.Data.dto
         public string OrderDate { get; set; }
         public DateTime AppointedTime { get; set; }
         public string TypeOfCar { get; set; }
+        public bool ChildSeat { get; set; }
         public string TypeOfPayment { get; set; }
         public double ApproximatePrice { get; set; }
 

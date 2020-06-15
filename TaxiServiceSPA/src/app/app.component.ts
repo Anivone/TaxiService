@@ -30,11 +30,4 @@ export class AppComponent implements OnInit {
     const timeLeft = token.exp * 1000 - Date.now();
     console.log('time left: ', timeLeft);
   }
-
-  getImage() {
-    if (this.user.role === 'Operator') { return 'url("../assets/img/5.jpg")'; }
-    else {
-      return 'none';
-    }
-  }
 }

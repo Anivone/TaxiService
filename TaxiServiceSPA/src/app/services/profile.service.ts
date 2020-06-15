@@ -13,19 +13,22 @@ import { AuthService } from './auth.service';
 export class ProfileService {
   public user: User;
   constructor(
-    private http: HttpClient) {
-  }
+    private auth: AuthService,
+    private http: HttpClient
+    ) {
+      auth.currentUser.subscribe(user => this.user = user);
+    }
 
   public getClient() {
-    return this.http.post<Client>(environment.baseUrl + 'api/clients/phone', { phone: '0979623717' });
+    return this.http.post<Client>(environment.baseUrl + 'api/clients/phone', { phone: this.user.username });
   }
 
   public getOperator() {
-    return this.http.post<Operator>(environment.baseUrl + 'api/operators/phone', { phone: '0979623717' });
+    return this.http.post<Operator>(environment.baseUrl + 'api/operators/phone', { phone: this.user.username });
   }
 
   public getDriver() {
-    return this.http.post<Driver>(environment.baseUrl + 'api/drivers/phone', { phone: '0979623717' });
+    return this.http.post<Driver>(environment.baseUrl + 'api/drivers/phone', { phone: this.user.username });
   }
 
 }

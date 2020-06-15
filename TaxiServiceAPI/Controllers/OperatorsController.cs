@@ -42,6 +42,12 @@ namespace TaxiServiceAPI.Controllers
             return staffOperator;
         }
 
+        [HttpGet("recent")]
+        public async Task<ActionResult<StaffOperator>> GetRecentOperator()
+        {
+            return await _context.Operators.FromSqlRaw("SELECT * FROM Operators WHERE OperatorId = (SELECT MAX(OperatorId) FROM Operators)").FirstOrDefaultAsync();
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOperator(int id, StaffOperator staffOperator)
         {

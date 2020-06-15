@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
 using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Controllers
 {
@@ -22,9 +23,9 @@ namespace TaxiServiceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DriverPhones>>> GetDriverPhones()
+        public async Task<ActionResult<IEnumerable<DriverPhoneQueryObject>>> GetDriverPhones()
         {
-            return await _context.DriverPhones.FromSqlRaw("SELECT * FROM DriverPhones").ToListAsync();
+            return await _context.DriverQueryPhones.FromSqlRaw("SELECT DP.PhoneNumber, DP.DriverId, D.FirstName, D.LastName, D.DateOfBirth FROM DriverPhones AS DP INNER JOIN Drivers AS D ON DP.DriverId = D.DriverId").ToListAsync();
         }
 
         [HttpGet("{id}")]

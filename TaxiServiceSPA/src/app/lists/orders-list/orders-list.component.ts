@@ -33,6 +33,7 @@ export class OrdersListComponent implements OnInit {
     'Approximate Price',
     'Order Date',
     'Appointed Time',
+    'Child Seat',
     'Type of Car',
     'Time of Acceptance',
     'Time of Completion',

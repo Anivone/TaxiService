@@ -21,7 +21,7 @@ export class CarsListComponent implements OnInit {
   cars: MatTableDataSource<Car>;
   item = 'Автомобіль';
 
-  displayedColumns = ['Car Id', 'Type of Car', 'Number of Seats', 'Actions'];
+  displayedColumns = ['Car Id', 'Type of Car', 'Number of Seats', 'Child Seat', 'Actions'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
@@ -47,9 +47,14 @@ export class CarsListComponent implements OnInit {
         edit: true
       }
     });
+    dialogRef.afterClosed().subscribe(() => this.getCars());
   }
 
-  onRowClicked(row: any) {
-    console.log('Row clicked: ', row);
+  delete(car: Car) {
+    this.http.delete(environment.baseUrl + `api/cars/${car.carId}`)
+      .subscribe(() => {
+        this.getCars();
+        console.log('car deleted');
+      });
   }
 }

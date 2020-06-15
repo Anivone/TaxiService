@@ -80,4 +80,12 @@ export class DriversListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => this.getDrivers());
   }
+
+  delete(driver: Driver) {
+    this.http.delete(environment.baseUrl + `api/drivers/${driver.driverId}`)
+      .subscribe(() => {
+        this.getDrivers();
+        console.log('driver deleted');
+      });
+  }
 }

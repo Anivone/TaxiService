@@ -9,6 +9,7 @@ import { Driver } from 'src/interfaces/models/driver';
 import { Car } from 'src/interfaces/models/car';
 import { Department } from 'src/interfaces/models/department';
 import { DriverPhones } from 'src/interfaces/models/driver-phones';
+import { UserToRegister } from 'src/interfaces/models/userToRegister';
 
 @Component({
   selector: 'app-driver-app-page',
@@ -62,17 +63,19 @@ export class DriverAppPageComponent implements OnInit {
         this.departments = result;
       });
 
-    this.driverForm.controls.firstName.setValue(this.editDriver.firstName);
-    this.driverForm.controls.lastName.setValue(this.editDriver.lastName);
-    this.driverForm.controls.middleName.setValue(this.editDriver.middleName);
-    this.driverForm.controls.carId.setValue(this.editDriver.carId);
-    this.driverForm.controls.departmentId.setValue(this.editDriver.departmentId);
-    this.driverForm.controls.birthDate.setValue(this.editDriver.dateOfBirth);
-    this.driverForm.controls.region.setValue(this.editDriver.region);
-    this.driverForm.controls.city.setValue(this.editDriver.city);
-    this.driverForm.controls.building.setValue(this.editDriver.building);
-    this.driverForm.controls.street.setValue(this.editDriver.street);
-    this.driverForm.controls.flat.setValue(this.editDriver.flat);
+    if (this.editDriver) {
+      this.driverForm.controls.firstName.setValue(this.editDriver.firstName);
+      this.driverForm.controls.lastName.setValue(this.editDriver.lastName);
+      this.driverForm.controls.middleName.setValue(this.editDriver.middleName);
+      this.driverForm.controls.carId.setValue(this.editDriver.carId);
+      this.driverForm.controls.departmentId.setValue(this.editDriver.departmentId);
+      this.driverForm.controls.birthDate.setValue(this.editDriver.dateOfBirth);
+      this.driverForm.controls.region.setValue(this.editDriver.region);
+      this.driverForm.controls.city.setValue(this.editDriver.city);
+      this.driverForm.controls.building.setValue(this.editDriver.building);
+      this.driverForm.controls.street.setValue(this.editDriver.street);
+      this.driverForm.controls.flat.setValue(this.editDriver.flat);
+    }
   }
 
   add(event: MatChipInputEvent): void {
@@ -120,13 +123,16 @@ export class DriverAppPageComponent implements OnInit {
       salary: (shift.substr(0, 5) === '08:00') ? 0 : 2500
     }).subscribe(result => {
       console.log(result);
-      this.phones.forEach(e => {
-        this.http.post<DriverPhones>(environment.baseUrl + 'api/driver-phones-list', {
-          phoneNumber: e,
-          driverId: result.driverId
+      this.http.get<Driver>(environment.baseUrl + 'api/drivers/recent')
+        .subscribe(driver => {
+          this.phones.forEach(phone => {
+            this.http.post<DriverPhones>(environment.baseUrl + 'api/driverphones', {
+              phoneNumber: phone,
+              driverId: driver.driverId
+            }).subscribe(res => console.log(res));
+          });
         });
-      });
-    }, err => console.log(err));
+    });
   }
 
   updateDriver() {
@@ -153,13 +159,16 @@ export class DriverAppPageComponent implements OnInit {
       salary: (shift.substr(0, 5) === '08:00') ? 0 : 2500
     }).subscribe(result => {
       console.log(result);
-      this.phones.forEach(e => {
-        this.http.post<DriverPhones>(environment.baseUrl + 'api/driver-phones-list', {
-          phoneNumber: e,
-          driverId: result.driverId
+      this.http.get<Driver>(environment.baseUrl + 'api/drivers/recent')
+        .subscribe(driver => {
+          this.phones.forEach(phone => {
+            this.http.post<DriverPhones>(environment.baseUrl + 'api/driverphones', {
+              phoneNumber: phone,
+              driverId: driver.driverId
+            }).subscribe(res => console.log(res));
+          });
         });
-      });
-    }, err => console.log(err));
+    });
 
   }
 }

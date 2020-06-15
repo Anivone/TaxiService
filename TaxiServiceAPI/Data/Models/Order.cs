@@ -11,6 +11,7 @@ namespace TaxiServiceAPI.Data.Models
         [StringLength(15)]
         public string WayOfOrder { get; set; }
         public int? OperatorId { get; set; }
+
         public int? DriverId { get; set; }
 
         public int ClientId { get; set; }
@@ -29,6 +30,9 @@ namespace TaxiServiceAPI.Data.Models
 
         [DataType(DataType.DateTime)]
         public DateTime? AppointedTime { get; set; }
+
+        [Required]
+        public bool ChildSeat { get; set; }
 
         [StringLength(15)]
         public string TypeOfCar { get; set; }

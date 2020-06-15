@@ -70,7 +70,7 @@ namespace TaxiServiceAPI.Data
                 e.HasKey(p => p.CarId);
                 e.Property(p => p.CarId).ValueGeneratedNever();
                 e.HasMany<StaffDriver>().WithOne().
-                    HasForeignKey(d => d.CarId).OnDelete(DeleteBehavior.SetNull);
+                    HasForeignKey(d => d.CarId).OnDelete(DeleteBehavior.NoAction);
                 e.ToTable("Cars");
             });
 
@@ -88,12 +88,19 @@ namespace TaxiServiceAPI.Data
                 e.ToTable("Orders");
             });
 
-            modelBuilder.Entity<DriverCarQueryObject>(entity => entity.HasNoKey());
+            modelBuilder.Entity<DriverCarQueryObject>(entity => entity.HasNoKey().ToView(null));
             modelBuilder.Entity<DriverReceivedOrder>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasNoKey().ToView(null);
                 entity.Property(p => p.ApproximatePrice).HasColumnType("money");
             });
+            modelBuilder.Entity<OperatorPhoneQueryObject>(entity =>
+            {
+                entity.HasNoKey().ToView(null);
+            });
+            modelBuilder.Entity<DriverPhoneQueryObject>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<AvailableCar>(entity => entity.HasNoKey().ToView(null));
+
         }
 
         public DbSet<Department> Departments { get; set; }
@@ -107,5 +114,9 @@ namespace TaxiServiceAPI.Data
         public DbSet<DriverCarQueryObject> DriverCarQueryObjects { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<DriverReceivedOrder> DriverReceivedOrders { get; set; }
+        public DbSet<OperatorPhoneQueryObject> OperatorQueryPhones { get; set; }
+        public DbSet<DriverPhoneQueryObject> DriverQueryPhones { get; set; }
+        public DbSet<AvailableCar> AvailableCars { get; set; }
+
     }
 }

@@ -11,6 +11,7 @@ export interface Order {
     orderDate: string;
     appointedTime: string;
     typeOfCar: string;
+    childSeat: boolean;
     timeOfAcceptance: string;
     timeOfCompletion: string;
     typeOfPayment: string;

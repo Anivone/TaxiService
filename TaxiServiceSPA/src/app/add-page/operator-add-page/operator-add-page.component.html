@@ -55,7 +55,7 @@
           </mat-chip>
           <input [matChipInputFor]="chipList" formControlName="personalPhone" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" class="phone-input">
-
+          <mat-error *ngIf="!valid">Введіть коректний номер телефону</mat-error>
         </mat-chip-list>
       </mat-form-field>
     </div>
@@ -101,12 +101,12 @@
 
     <mat-radio-group fxLayout="row" fxLayoutGap="20px">
       <div>
-        <input type="radio" formControlName="shiftTime" class="shift-radio" value="08:00 - 20:00"><span>08:00 -
-          20:00</span>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="08:00 - 20:00">
+        <span>08:00 - 20:00</span>
       </div>
       <div>
-        <input type="radio" formControlName="shiftTime" class="shift-radio" value="20:00 - 8:00"> <span>20:00 -
-          8:00</span>
+        <input type="radio" formControlName="shiftTime" class="shift-radio" value="20:00 - 08:00">
+        <span>20:00 - 08:00</span>
       </div>
     </mat-radio-group>
   </div>

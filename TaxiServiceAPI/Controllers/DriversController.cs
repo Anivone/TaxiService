@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +21,12 @@ namespace TaxiServiceAPI.Controllers
         public DriversController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("recent")]
+        public async Task<ActionResult<StaffDriver>> GetRecentDriver()
+        {
+            return await _context.Drivers.FromSqlRaw("SELECT * FROM Drivers WHERE DriverId = (SELECT MAX(DriverId) FROM Drivers)").FirstOrDefaultAsync();
         }
 
         [HttpGet("productive")]

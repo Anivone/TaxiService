@@ -8,11 +8,11 @@ namespace TaxiServiceAPI.Data.Models
         public int DriverId { get; set; }
 
         [Required]
-        public int DepartmentId { get; set; }
-
-        [Required]
         [StringLength(20)]
         public string CarId { get; set; }
+
+        [Required]
+        public int DepartmentId { get; set; }
 
         [Required]
         [StringLength(20)]

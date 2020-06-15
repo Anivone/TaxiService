@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
 import { Router } from '@angular/router';
+import { Operator } from 'src/interfaces/models/operator';
+import { Driver } from 'src/interfaces/models/driver';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,7 +20,10 @@ export class NavBarComponent implements OnInit {
 
   public dialogRef: MatDialogRef<LoginComponent>;
   public user: User;
+
   public client: Client;
+  public operator: Operator;
+  public driver: Driver;
 
   constructor(
     private dialog: MatDialog,
@@ -30,7 +35,9 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getClient();
+    if (this.user.role === 'Client') { this.getClient(); }
+    if (this.user.role === 'Operator') { this.getOperator(); }
+    if (this.user.role === 'Driver') { this.getDriver(); }
   }
 
   openDialog() {
@@ -43,9 +50,22 @@ export class NavBarComponent implements OnInit {
   }
 
   getClient() {
-    this.http.post<Client>(environment.baseUrl + 'api/clients/phone', { phone: '0979623717' }).subscribe(result => {
-        this.client = result;
-        console.log(this.client);
-      });
+    this.http.post<Client>(environment.baseUrl + 'api/clients/phone', { phone: this.user.username }).subscribe(result => {
+      this.client = result;
+      console.log(this.client);
+    });
+  }
+  getOperator() {
+    this.http.post<Operator>(environment.baseUrl + 'api/operators/phone', { phone: this.user.username }).subscribe(result => {
+      this.operator = result;
+      console.log(this.operator);
+    });
+  }
+  getDriver() {
+    console.log('phone: ', this.user.username);
+    this.http.post<Driver>(environment.baseUrl + 'api/drivers/phone', { phone: this.user.username }).subscribe(result => {
+      this.driver = result;
+      console.log(this.driver);
+    });
   }
 }

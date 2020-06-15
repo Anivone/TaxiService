@@ -40,6 +40,9 @@ import { ClientAddPageComponent } from './add-page/client-add-page/client-add-pa
 import { OperatorAddPageComponent } from './add-page/operator-add-page/operator-add-page.component';
 import { OperatorActionBarComponent } from './operator-page/operator-action-bar/operator-action-bar.component';
 import { OrderAddPageComponent } from './add-page/order-add-page/order-add-page.component';
+import { UsersListComponent } from './lists/users-list/users-list.component';
+import { CarAddPageComponent } from './add-page/car-add-page/car-add-page.component';
+import { DriverPhonesAddPageComponent } from './add-page/driver-phones-add-page/driver-phones-add-page.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { OrderAddPageComponent } from './add-page/order-add-page/order-add-page.
     OperatorAddPageComponent,
     OperatorActionBarComponent,
     OrderAddPageComponent,
+    UsersListComponent,
+    CarAddPageComponent,
+    DriverPhonesAddPageComponent
   ],
   imports: [
     BrowserModule,

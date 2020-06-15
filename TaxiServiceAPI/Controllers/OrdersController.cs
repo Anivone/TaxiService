@@ -55,7 +55,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<DriverReceivedOrder>> GetReceivedOrder(int id)
         {
             var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
-                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NULL").FirstOrDefaultAsync();
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.ChildSeat, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NULL").FirstOrDefaultAsync();
 
             return order;
         }
@@ -64,7 +64,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<DriverReceivedOrder>> GetAcceptedOrder(int id)
         {
             var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
-                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NOT NULL AND O.TimeOfCompletion IS NULL").FirstOrDefaultAsync();
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.ChildSeat, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfAcceptance IS NOT NULL AND O.TimeOfCompletion IS NULL").FirstOrDefaultAsync();
 
             return order;
         }
@@ -73,7 +73,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<DriverReceivedOrder>> GetCompletedOrder(int id)
         {
             var order = await _context.DriverReceivedOrders.FromSqlInterpolated(
-                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfCompletion IS NOT NULL AND O.FinalPrice IS NULL").FirstOrDefaultAsync();
+                $"SELECT O.OrderId, C.PhoneNumber, C.FirstName, C.LastName, C.MiddleName, O.DeparturePoint, O.ArrivalPoint, O.NumberOfKm, O.ApproximatePrice, O.AppointedTime, O.ChildSeat, O.TimeOfAcceptance, O.TimeOfCompletion, O.TypeOfPayment FROM Orders AS O INNER JOIN Clients AS C ON O.ClientId = C.ClientId WHERE O.DriverId = {id} AND O.TimeOfCompletion IS NOT NULL AND O.FinalPrice IS NULL").FirstOrDefaultAsync();
 
             return order;
         }
@@ -87,7 +87,7 @@ namespace TaxiServiceAPI.Controllers
             }
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Orders SET WayOfOrder = {order.WayOfOrder}, DeparturePoint = {order.DeparturePoint}, ArrivalPoint = {order.ArrivalPoint}, NumberOfKm = {order.NumberOfKm}, ApproximatePrice = {order.ApproximatePrice}, OrderDate = {order.OrderDate}, AppointedTime = {order.AppointedTime}, TypeOfCar = {order.TypeOfCar}, TimeOfAcceptance = {order.TimeOfAcceptance}, TimeOfCompletion = {order.TimeOfCompletion}, TypeOfPayment = {order.TypeOfPayment}, FinalPrice = {order.FinalPrice} WHERE OrderId = {id}");
+                $"UPDATE Orders SET WayOfOrder = {order.WayOfOrder}, DeparturePoint = {order.DeparturePoint}, ArrivalPoint = {order.ArrivalPoint}, NumberOfKm = {order.NumberOfKm}, ApproximatePrice = {order.ApproximatePrice}, OrderDate = {order.OrderDate}, AppointedTime = {order.AppointedTime}, ChildSeat = {order.ChildSeat}, TypeOfCar = {order.TypeOfCar}, TimeOfAcceptance = {order.TimeOfAcceptance}, TimeOfCompletion = {order.TimeOfCompletion}, TypeOfPayment = {order.TypeOfPayment}, FinalPrice = {order.FinalPrice} WHERE OrderId = {id}");
             try
             {
                 await _context.SaveChangesAsync();
@@ -207,7 +207,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({order.WayOfOrder}, {order.OperatorId}, {order.DriverId}, {order.ClientId}, {order.DeparturePoint}, {order.ArrivalPoint}, {order.NumberOfKm}, {order.ApproximatePrice}, {order.OrderDate}, {order.AppointedTime}, {order.TypeOfCar}, {order.TimeOfAcceptance}, {order.TimeOfCompletion}, {order.TypeOfPayment}, {order.FinalPrice})");
+                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({order.WayOfOrder}, {order.OperatorId}, {order.DriverId}, {order.ClientId}, {order.DeparturePoint}, {order.ArrivalPoint}, {order.NumberOfKm}, {order.ApproximatePrice}, {order.OrderDate}, {order.AppointedTime}, {order.ChildSeat} {order.TypeOfCar}, {order.TimeOfAcceptance}, {order.TimeOfCompletion}, {order.TypeOfPayment}, {order.FinalPrice})");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
@@ -217,7 +217,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Order>> PostNewOrder(NewOrderDto orderDto)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({orderDto.WayOfOrder}, NULL, NULL, {orderDto.ClientId}, {orderDto.DeparturePoint}, {orderDto.ArrivalPoint}, {orderDto.NumberOfKm}, {orderDto.ApproximatePrice}, {orderDto.OrderDate}, {orderDto.AppointedTime}, {orderDto.TypeOfCar}, NULL, NULL, {orderDto.TypeOfPayment}, NULL)");
+                $"INSERT INTO Orders (WayOfOrder, OperatorId, DriverId, ClientId, DeparturePoint, ArrivalPoint, NumberOfKm, ApproximatePrice, OrderDate, AppointedTime, ChildSeat, TypeOfCar, TimeOfAcceptance, TimeOfCompletion, TypeOfPayment, FinalPrice) VALUES ({orderDto.WayOfOrder}, NULL, NULL, {orderDto.ClientId}, {orderDto.DeparturePoint}, {orderDto.ArrivalPoint}, {orderDto.NumberOfKm}, {orderDto.ApproximatePrice}, {orderDto.OrderDate}, {orderDto.AppointedTime}, {orderDto.ChildSeat} {orderDto.TypeOfCar}, NULL, NULL, {orderDto.TypeOfPayment}, NULL)");
             await _context.SaveChangesAsync();
 
             return StatusCode(201);

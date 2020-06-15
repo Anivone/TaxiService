@@ -2,7 +2,7 @@
   <mat-spinner [diameter]="30" *ngIf="isLoading"></mat-spinner>
   <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="!isLoading && empty" class="empty container">
     <mat-icon>info</mat-icon>
-    <span class="empty-message">There are currently no orders</span>
+    <span class="empty-message">На разі для Вас немає замовлень</span>
   </div>
   <mat-card *ngIf="!isLoading && !empty && order" class="order">
     <mat-card-header>

@@ -6,6 +6,7 @@ export interface NewOrderDto {
   numberOfKm: number;
   orderDate: string;
   appointedTime: string;
+  childSeat: boolean;
   typeOfCar: string;
   typeOfPayment: string;
   approximatePrice: number;

@@ -16,8 +16,14 @@
 
     <button *ngIf="!user.isLoggedIn" mat-raised-button class="login" color="primary" (click)="openDialog()">Увійти</button>
     <div *ngIf="user.isLoggedIn" fxLayout="row" fxLayoutAlign=". center" class="login">
-      <div *ngIf="client" fxLayoutAlign=". center" class="welcome">
+      <div *ngIf="user.role === 'Client'" fxLayoutAlign=". center" class="welcome">
         <span *ngIf="client">Вітаємо, {{client.lastName}} {{client.firstName}}</span>
+      </div>
+      <div *ngIf="user.role === 'Operator'" fxLayoutAlign=". center" class="welcome">
+        <span *ngIf="operator">Вітаємо, {{operator.lastName}} {{operator.firstName}}</span>
+      </div>
+      <div *ngIf="user.role === 'Driver'" fxLayoutAlign=". center" class="welcome">
+        <span *ngIf="driver">Вітаємо, {{driver.lastName}} {{driver.firstName}}</span>
       </div>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>person</mat-icon>

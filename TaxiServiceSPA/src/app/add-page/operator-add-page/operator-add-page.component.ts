@@ -19,6 +19,7 @@ import { Department } from 'src/interfaces/models/department';
 export class OperatorAddPageComponent implements OnInit {
 
   public operatorForm: FormGroup;
+  valid = true;
   visible = true;
   selectable = true;
   removable = true;
@@ -52,16 +53,18 @@ export class OperatorAddPageComponent implements OnInit {
       shiftTime: ['', Validators.required],
     });
 
-    this.operatorForm.controls.firstName.setValue(this.editOperator.firstName);
-    this.operatorForm.controls.lastName.setValue(this.editOperator.lastName);
-    this.operatorForm.controls.middleName.setValue(this.editOperator.middleName);
-    this.operatorForm.controls.departmentId.setValue(this.editOperator.departmentId);
-    this.operatorForm.controls.birthDate.setValue(this.editOperator.dateOfBirth);
-    this.operatorForm.controls.workingPhone.setValue(this.editOperator.workingPhone);
-    this.operatorForm.controls.region.setValue(this.editOperator.region);
-    this.operatorForm.controls.city.setValue(this.editOperator.city);
-    this.operatorForm.controls.building.setValue(this.editOperator.building);
-    this.operatorForm.controls.street.setValue(this.editOperator.street);
+    if (this.editOperator) {
+      this.operatorForm.controls.firstName.setValue(this.editOperator.firstName);
+      this.operatorForm.controls.lastName.setValue(this.editOperator.lastName);
+      this.operatorForm.controls.middleName.setValue(this.editOperator.middleName);
+      this.operatorForm.controls.departmentId.setValue(this.editOperator.departmentId);
+      this.operatorForm.controls.birthDate.setValue(this.editOperator.dateOfBirth);
+      this.operatorForm.controls.workingPhone.setValue(this.editOperator.workingPhone);
+      this.operatorForm.controls.region.setValue(this.editOperator.region);
+      this.operatorForm.controls.city.setValue(this.editOperator.city);
+      this.operatorForm.controls.building.setValue(this.editOperator.building);
+      this.operatorForm.controls.street.setValue(this.editOperator.street);
+    }
 
     this.http.get<Department[]>(environment.baseUrl + 'api/departments')
       .subscribe(result => {
@@ -92,9 +95,12 @@ export class OperatorAddPageComponent implements OnInit {
   }
 
   addOperator() {
+    console.log(this.operatorForm.value.birthDate);
     const shift: string = this.operatorForm.value.shiftTime;
     const begin = `1900-01-01T${shift.substr(0, 5)}:00`;
     const end = `1900-01-01T${shift.substr(shift.length - 5, 5)}:00`;
+    console.log(`begin ${begin}`);
+    console.log(`ending ${end}`);
     this.http.post<Operator>(environment.baseUrl + 'api/operators', {
       departmentId: parseInt(this.operatorForm.value.departmentId, 10),
       lastName: this.operatorForm.value.lastName,
@@ -111,41 +117,51 @@ export class OperatorAddPageComponent implements OnInit {
       ending: end,
       salary: (shift.substr(0, 5) === '08:00') ? 12000 : 14000
     }).subscribe(result => {
-      this.phones.forEach(phone => {
-        this.http.post<OperatorPhones>(environment.baseUrl + 'api/operator-phones-list', {
-          phoneNumber: phone,
-          operatorId: result.operatorId
-        });
-      });
-    });
-  }
-    updateOperator() {
-      const shift: string = this.operatorForm.value.shiftTime;
-      const begin = `1900-01-01T${shift.substr(0, 5)}:00`;
-      const end = `1900-01-01T${shift.substr(shift.length - 5, 5)}:00`;
-      this.http.put<Operator>(environment.baseUrl + `api/operators/${this.editOperator.operatorId}`, {
-        operatorId: this.editOperator.operatorId,
-        departmentId: parseInt(this.operatorForm.value.departmentId, 10),
-        lastName: this.operatorForm.value.lastName,
-        firstName: this.operatorForm.value.firstName,
-        middleName: this.operatorForm.value.middleName,
-        dateOfBirth: this.operatorForm.value.birthDate,
-        workingPhone: this.operatorForm.value.workingPhone,
-        region: this.operatorForm.value.region,
-        city: this.operatorForm.value.city,
-        street: this.operatorForm.value.street,
-        building: this.operatorForm.value.building,
-        flat: parseInt(this.operatorForm.value.flat, 10),
-        beginning: begin,
-        ending: end,
-        salary: (shift.substr(0, 5) === '08:00') ? 12000 : 14000
-      }).subscribe(result => {
-        this.phones.forEach(phone => {
-          this.http.post<OperatorPhones>(environment.baseUrl + 'api/operator-phones-list', {
-            phoneNumber: phone,
-            operatorId: result.operatorId
+      console.log(result);
+      this.http.get<Operator>(environment.baseUrl + 'api/operators/recent')
+        .subscribe(operator => {
+          this.phones.forEach(phone => {
+            this.http.post<OperatorPhones>(environment.baseUrl + 'api/operatorphones', {
+              phoneNumber: phone,
+              operatorId: operator.operatorId
+            }).subscribe(res => console.log(res));
           });
         });
-      });
+    });
+  }
+  updateOperator() {
+    const shift: string = this.operatorForm.value.shiftTime;
+    const begin = `1900-01-01T${shift.substr(0, 5)}:00`;
+    const end = `1900-01-01T${shift.substr(shift.length - 5, 5)}:00`;
+    console.log(`begin ${begin}`);
+    console.log(`ending ${end}`);
+    this.http.put<Operator>(environment.baseUrl + `api/operators/${this.editOperator.operatorId}`, {
+      operatorId: this.editOperator.operatorId,
+      departmentId: parseInt(this.operatorForm.value.departmentId, 10),
+      lastName: this.operatorForm.value.lastName,
+      firstName: this.operatorForm.value.firstName,
+      middleName: this.operatorForm.value.middleName,
+      dateOfBirth: this.operatorForm.value.birthDate,
+      workingPhone: this.operatorForm.value.workingPhone,
+      region: this.operatorForm.value.region,
+      city: this.operatorForm.value.city,
+      street: this.operatorForm.value.street,
+      building: this.operatorForm.value.building,
+      flat: parseInt(this.operatorForm.value.flat, 10),
+      beginning: begin,
+      ending: end,
+      salary: (shift.substr(0, 5) === '08:00') ? 12000 : 14000
+    }).subscribe(result => {
+      console.log(result);
+      this.http.get<Operator>(environment.baseUrl + 'api/operators/recent')
+        .subscribe(operator => {
+          this.phones.forEach(phone => {
+            this.http.post<OperatorPhones>(environment.baseUrl + 'api/operatorphones', {
+              phoneNumber: phone,
+              operatorId: operator.operatorId
+            }).subscribe(res => console.log(res));
+          });
+        });
+    });
   }
 }

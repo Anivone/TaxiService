@@ -4,7 +4,7 @@ namespace TaxiServiceAPI.Data.Models
 {
     public class Car
     {
-        [Required]
+        [Required]  
         [StringLength(20)]
         public string CarId { get; set; }
 
@@ -12,5 +12,8 @@ namespace TaxiServiceAPI.Data.Models
         public string TypeOfCar { get; set; }
 
         public int NumberOfSeats { get; set; }
+
+        [Required]
+        public bool ChildSeat { get; set; }
     }
 }
