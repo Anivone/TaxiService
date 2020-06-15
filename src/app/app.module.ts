@@ -43,6 +43,7 @@ import { PrintButtonComponent } from './lists/print-button/print-button.componen
 import { DriverPhonesComponentComponent } from './driver-phones-component/driver-phones-component.component';
 import { OperatorPhonesComponentComponent } from './operator-phones-component/operator-phones-component.component';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
+import { DepartmentAddingFormComponent } from './department-adding-form/department-adding-form.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
     DriverPhonesComponentComponent,
     OperatorPhonesComponentComponent,
     SignUpFormComponent,
+    DepartmentAddingFormComponent,
     
   ],
   imports: [

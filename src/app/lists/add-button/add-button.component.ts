@@ -9,6 +9,7 @@ import { UserAddingFormComponent } from 'src/app/user-adding-form/user-adding-fo
 import { OperatorPhonesComponentComponent } from 'src/app/operator-phones-component/operator-phones-component.component';
 import { SignUpFormComponent } from 'src/app/sign-up-form/sign-up-form.component';
 import { DriverPhonesComponentComponent } from 'src/app/driver-phones-component/driver-phones-component.component';
+import { DepartmentAddingFormComponent } from 'src/app/department-adding-form/department-adding-form.component';
 
 @Component({
   selector: 'app-add-button',
@@ -25,7 +26,7 @@ export class AddButtonComponent implements OnInit {
   }
 
   openAddPage() {
-    const dialogRef = this.dialog.open(OperatorPhonesComponentComponent, {
+    const dialogRef = this.dialog.open(DepartmentAddingFormComponent, {
 });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed: ');
