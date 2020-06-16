@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { Operator } from 'src/interfaces/models/operator';
 import { environment } from 'src/environments/environment';
 import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { OperatorAddingFormComponent } from 'src/app/operator-adding-form/operator-adding-form.component';
+import { AddPageComponent } from 'src/app/add-page/add-page.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-operators-list',
@@ -13,8 +15,10 @@ import { OperatorAddingFormComponent } from 'src/app/operator-adding-form/operat
   styleUrls: ['./operators-list.component.css'],
 })
 export class OperatorsListComponent implements OnInit {
-  constructor(public http: HttpClient,
-    public dialog: MatDialog) { }
+  constructor(
+    public http: HttpClient,
+    public dialog: MatDialog
+  ) { }
 
   displayedColumns = [
     'Id',
@@ -36,10 +40,23 @@ export class OperatorsListComponent implements OnInit {
   ];
 
   operators: MatTableDataSource<Operator>;
-  item = 'Operator';
+  item = 'Оператора';
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
     this.getOperators();
+    this.operators.sort = this.sort;
+
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.operators.filter = filterValue.trim().toLowerCase();
+
+    if (this.operators.paginator) {
+      this.operators.paginator.firstPage();
+    }
   }
 
   getOperators() {
@@ -47,6 +64,7 @@ export class OperatorsListComponent implements OnInit {
       .get<Operator[]>(environment.baseUrl + 'api/operators')
       .subscribe((result) => {
         this.operators = new MatTableDataSource<Operator>(result);
+        this.operators.paginator = this.paginator;
         console.log(result);
       });
   }
@@ -62,13 +80,25 @@ export class OperatorsListComponent implements OnInit {
   onRowClicked(row: any) {
     console.log('Row clicked: ', row);
   }
-  addOperator(): void {
-    const dia = this.dialog.open(OperatorAddingFormComponent);
-    
-    dia.afterClosed().subscribe(result => {
-      console.log('The dialog was closed: ');
-      // this.first_name = result;
+
+  edit(operator: Operator) {
+    const dialogRef = this.dialog.open(AddPageComponent, {
+      autoFocus: true,
+      data: {
+        item: this.item,
+        operator,
+        edit: true
+      }
     });
+
+    dialogRef.afterClosed().subscribe(() => this.getOperators());
   }
 
+  delete(operator: Operator) {
+    this.http.delete(environment.baseUrl + `api/operators/${operator.operatorId}`)
+      .subscribe(() => {
+        this.getOperators();
+        console.log('operator deleted');
+      });
+  }
 }

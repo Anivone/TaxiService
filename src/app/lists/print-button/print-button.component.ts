@@ -5,11 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './print-button.component.html',
   styleUrls: ['./print-button.component.css']
 })
-export class PrintButtonComponent implements OnInit {
+export class PrintButtonComponent  {
 
-  constructor() { }
-
-  ngOnInit() {
+  printPage() {
+    window.print();
   }
 
 }
