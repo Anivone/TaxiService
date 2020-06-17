@@ -58,7 +58,7 @@
           </mat-chip>
           <input [matChipInputFor]="chipList" formControlName="personalPhone"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="add($event)" class="phone-input">
+            (matChipInputTokenEnd)="add($event)" (blur)="isValid()" class="phone-input">
     
         </mat-chip-list>
     

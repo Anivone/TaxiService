@@ -5,6 +5,7 @@ import { OperatorPhones } from 'src/interfaces/models/operator-phones';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { StaffPhones } from 'src/interfaces/queryObjects/staffPhones';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-operator-phones-list',
@@ -18,8 +19,9 @@ export class OperatorPhonesListComponent implements OnInit {
   phones: MatTableDataSource<StaffPhones>;
   item = 'Телефон Оператора';
 
-  displayedColumns = ['Phone Number', 'Operator Id', 'Last Name', 'First Name', 'Birthday', 'Actions'];
+  displayedColumns = ['phoneNumber', 'operatorId', 'lastName', 'firstName', 'birthday', 'Actions'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
     this.getPhones();
@@ -35,6 +37,7 @@ export class OperatorPhonesListComponent implements OnInit {
       .subscribe((result) => {
         this.phones = new MatTableDataSource<StaffPhones>(result);
         this.phones.paginator = this.paginator;
+        this.phones.sort = this.sort;
         console.log(this.phones);
       });
   }

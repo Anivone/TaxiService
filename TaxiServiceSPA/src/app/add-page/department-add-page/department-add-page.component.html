@@ -1,0 +1,15 @@
+<div class="dialog-container">
+  <div mat-dialog-content class="dialog-content" fxLayout="column" fxLayoutAling="space-between center"
+      [formGroup]="departmentForm">
+
+      <mat-form-field  >
+          <mat-label>Місто</mat-label>
+          <input matInput formControlName="city">
+          <mat-icon matSuffix>location_city</mat-icon>
+      </mat-form-field>
+  </div>
+      <div mat-dialog-actions class="submit-container" fxLayout="row" fxLayoutAlign="center">
+          <button type="submit" [disabled]="departmentForm.invalid" mat-raised-button color="primary" (click)="onSubmit()"
+              class="submit-btn">Додати</button>
+      </div>
+</div>

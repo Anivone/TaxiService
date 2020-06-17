@@ -5,33 +5,43 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaxiServiceAPI.Data;
+using TaxiServiceAPI.Data.Models;
+using TaxiServiceAPI.Data.QueryObjects;
 
 namespace TaxiServiceAPI.Controllers
 {
-    [Route("[controller]/{action}")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        [Authorize(Policy = Policies.Operator)]
-        public IActionResult Operator()
+        private readonly ApplicationDbContext _context;
+
+        public UserController(ApplicationDbContext context)
         {
-            return Ok("Response from Operator");
+            _context = context;
         }
 
         [HttpGet]
-        [Authorize(Policy = Policies.Driver)]
-        public IActionResult Driver()
+        public async Task<ActionResult<IEnumerable<GetUser>>> GetNewOrders()
         {
-            return Ok("Response from Driver");
+            return await _context.GetUsers.FromSqlRaw("SELECT U.Id, U.Username, U.Role FROM Users AS U").ToListAsync();
         }
 
-        [HttpGet]
-        [Authorize(Policy = Policies.Client)]
-        public IActionResult Client()
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            return Ok("Response from Client");
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"DELETE FROM Users WHERE Id = {id}");
+            await _context.SaveChangesAsync();
+
+            return user;
         }
     }
 }

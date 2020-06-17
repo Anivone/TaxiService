@@ -31,3 +31,24 @@ body { margin: 0; font-family: Roboto , "Helvetica Neue", sans-serif; }
   .timepicker-backdrop-overlay {
     z-index: 1100 !important;
   }
+
+  @media print{
+    .first-row, .second-row {
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+
+    .flat-drivers, .second-column, .productive-drivers {
+      width: 100% !important;
+    }
+    
+    .print-button {
+      visibility: hidden !important;
+    }
+
+    @page {
+        size: auto;   
+        margin: 20px; 
+    }
+    
+    }

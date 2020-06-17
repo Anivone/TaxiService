@@ -7,12 +7,17 @@
     border-radius: 15px;
 }
 
-.productive-drivers {
-    width: 60%;
+.print-button {
+    background-color: rgba(255, 255, 255, 0.9);
+
 }
 
-.department-popularity {
-    width: 40%;
+.productive-drivers {
+    width: 50%;
+}
+
+.flat-drivers {
+    width: 60%;
 }
 
 .mat-header-cell, .mat-cell{
@@ -26,4 +31,12 @@
 
 .department-name {
     font-size: 18px;
+}
+
+.second-column {
+    width: 50%;
+}
+
+.print-header {
+    width: 100%;
 }

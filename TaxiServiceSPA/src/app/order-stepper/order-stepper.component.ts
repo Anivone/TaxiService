@@ -51,6 +51,8 @@ export class OrderStepperComponent implements OnInit {
   user: User;
   client: Client;
 
+  fullTime: string;
+
   @ViewChild('stepper') stepper: any;
 
   constructor(
@@ -132,7 +134,7 @@ export class OrderStepperComponent implements OnInit {
 
   setChildSeat(seat: string) {
     console.log('Child seat: ', seat);
-    this.childSeat = seat === 'true' ? true : false;
+    this.childSeat = seat === 'Потрібно' ? true : false;
   }
 
   getDistance(id1: string, id2: string) {
@@ -190,6 +192,16 @@ export class OrderStepperComponent implements OnInit {
       autoFocus: false,
       data: 'Login'
     });
+  }
+
+  getCurrentTime() {
+    const date = new Date();
+
+    const hours = date.getHours().toString().length === 1 ? `0${date.getHours()}` : `${date.getHours()}`;
+    const minutes = date.getMinutes().toString().length === 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
+    const seconds = date.getSeconds().toString().length === 1 ? `0${date.getSeconds()}` : `${date.getSeconds()}`;
+
+    return `${hours}:${minutes}:${seconds}`;
   }
 
 }

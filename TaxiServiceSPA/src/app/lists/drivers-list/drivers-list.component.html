@@ -2,86 +2,86 @@
 <app-operator-action-bar></app-operator-action-bar>
 
 <div class="mat-elevation-z8 table-container">
-  <table mat-table [dataSource]="drivers"> 
-    <ng-container matColumnDef="Id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
+  <table mat-table matSort [dataSource]="drivers"> 
+    <ng-container matColumnDef="driverId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
       <td mat-cell *matCellDef="let driver">{{ driver.driverId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Department Id">
-      <th mat-header-cell *matHeaderCellDef>Department Id</th>
+    <ng-container matColumnDef="departmentId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Department Id</th>
       <td mat-cell *matCellDef="let driver">{{ driver.departmentId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Car Id">
-      <th mat-header-cell *matHeaderCellDef>Car Id</th>
+    <ng-container matColumnDef="carId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Car Id</th>
       <td mat-cell *matCellDef="let driver">{{ driver.carId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Last Name">
-      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Last Name</th>
       <td mat-cell *matCellDef="let driver">{{ driver.lastName }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="First Name">
-      <th mat-header-cell *matHeaderCellDef>First Name</th>
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>First Name</th>
       <td mat-cell *matCellDef="let driver">{{ driver.firstName }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Middle Name">
-      <th mat-header-cell *matHeaderCellDef>Middle Name</th>
+    <ng-container matColumnDef="middleName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Middle Name</th>
       <td mat-cell *matCellDef="let driver">{{ driver.middleName }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Date of Birth">
-      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Date of Birth</th>
       <td mat-cell *matCellDef="let driver">
         {{ getDate(driver.dateOfBirth) }}
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="Region">
-      <th mat-header-cell *matHeaderCellDef>Region</th>
+    <ng-container matColumnDef="region">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Region</th>
       <td mat-cell *matCellDef="let driver">{{ driver.region }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="City">
-      <th mat-header-cell *matHeaderCellDef>City</th>
+    <ng-container matColumnDef="city">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>City</th>
       <td mat-cell *matCellDef="let driver">{{ driver.city }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Street">
-      <th mat-header-cell *matHeaderCellDef>Street</th>
+    <ng-container matColumnDef="street">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Street</th>
       <td mat-cell *matCellDef="let driver">{{ driver.street }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Building">
-      <th mat-header-cell *matHeaderCellDef>Building</th>
+    <ng-container matColumnDef="building">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Building</th>
       <td mat-cell *matCellDef="let driver">{{ driver.building }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Flat">
-      <th mat-header-cell *matHeaderCellDef>Flat</th>
+    <ng-container matColumnDef="flat">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Flat</th>
       <td mat-cell *matCellDef="let driver">{{ driver.flat }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Beginning">
-      <th mat-header-cell *matHeaderCellDef>Beginning</th>
+    <ng-container matColumnDef="beginning">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Beginning</th>
       <td mat-cell *matCellDef="let driver">{{ getTime(driver.beginning) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Ending">
-      <th mat-header-cell *matHeaderCellDef>Ending</th>
+    <ng-container matColumnDef="ending">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Ending</th>
       <td mat-cell *matCellDef="let driver">{{ getTime(driver.ending) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Salary">
-      <th mat-header-cell *matHeaderCellDef>Salary</th>
+    <ng-container matColumnDef="salary">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Salary</th>
       <td mat-cell *matCellDef="let driver">{{ driver.salary }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Available">
-      <th mat-header-cell *matHeaderCellDef>Available</th>
+    <ng-container matColumnDef="available">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Available</th>
       <td mat-cell *matCellDef="let driver">{{ driver.available }}</td>
     </ng-container>
 

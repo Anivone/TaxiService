@@ -31,8 +31,24 @@ namespace TaxiServiceAPI.Controllers
             return await _context.ProductiveDrivers.FromSqlRaw("SELECT TOP 10 DR.DriverId, D.City, DR.LastName, DR.FirstName, DR.MiddleName, DR.DateOfBirth, DR.Salary, DR.Beginning FROM Drivers AS DR INNER JOIN Departments AS D ON DR.DepartmentId = D.DepartmentId ORDER BY Salary DESC").ToListAsync();
         }
 
+        [HttpGet("credit")]
+        public async Task<ActionResult<IEnumerable<CreditCardsDriver>>> GetCreditCardsDrivers()
+        {
+            return await _context.CreditCardsDrivers.FromSqlRaw("SELECT D.DriverId, D.CarId, Dep.City, D.LastName, D.FirstName, D.MiddleName, D.DateOfBirth, D.Beginning FROM Drivers AS D INNER JOIN Departments AS Dep ON D.DepartmentId = Dep.DepartmentId WHERE D.DriverId IN (SELECT O1.DriverId FROM (Orders AS O1 INNER JOIN Orders AS O2 ON O1.DriverId = O2.DriverId) INNER JOIN Orders AS O3 ON O1.DriverId = O2.DriverId WHERE DATEPART(MONTH, O1.OrderDate) = DATEPART(MONTH, GETDATE()) AND DATEPART(MONTH, O2.OrderDate) = DATEPART(MONTH, GETDATE()) AND DATEPART(MONTH, O3.OrderDate) = DATEPART(MONTH, GETDATE()) AND O1.ClientId IN  (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O2.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O3.ClientId IN (SELECT C.ClientId FROM Clients AS C WHERE C.CreditCardNum IS NOT NULL) AND O1.ClientId <> O2.ClientId AND O2.ClientId <> O3.ClientId AND O1.ClientId <> O3.ClientId)").ToListAsync();
+        }
 
 
+        [HttpGet("flat")]
+        public async Task<ActionResult<IEnumerable<FlatBusinessDrivers>>> GetDriversWithFlatAndBusiness()
+        {
+            return await _context.FlatBusinessDrivers.FromSqlRaw("SELECT Dr.DriverId, Dep.City AS DepartmentCity, C.CarId, C.TypeOfCar, Dr.LastName, Dr.FirstName, Dr.DateOfBirth, Dr.City, Dr.Street, Dr.Building, Dr.Flat FROM (Drivers AS Dr INNER JOIN Departments AS Dep ON Dr.DepartmentId = Dep.DepartmentId) INNER JOIN Cars AS C ON Dr.CarId = C.CarId WHERE Dr.Flat IS NOT NULL AND NOT EXISTS (SELECT * FROM Drivers AS D INNER JOIN Cars AS C ON D.CarId = C.CarId AND D.DriverId = Dr.DriverId AND C.CarId NOT IN(SELECT Ca.CarId FROM Cars as Ca WHERE Ca.TypeOfCar = 'Седан-бізнес'))").ToListAsync();
+        }
+
+        [HttpGet("cheap/{price}")]
+        public async Task<ActionResult<IEnumerable<DriversWithCheapOrders>>> GetDriversWithCheapOrders(int price)
+        {
+            return await _context.DriversWithCheapOrders.FromSqlInterpolated($"SELECT COUNT(*) AS Number, O.DriverId, D.LastName, D.FirstName FROM Orders AS O INNER JOIN Drivers AS D ON O.DriverId = D.DriverId WHERE FinalPrice < {price} GROUP BY O.DriverId, D.LastName, D.FirstName").ToListAsync();
+        }
 
         [HttpGet("recent")]
         public async Task<ActionResult<StaffDriver>> GetRecentDriver()

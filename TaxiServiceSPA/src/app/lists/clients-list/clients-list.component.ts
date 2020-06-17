@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPageComponent } from 'src/app/add-page/add-page.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-clients-list',
@@ -19,19 +20,20 @@ export class ClientsListComponent implements OnInit {
   ) { }
 
   displayedColumns = [
-    'Id',
-    'Phone Number',
-    'First Name',
-    'Last Name',
-    'Middle Name',
-    'Date of Registration',
-    'Email',
-    'Credit Card Number',
+    'clientId',
+    'phoneNumber',
+    'firstName',
+    'lastName',
+    'middleName',
+    'dateOfRegistration',
+    'email',
+    'creditCardNumber',
     'Actions'
   ];
   clients: MatTableDataSource<Client>;
   item = 'Клієнта';
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
     this.getClients();
@@ -43,6 +45,7 @@ export class ClientsListComponent implements OnInit {
       .subscribe((result) => {
         this.clients = new MatTableDataSource<Client>(result);
         this.clients.paginator = this.paginator;
+        this.clients.sort = this.sort;
         console.log(this.clients);
       });
   }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddPageComponent } from 'src/app/add-page/add-page.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-drivers-list',
@@ -21,24 +22,25 @@ export class DriversListComponent implements OnInit {
   drivers: MatTableDataSource<Driver>;
   item = 'Водія';
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns = [
-    'Id',
-    'Department Id',
-    'Car Id',
-    'Last Name',
-    'First Name',
-    'Middle Name',
-    'Date of Birth',
-    'Region',
-    'City',
-    'Street',
-    'Building',
-    'Flat',
-    'Beginning',
-    'Ending',
-    'Salary',
-    'Available',
+    'driverId',
+    'departmentId',
+    'carId',
+    'lastName',
+    'firstName',
+    'middleName',
+    'dateOfBirth',
+    'region',
+    'city',
+    'street',
+    'building',
+    'flat',
+    'beginning',
+    'ending',
+    'salary',
+    'available',
     'Actions'
   ];
 
@@ -52,6 +54,7 @@ export class DriversListComponent implements OnInit {
       .subscribe((result) => {
         this.drivers = new MatTableDataSource<Driver>(result);
         this.drivers.paginator = this.paginator;
+        this.drivers.sort = this.sort;
         console.log(result);
       });
   }

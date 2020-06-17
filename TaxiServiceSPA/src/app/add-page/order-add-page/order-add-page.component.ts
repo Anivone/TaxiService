@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
+import { Client } from 'src/interfaces/models/client';
 
 @Component({
   selector: 'app-order-add-page',
@@ -10,10 +11,15 @@ import { NewOrderDto } from 'src/interfaces/dto/newOrderDto';
   styleUrls: ['./order-add-page.component.css']
 })
 export class OrderAddPageComponent implements OnInit {
-  orderForm: FormGroup;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
+  fifthFormGroup: FormGroup;
+
   finish = false;
   wayOfPayment: string;
-  ways: string[] = ['Готівка', 'Картка'];
+  ways: string[] = ['Готівкою', 'Кредитною карт'];
   departurePoint: string;
   arrivalPoint: string;
   typeOfCar: string;
@@ -21,22 +27,44 @@ export class OrderAddPageComponent implements OnInit {
   appointedTime: string;
   paymentMethod: string;
   approximatePrice: number;
+
+  childSeatTypes: string[] = ['Потрібно', 'Не потрібно'];
+
+  clientsSelect: Client[];
   constructor(
     private formBuilder: FormBuilder,
     public http: HttpClient
   ) { }
 
   ngOnInit() {
-    this.orderForm = this.formBuilder.group({
-      departure: ['', Validators.required],
-      arrival: ['', Validators.required],
-      numberOfKm: [{ value: '', disabled: true }, '', Validators.required],
-      approximatePrice: [{ value: '', disabled: true }, '', Validators.required],
-      appointedTime: ['', Validators.required],
-      carType: ['', Validators.required]
-
+    this.getClients();
+    this.firstFormGroup = this.formBuilder.group({
+      firstCtrl: ['', Validators.required],
+      secondCtrl: ['', Validators.required],
     });
 
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required],
+      thirdCtrl: ['', Validators.required],
+    });
+
+    this.thirdFormGroup = this.formBuilder.group({
+      thirdCtrl: ['', Validators.required],
+    });
+    this.fourthFormGroup = this.formBuilder.group({
+      fourthCtrl: ['', Validators.required],
+      fifthCtrl: ['', Validators.required]
+    });
+    this.fifthFormGroup = this.formBuilder.group({
+      fifthCtrl: ['', Validators.required]
+    });
+  }
+
+  getClients() {
+    this.http.get<Client[]>(environment.baseUrl + 'api/clients')
+    .subscribe(res => {
+      this.clientsSelect = res;
+    });
   }
   toggleFinish(): void {
     this.finish = !this.finish;
@@ -103,28 +131,29 @@ export class OrderAddPageComponent implements OnInit {
     const month = (date.getMonth() + 1).toString().length === 1 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
     const day = date.getDate().toString().length === 1 ? `0${date.getDate()}` : `${date.getDate()}`;
 
-
     return year + '-' + month + '-' + day;
   }
 
   createNewOrder() {
     this.toggleFinish();
-    console.log('payment: ', this.paymentMethod);
+    console.log(this.firstFormGroup.value);
+    console.log(this.secondFormGroup.value);
+    console.log(this.thirdFormGroup.value);
+    console.log(this.fourthFormGroup.value);
     this.http.post<NewOrderDto>(environment.baseUrl + 'api/orders/new', {
-      wayOfOrder: 'Телефон',
-      clientId: 2,
+      wayOfOrder: 'Website',
+      clientId: parseInt(this.fourthFormGroup.value.fifthCtrl, 10),
       departurePoint: this.departurePoint,
       arrivalPoint: this.arrivalPoint,
       numberOfKm: this.numberOfKm,
       orderDate: this.getCurrentDate(),
-      appointedTime: this.appointedTime,
+      appointedTime: `1900-01-01T${this.appointedTime}:00`,
+      childSeat: this.fourthFormGroup.value.fourthCtrl === 'Потрібно' ? true : false,
       typeOfCar: this.typeOfCar,
-      typeOfPayment: this.paymentMethod,
+      typeOfPayment: this.fifthFormGroup.value.fifthCtrl,
       approximatePrice: this.approximatePrice
-
     }).subscribe(result => {
       console.log(result);
-
     }, err => console.log(err));
 
 

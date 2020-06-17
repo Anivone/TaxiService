@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPageComponent } from 'src/app/add-page/add-page.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-cars-list',
@@ -21,8 +22,9 @@ export class CarsListComponent implements OnInit {
   cars: MatTableDataSource<Car>;
   item = 'Автомобіль';
 
-  displayedColumns = ['Car Id', 'Type of Car', 'Number of Seats', 'Child Seat', 'Actions'];
+  displayedColumns = ['carId', 'typeOfCar', 'numberOfSeats', 'childSeat', 'Actions'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
     this.getCars();
@@ -34,6 +36,7 @@ export class CarsListComponent implements OnInit {
       .subscribe((result) => {
         this.cars = new MatTableDataSource<Car>(result);
         this.cars.paginator = this.paginator;
+        this.cars.sort = this.sort;
         console.log(this.cars);
       });
   }

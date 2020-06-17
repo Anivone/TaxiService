@@ -43,6 +43,9 @@ import { OrderAddPageComponent } from './add-page/order-add-page/order-add-page.
 import { UsersListComponent } from './lists/users-list/users-list.component';
 import { CarAddPageComponent } from './add-page/car-add-page/car-add-page.component';
 import { DriverPhonesAddPageComponent } from './add-page/driver-phones-add-page/driver-phones-add-page.component';
+import { RegisterComponent } from './login/register/register.component';
+import { UserAddPageComponent } from './add-page/user-add-page/user-add-page.component';
+import { DepartmentAddPageComponent } from './add-page/department-add-page/department-add-page.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,10 @@ import { DriverPhonesAddPageComponent } from './add-page/driver-phones-add-page/
     OrderAddPageComponent,
     UsersListComponent,
     CarAddPageComponent,
-    DriverPhonesAddPageComponent
+    DriverPhonesAddPageComponent,
+    RegisterComponent,
+    UserAddPageComponent,
+    DepartmentAddPageComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +103,7 @@ import { DriverPhonesAddPageComponent } from './add-page/driver-phones-add-page/
     LoginComponent,
     DriverListDialogComponent,
     AddPageComponent,
+    RegisterComponent
   ],
 })
 export class AppModule { }

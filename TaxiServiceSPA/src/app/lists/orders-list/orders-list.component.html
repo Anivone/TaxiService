@@ -2,90 +2,90 @@
 <app-operator-action-bar></app-operator-action-bar>
 
 <div class="mat-elevation-z8 table-container">
-  <table mat-table [dataSource]="orders">
+  <table mat-table matSort [dataSource]="orders">
     
-    <ng-container matColumnDef="Id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
       <td mat-cell *matCellDef="let order">{{ order.orderId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Way of Order">
-      <th mat-header-cell *matHeaderCellDef>Way of Order</th>
+    <ng-container matColumnDef="wayOfOrder">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Way of Order</th>
       <td mat-cell *matCellDef="let order">{{ order.wayOfOrder }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Operator Id">
-      <th mat-header-cell *matHeaderCellDef>Operator Id</th>
+    <ng-container matColumnDef="operatorId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Operator Id</th>
       <td mat-cell *matCellDef="let order">{{ order.operatorId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Driver Id">
-      <th mat-header-cell *matHeaderCellDef>Driver Id</th>
+    <ng-container matColumnDef="driverId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Driver Id</th>
       <td mat-cell *matCellDef="let order">{{ order.driverId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Client Id">
-      <th mat-header-cell *matHeaderCellDef>Client Id</th>
+    <ng-container matColumnDef="clientId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Client Id</th>
       <td mat-cell *matCellDef="let order">{{ order.clientId }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Departure Point">
-      <th mat-header-cell *matHeaderCellDef>Departure Point</th>
+    <ng-container matColumnDef="departurePoint">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Departure Point</th>
       <td mat-cell *matCellDef="let order">{{ order.departurePoint }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Arrival Point">
-      <th mat-header-cell *matHeaderCellDef>Arrival Point</th>
+    <ng-container matColumnDef="arrivalPoint">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Arrival Point</th>
       <td mat-cell *matCellDef="let order">{{ order.arrivalPoint }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Number of Km">
-      <th mat-header-cell *matHeaderCellDef>Number of Km</th>
+    <ng-container matColumnDef="numberOfKm">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Number of Km</th>
       <td mat-cell *matCellDef="let order">{{ order.numberOfKm }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Approximate Price">
-      <th mat-header-cell *matHeaderCellDef>Approximate Price</th>
+    <ng-container matColumnDef="approximatePrice">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Approximate Price</th>
       <td mat-cell *matCellDef="let order">{{ order.approximatePrice }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Order Date">
-      <th mat-header-cell *matHeaderCellDef>Order Date</th>
+    <ng-container matColumnDef="orderDate">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Order Date</th>
       <td mat-cell *matCellDef="let order">{{ getDate(order.orderDate) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Appointed Time">
-      <th mat-header-cell *matHeaderCellDef>Appointed Time</th>
+    <ng-container matColumnDef="appointedTime">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Appointed Time</th>
       <td mat-cell *matCellDef="let order">{{ getTime(order.appointedTime) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Child Seat">
-      <th mat-header-cell *matHeaderCellDef>Child Seat</th>
+    <ng-container matColumnDef="childSeat">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Child Seat</th>
       <td mat-cell *matCellDef="let order">{{ order.childSeat === 'true' ? 'Є' : 'Немає' }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Type of Car">
-      <th mat-header-cell *matHeaderCellDef>Type of Car</th>
+    <ng-container matColumnDef="typeOfCar">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Type of Car</th>
       <td mat-cell *matCellDef="let order">{{ order.typeOfCar }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Time of Acceptance">
-      <th mat-header-cell *matHeaderCellDef>Time of Acceptance</th>
+    <ng-container matColumnDef="timeOfAcceptance">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Time of Acceptance</th>
       <td mat-cell *matCellDef="let order">{{ getTime(order.timeOfAcceptance) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Time of Completion">
-      <th mat-header-cell *matHeaderCellDef>Time of Completion</th>
+    <ng-container matColumnDef="timeOfCompletion">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Time of Completion</th>
       <td mat-cell *matCellDef="let order">{{ getTime(order.timeOfCompletion) }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Type of Payment">
-      <th mat-header-cell *matHeaderCellDef>Type of Payment</th>
+    <ng-container matColumnDef="typeOfPayment">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Type of Payment</th>
       <td mat-cell *matCellDef="let order">{{ order.typeOfPayment }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Final Price">
-      <th mat-header-cell *matHeaderCellDef>Final Price</th>
+    <ng-container matColumnDef="finalPrice">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Final Price</th>
       <td mat-cell *matCellDef="let order">{{ order.finalPrice }}</td>
     </ng-container>
 

@@ -18,6 +18,7 @@ import { UserToRegister } from 'src/interfaces/models/userToRegister';
 })
 export class DriverAppPageComponent implements OnInit {
   driverForm: FormGroup;
+  valid = true;
   visible = true;
   selectable = true;
   removable = true;
@@ -170,6 +171,21 @@ export class DriverAppPageComponent implements OnInit {
         });
     });
 
+  }
+
+  isValid() {
+    var reg = /^\d+$/;
+
+    for (let index in this.phones) {
+      if (reg.test(this.phones[index]) || this.phones.length == 0) {
+        this.valid = true;
+      } else {
+        this.valid = false;
+      }
+    }
+    if (this.phones.length == 0) {
+      this.valid = true;
+    }
   }
 }
 

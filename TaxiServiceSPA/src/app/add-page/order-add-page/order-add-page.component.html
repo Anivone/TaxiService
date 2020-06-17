@@ -1,47 +1,64 @@
 <div class="inner-container">
   <div mat-dialog-content class="dialog-content" fxLayout="column" fxLayoutGap="15px">
-    <div class="route route-info" [formGroup]="orderForm" fxLaoyut="row" fxLayoutGap="10px">
+    <div class="route route-info" [formGroup]="firstFormGroup" fxLaoyut="row" fxLayoutGap="10px">
       <mat-form-field>
         <mat-label>Місце відправлення</mat-label>
-        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="departure"
+        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="firstCtrl"
           (onAutocompleteSelected)="setDeparture($event)" placeholder="Введіть місце відправлення">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Місце прибуття</mat-label>
-        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="arrival"
+        <input matInput matGoogleMapsAutocomplete country="ua" formControlName="secondCtrl"
           (onAutocompleteSelected)="setArrival($event)" placeholder="Введіть місце прибуття">
       </mat-form-field>
 
     </div>
-    <div class="car-type" [formGroup]="orderForm" fxLayout="row" fxLayoutGap="20px">
-      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
-          value="Econom" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+    <div class="car-type" fxLayout="row" fxLayoutGap="20px" [formGroup]="secondFormGroup">
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="secondCtrl"
+          value="Econom" (blur)="setTypeOfCar(secondFormGroup.value.secondCtrl)" type="radio">
         <span>Економ</span></div>
-      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
-          value="Sedan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="secondCtrl"
+          value="Sedan" (blur)="setTypeOfCar(secondFormGroup.value.secondCtrl)" type="radio">
         <span>Седан</span></div>
-      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
-          value="Business-Sedan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio">
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="secondCtrl"
+          value="Business-Sedan" (blur)="setTypeOfCar(secondFormGroup.value.secondCtrl)" type="radio">
         <span>Бізнес</span></div>
-      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="carType"
-          value="Minivan" (blur)="setTypeOfCar(orderForm.value.carType)" type="radio" value="Minivan">
+      <div class="car-type-input car-radio" fxLayout="row" fxLayoutGap="4px"><input formControlName="secondCtrl"
+          value="Minivan" (blur)="setTypeOfCar(secondFormGroup.value.secondCtrl)" type="radio" value="Minivan">
         <span>Мінівен</span></div>
     </div>
 
-    <div class="date-info price-info time-info" fxLayout="row" fxLayoutGap="10px">
-      <div [formGroup]="orderForm">
+    <div class="date-info price-info time-info" fxLayout="row" fxLayoutGap="10px" [formGroup]="thirdFormGroup">
+      <div>
         <mat-form-field>
           <mat-label>Час відправлення</mat-label>
-          <input matInput aria-label="time-picker" [ngxTimepicker]="appointTime" formControlName="appointedTime"
-            (blur)="setAppointedTime(orderForm.value.appointedTime)" [format]="24" readonly />
+          <input matInput aria-label="time-picker" [ngxTimepicker]="appointTime" formControlName="thirdCtrl"
+            (blur)="setAppointedTime(thirdFormGroup.value.thirdCtrl)" [format]="24" readonly />
           <ngx-material-timepicker class="timePicker" #appointTime></ngx-material-timepicker>
         </mat-form-field>
       </div>
-      <mat-form-field>
+      <mat-form-field [formGroup]="fifthFormGroup">
         <mat-label>Тип оплати</mat-label>
-        <mat-select [(ngModel)]="wayOfPayment">
-          <mat-option (blur)="setPaymentMethod(wayOfPayment)" *ngFor="let way of ways" [value]="way">{{way}}
+        <mat-select formControlName="fifthCtrl">
+          <mat-option *ngFor="let way of ways" [value]="way">{{way}}
           </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div [formGroup]="fourthFormGroup">
+      <mat-form-field>
+        <mat-select formControlName="fourthCtrl">
+          <mat-option *ngFor="let childSeat of childSeatTypes" [value]="childSeat">
+            {{ childSeat }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Оберіть клієнта</mat-label>
+        <mat-select formControlName="fifthCtrl">
+          <mat-option *ngFor="let client of clientsSelect" [value]="client.clientId">{{client.clientId}} -
+            {{client.lastName}} - {{client.firstName}} - {{client.phoneNumber}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

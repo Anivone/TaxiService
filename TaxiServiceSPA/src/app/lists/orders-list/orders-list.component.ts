@@ -4,6 +4,7 @@ import { Order } from 'src/interfaces/models/order';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-orders-list',
@@ -20,25 +21,26 @@ export class OrdersListComponent implements OnInit {
   item = 'Замовлення';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns = [
-    'Id',
-    'Way of Order',
-    'Operator Id',
-    'Driver Id',
-    'Client Id',
-    'Departure Point',
-    'Arrival Point',
-    'Number of Km',
-    'Approximate Price',
-    'Order Date',
-    'Appointed Time',
-    'Child Seat',
-    'Type of Car',
-    'Time of Acceptance',
-    'Time of Completion',
-    'Type of Payment',
-    'Final Price',
+    'orderId',
+    'wayOfOrder',
+    'operatorId',
+    'driverId',
+    'clientId',
+    'departurePoint',
+    'arrivalPoint',
+    'numberOfKm',
+    'approximatePrice',
+    'orderDate',
+    'appointedTime',
+    'childSeat',
+    'typeOfCar',
+    'timeOfAcceptance',
+    'timeOfCompletion',
+    'typeOfPayment',
+    'finalPrice',
     'Actions',
   ];
 
@@ -52,6 +54,7 @@ export class OrdersListComponent implements OnInit {
       .subscribe((result) => {
         this.orders = new MatTableDataSource<Order>(result);
         this.orders.paginator = this.paginator;
+        this.orders.sort = this.sort;
         console.log(this.orders);
       });
   }

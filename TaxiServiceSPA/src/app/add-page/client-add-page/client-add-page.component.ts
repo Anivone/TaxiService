@@ -40,19 +40,21 @@ export class ClientAddPageComponent implements OnInit {
       firstName: ['', Validators.required],
       middleName: ['', Validators.required],
       lastName: ['', Validators.required],
-      personalPhone: ['', Validators.required],
+      personalPhone: ['', Validators.pattern('^[0-9]{10,10}$')],
       creditCard: ['', Validators.required],
       primaryEmail: new FormControl('', [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])
     });
 
-    this.userForm.controls.firstName.setValue(this.editClient.firstName);
-    this.userForm.controls.middleName.setValue(this.editClient.middleName);
-    this.userForm.controls.lastName.setValue(this.editClient.lastName);
-    this.userForm.controls.personalPhone.setValue(this.editClient.phoneNumber);
-    this.userForm.controls.creditCard.setValue(this.editClient.creditCardNum);
-    this.userForm.controls.primaryEmail.setValue(this.editClient.email);
+    if (this.editClient) {
+      this.userForm.controls.firstName.setValue(this.editClient.firstName);
+      this.userForm.controls.middleName.setValue(this.editClient.middleName);
+      this.userForm.controls.lastName.setValue(this.editClient.lastName);
+      this.userForm.controls.personalPhone.setValue(this.editClient.phoneNumber);
+      this.userForm.controls.creditCard.setValue(this.editClient.creditCardNum);
+      this.userForm.controls.primaryEmail.setValue(this.editClient.email);
+    }
   }
 
   createClient() {

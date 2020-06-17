@@ -107,6 +107,10 @@ namespace TaxiServiceAPI.Data
             });
             modelBuilder.Entity<NumberOfOrdersDepartment>(entity => entity.HasNoKey().ToView(null));
             modelBuilder.Entity<NumberOfOrders>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<CreditCardsDriver>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<FlatBusinessDrivers>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<DriversWithCheapOrders>(entity => entity.HasNoKey().ToView(null));
+            modelBuilder.Entity<GetUser>(entity => entity.HasNoKey().ToView(null));
 
         }
 
@@ -128,6 +132,10 @@ namespace TaxiServiceAPI.Data
 
         public DbSet<NumberOfOrdersDepartment> NumberOfOrdersDepartments { get; set; }
         public DbSet<NumberOfOrders> NumberOfOrders { get; set; }
+        public DbSet<CreditCardsDriver> CreditCardsDrivers { get; set; }
+        public DbSet<FlatBusinessDrivers> FlatBusinessDrivers { get; set; }
+        public DbSet<DriversWithCheapOrders> DriversWithCheapOrders { get; set; }
+        public DbSet<GetUser> GetUsers { get; set; }
 
     }
 }

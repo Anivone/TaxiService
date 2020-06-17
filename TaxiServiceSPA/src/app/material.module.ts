@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSortModule,
   ],
   exports: [
     MatButtonModule,
@@ -74,6 +76,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSortModule,
   ],
   providers: [
     MatDatepickerModule,

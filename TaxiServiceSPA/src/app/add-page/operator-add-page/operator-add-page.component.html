@@ -54,7 +54,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           <input [matChipInputFor]="chipList" formControlName="personalPhone" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" class="phone-input">
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" (blur)="isValid()" class="phone-input">
           <mat-error *ngIf="!valid">Введіть коректний номер телефону</mat-error>
         </mat-chip-list>
       </mat-form-field>

@@ -94,6 +94,21 @@ export class OperatorAddPageComponent implements OnInit {
     }
   }
 
+  isValid() {
+    var reg = /^\d+$/;
+
+    for (let index in this.phones) {
+      if (reg.test(this.phones[index]) || this.phones.length == 0) {
+        this.valid = true;
+      } else {
+        this.valid = false;
+      }
+    }
+    if (this.phones.length == 0) {
+      this.valid = true;
+    }
+  }
+
   addOperator() {
     console.log(this.operatorForm.value.birthDate);
     const shift: string = this.operatorForm.value.shiftTime;

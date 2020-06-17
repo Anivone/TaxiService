@@ -15,6 +15,7 @@ import { AddPageComponent } from './add-page/add-page.component';
 import { DriverPageComponent } from './driver-page/driver-page.component';
 import { LoginComponent } from './login/login.component';
 import { ReportComponent } from './operator-page/report/report.component';
+import { UsersListComponent } from './lists/users-list/users-list.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'departments-list', component: DepartmentsListComponent, pathMatch: 'full' },
   { path: 'operator-phones-list', component: OperatorPhonesListComponent, pathMatch: 'full' },
   { path: 'driver-phones-list', component: DriverPhonesListComponent, pathMatch: 'full' },
+  { path: 'user-list', component: UsersListComponent, pathMatch: 'full' },
   { path: 'add', component: AddPageComponent },
   { path: 'report', component: ReportComponent },
   { path: 'driver', component: DriverPageComponent },

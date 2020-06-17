@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Department } from 'src/interfaces/models/department';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-departments-list',
@@ -16,8 +17,10 @@ export class DepartmentsListComponent implements OnInit {
   departments: MatTableDataSource<Department>;
   item = 'Відділення';
 
-  displayedColumns = ['Department Id', 'City', 'Actions'];
+  displayedColumns = ['departmentId', 'city', 'Actions'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   ngOnInit() {
     this.getDepartments();
@@ -29,6 +32,7 @@ export class DepartmentsListComponent implements OnInit {
       .subscribe((result) => {
         this.departments = new MatTableDataSource<Department>(result);
         this.departments.paginator = this.paginator;
+        this.departments.sort = this.sort;
         console.log(this.departments);
       });
   }
