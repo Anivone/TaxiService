@@ -24,7 +24,7 @@ export class DepartmentAddPageComponent implements OnInit {
   }
   onSubmit(){
 
-    this.http.post<Department>(environment.baseUrl + 'api/departaments',{
+    this.http.post<Department>(environment.baseUrl + 'api/departments',{
       city: this.departmentForm.value.city,
     }).subscribe(() => console.log('Department has been added! '));
   }

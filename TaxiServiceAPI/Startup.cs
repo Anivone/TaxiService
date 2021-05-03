@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using TaxiServiceAPI.Data;
 using TaxiServiceAPI.Data.Models;
@@ -33,9 +34,19 @@ namespace TaxiServiceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsAPI",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                );
+            });
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL")));
+            // options.UseSqlServer(Configuration.GetConnectionString("SqlServer")));
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -69,11 +80,7 @@ namespace TaxiServiceAPI
 
             app.UseRouting();
 
-            app.UseCors(
-                options => options.SetIsOriginAllowed(x => _ = true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+            app.UseCors("CorsAPI");
 
             app.UseAuthentication();
             app.UseAuthorization();

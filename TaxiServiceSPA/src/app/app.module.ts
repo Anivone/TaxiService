@@ -91,7 +91,8 @@ import { DepartmentAddPageComponent } from './add-page/department-add-page/depar
     ReactiveFormsModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDKKnmD4wIWNHzDsvNeQkgpIEdCKa_7o_k',
+      // apiKey: 'AIzaSyDKKnmD4wIWNHzDsvNeQkgpIEdCKa_7o_k',
+      apiKey: 'AIzaSyB_Vi_E88HZDj60yOftrnI-y9Bsa6-MRBE',
       libraries: ['places'],
     }),
     MatGoogleMapsAutocompleteModule,

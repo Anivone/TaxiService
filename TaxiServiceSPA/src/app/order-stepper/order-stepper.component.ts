@@ -147,6 +147,7 @@ export class OrderStepperComponent implements OnInit {
       (result) => {
         this.numberOfKm = result.rows[0].elements[0].distance.value / 1000;
         this.approximatePrice = Math.ceil(40 + this.numberOfKm * 4.5);
+        console.log('Approximate price: ', this.approximatePrice);
         console.log('Number of km: ', this.numberOfKm);
       }
     );

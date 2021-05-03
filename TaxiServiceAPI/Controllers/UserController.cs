@@ -26,7 +26,7 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetUser>>> GetNewOrders()
         {
-            return await _context.GetUsers.FromSqlRaw("SELECT U.Id, U.Username, U.Role FROM Users AS U").ToListAsync();
+            return await _context.GetUsers.FromSqlRaw("SELECT U.\"Id\", U.\"Username\", U.\"Role\" FROM \"Users\" AS U").ToListAsync();
         }
 
         [HttpDelete("{id}")]
@@ -38,7 +38,7 @@ namespace TaxiServiceAPI.Controllers
                 return NotFound();
             }
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"DELETE FROM Users WHERE Id = {id}");
+                $"DELETE FROM \"Users\" WHERE \"Id\" = {id}");
             await _context.SaveChangesAsync();
 
             return user;

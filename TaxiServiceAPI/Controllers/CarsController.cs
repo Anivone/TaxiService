@@ -25,20 +25,21 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Car>>> GetCars()
         {
-            return await _context.Cars.FromSqlRaw("SELECT * FROM Cars").ToListAsync();
+            return await _context.Cars.FromSqlRaw("SELECT * FROM \"Cars\"").ToListAsync();
+            // return await _context.Cars.ToListAsync();
         }
 
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<AvailableCar>>> GetAvailableCars()
         {
-            return await _context.AvailableCars.FromSqlRaw("SELECT C.CarId, C.TypeOfCar FROM Cars AS C LEFT JOIN Drivers AS D ON C.CarId = D.CarId GROUP BY C.CarId, C.TypeOfCar HAVING COUNT(*) < 2").ToListAsync();
+            return await _context.AvailableCars.FromSqlRaw("SELECT C.\"CarId\", C.\"TypeOfCar\" FROM \"Cars\" AS C LEFT JOIN \"Drivers\" AS D ON C.\"CarId\" = D.\"CarId\" GROUP BY C.\"CarId\", C.\"TypeOfCar\" HAVING COUNT(*) < 2").ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(string id)
         {
             var car = await _context.Cars.FromSqlInterpolated(
-                $"SELECT * FROM Cars WHERE CarId = {id}").FirstOrDefaultAsync();
+                $"SELECT * FROM \"Cars\" WHERE \"CarId\" = {id}").FirstOrDefaultAsync();
 
             if (car == null)
             {
@@ -57,7 +58,7 @@ namespace TaxiServiceAPI.Controllers
             }
             
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Cars SET TypeOfCar = {car.TypeOfCar}, NumberOfSeats = {car.NumberOfSeats}, ChildSeat = {car.ChildSeat} WHERE CarId = {id}");
+                $"UPDATE \"Cars\" SET \"TypeOfCar\" = {car.TypeOfCar}, \"NumberOfSeats\" = {car.NumberOfSeats}, \"ChildSeat\" = {car.ChildSeat} WHERE \"CarId\" = {id}");
 
             try
             {
@@ -82,7 +83,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Car>> PostCar(Car car)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Cars (CarId, TypeOfCar, NumberOfSeats, ChildSeat) VALUES ({car.CarId}, {car.TypeOfCar}, {car.NumberOfSeats}, {car.ChildSeat})");
+                $"INSERT INTO \"Cars\" (\"CarId\", \"TypeOfCar\", \"NumberOfSeats\", \"ChildSeat\") VALUES ({car.CarId}, {car.TypeOfCar}, {car.NumberOfSeats}, {car.ChildSeat})");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCar", new { id = car.CarId }, car);
@@ -97,7 +98,7 @@ namespace TaxiServiceAPI.Controllers
                 return NotFound();
             }
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM Cars WHERE CarId = {id}");
+               $"DELETE FROM \"Cars\" WHERE \"CarId\" = {id}");
             await _context.SaveChangesAsync();
 
             return car;

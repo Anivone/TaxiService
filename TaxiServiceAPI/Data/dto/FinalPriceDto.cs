@@ -7,6 +7,6 @@ namespace TaxiServiceAPI.Data.dto
 {
     public class FinalPriceDto
     {
-        public double FinalPrice { get; set; }
+        public decimal FinalPrice { get; set; }
     }
 }

@@ -25,14 +25,14 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DriverPhoneQueryObject>>> GetDriverPhones()
         {
-            return await _context.DriverQueryPhones.FromSqlRaw("SELECT DP.PhoneNumber, DP.DriverId, D.FirstName, D.LastName, D.DateOfBirth FROM DriverPhones AS DP INNER JOIN Drivers AS D ON DP.DriverId = D.DriverId").ToListAsync();
+            return await _context.DriverQueryPhones.FromSqlRaw("SELECT DP.\"PhoneNumber\", DP.\"DriverId\", D.\"FirstName\", D.\"LastName\", D.\"DateOfBirth\" FROM \"DriverPhones\" AS DP INNER JOIN \"Drivers\" AS D ON DP.\"DriverId\" = D.\"DriverId\"").ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<DriverPhones>> GetDriverPhones(string id)
         {
             var driverPhone = await _context.DriverPhones.FromSqlInterpolated(
-                $"SELECT * FROM DriverPhones WHERE PhoneNumber = {id}").FirstOrDefaultAsync();
+                $"SELECT * FROM \"DriverPhones\" WHERE \"PhoneNumber\" = {id}").FirstOrDefaultAsync();
 
             if (driverPhone == null)
             {
@@ -46,7 +46,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<DriverPhones>> PostDriverPhones(DriverPhones driverPhone)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO DriverPhones (PhoneNumber, DriverId) VALUES ({driverPhone.PhoneNumber}, {driverPhone.DriverId})");
+                $"INSERT INTO \"DriverPhones\" (\"PhoneNumber\", \"DriverId\") VALUES ({driverPhone.PhoneNumber}, {driverPhone.DriverId})");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDriverPhones", new { id = driverPhone.PhoneNumber }, driverPhone);
@@ -61,7 +61,7 @@ namespace TaxiServiceAPI.Controllers
                 return NotFound();
             }
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM DriverPhones WHERE PhoneNumber = {id}");
+               $"DELETE FROM \"DriverPhones\" WHERE \"PhoneNumber\" = {id}");
             await _context.SaveChangesAsync();
 
             return driverPhone;

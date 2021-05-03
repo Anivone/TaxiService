@@ -25,26 +25,26 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet("number")]
         public async Task<ActionResult<IEnumerable<NumberOfOrdersDepartment>>> CountDepartments()
         {
-            return await _context.NumberOfOrdersDepartments.FromSqlRaw("SELECT COUNT(*) AS Number, D.DepartmentId, D.City FROM (Departments AS D INNER JOIN Operators AS OP ON D.DepartmentId = OP.DepartmentId) INNER JOIN Orders AS O ON OP.OperatorId = O.OperatorId WHERE DATEPART(MONTH, O.OrderDate) = DATEPART(MONTH, GETDATE()) GROUP BY D.DepartmentId, D.City").ToListAsync();
+            return await _context.NumberOfOrdersDepartments.FromSqlRaw("SELECT COUNT(*) AS Number, D.\"DepartmentId\", D.\"City\" FROM (\"Departments\" AS D INNER JOIN \"Operators\" AS OP ON D.\"DepartmentId\" = OP.\"DepartmentId\") INNER JOIN \"Orders\" AS O ON OP.\"OperatorId\" = O.\"OperatorId\" WHERE DATE_PART('month', O.\"OrderDate\") = DATE_PART('month', NOW()) GROUP BY D.\"DepartmentId\", D.\"City\"").ToListAsync();
         }
 
         [HttpGet("productive")]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartmentsWithProductiveOperators()
         {
-            return await _context.Departments.FromSqlRaw("SELECT * FROM Departments AS D WHERE D.DepartmentId IN (SELECT O.DepartmentId FROM Operators AS O WHERE O.OperatorId IN (SELECT Ord.OperatorId FROM Orders AS Ord WHERE DATEPART(MONTH, Ord.OrderDate) = DATEPART(MONTH, GETDATE()) GROUP BY Ord.OperatorId HAVING COUNT(*) >= 5) GROUP BY O.DepartmentId HAVING COUNT(*) >= 2)").ToListAsync();
+            return await _context.Departments.FromSqlRaw("SELECT * FROM \"Departments\" AS D WHERE D.\"DepartmentId\" IN (SELECT O.\"DepartmentId\" FROM \"Operators\" AS O WHERE O.\"OperatorId\" IN (SELECT Ord.\"OperatorId\" FROM \"Orders\" AS Ord WHERE DATE_PART('month', Ord.\"OrderDate\") = DATE_PART('month', NOW()) GROUP BY Ord.\"OperatorId\" HAVING COUNT(*) >= 5) GROUP BY O.\"DepartmentId\" HAVING COUNT(*) >= 2)").ToListAsync();
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-            return await _context.Departments.FromSqlRaw("SELECT * FROM Departments").ToListAsync();
+            return await _context.Departments.FromSqlRaw("SELECT * FROM \"Departments\"").ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Department>> GetDepartment(int id)
         {
             var department = await _context.Departments.FromSqlInterpolated(
-                $"SELECT * FROM Departments WHERE DepartmentId = {id}").FirstOrDefaultAsync();
+                $"SELECT * FROM \"Departments\" WHERE \"DepartmentId\" = {id}").FirstOrDefaultAsync();
 
             if (department == null)
             {
@@ -63,7 +63,7 @@ namespace TaxiServiceAPI.Controllers
             }
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Departments SET City = {department.City} WHERE DepartmentId = {id}");
+                $"UPDATE \"Departments\" SET \"City\" = {department.City} WHERE \"DepartmentId\" = {id}");
 
             try
             {
@@ -88,7 +88,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Departments (City) VALUES ({department.City})");
+                $"INSERT INTO \"Departments\" (\"City\") VALUES ({department.City})");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
@@ -103,7 +103,7 @@ namespace TaxiServiceAPI.Controllers
                 return NotFound();
             }
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM Departments WHERE DepartmentId = {id}");
+               $"DELETE FROM \"Departments\" WHERE \"DepartmentId\" = {id}");
             await _context.SaveChangesAsync();
 
             return department;

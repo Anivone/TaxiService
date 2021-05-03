@@ -12,12 +12,12 @@ namespace TaxiServiceAPI.Data.dto
         public string DeparturePoint { get; set; }
         public string ArrivalPoint { get; set; }
         public double NumberOfKm { get; set; }
-        public string OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
         public DateTime AppointedTime { get; set; }
         public string TypeOfCar { get; set; }
         public bool ChildSeat { get; set; }
         public string TypeOfPayment { get; set; }
-        public double ApproximatePrice { get; set; }
+        public decimal ApproximatePrice { get; set; }
 
     }
 }

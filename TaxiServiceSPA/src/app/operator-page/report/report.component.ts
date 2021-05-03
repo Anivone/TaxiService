@@ -26,7 +26,7 @@ export class ReportComponent implements OnInit {
   cheapDrivers: MatTableDataSource<CheapDrivers>;
 
   priceForm: FormGroup;
-  price: number = 200;
+  price: number = 200.0;
 
   show = true;
 

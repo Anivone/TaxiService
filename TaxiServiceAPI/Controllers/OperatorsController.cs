@@ -25,14 +25,14 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StaffOperator>>> GetOperators()
         {
-            return await _context.Operators.FromSqlRaw("SELECT * FROM Operators").ToListAsync();
+            return await _context.Operators.FromSqlRaw("SELECT * FROM \"Operators\"").ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<StaffOperator>> GetOperator(int id)
         {
             var staffOperator = await _context.Operators.FromSqlInterpolated(
-                $"SELECT * FROM Operators WHERE OperatorId = {id}").FirstOrDefaultAsync();
+                $"SELECT * FROM \"Operators\" WHERE \"OperatorId\" = {id}").FirstOrDefaultAsync();
 
             if (staffOperator == null)
             {
@@ -45,7 +45,7 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet("recent")]
         public async Task<ActionResult<StaffOperator>> GetRecentOperator()
         {
-            return await _context.Operators.FromSqlRaw("SELECT * FROM Operators WHERE OperatorId = (SELECT MAX(OperatorId) FROM Operators)").FirstOrDefaultAsync();
+            return await _context.Operators.FromSqlRaw("SELECT * FROM \"Operators\" WHERE \"OperatorId\" = (SELECT MAX(\"OperatorId\") FROM \"Operators\")").FirstOrDefaultAsync();
         }
 
         [HttpPut("{id}")]
@@ -57,7 +57,7 @@ namespace TaxiServiceAPI.Controllers
             }
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Operators SET DepartmentId = {staffOperator.DepartmentId}, LastName = {staffOperator.LastName}, FirstName = {staffOperator.FirstName}, MiddleName = {staffOperator.MiddleName}, DateOfBirth = {staffOperator.DateOfBirth}, Region = {staffOperator.Region}, City = {staffOperator.City}, Street = {staffOperator.Street}, Building = {staffOperator.Building}, Flat = {staffOperator.Flat}, Beginning = {staffOperator.Beginning}, Ending = {staffOperator.Ending}, Salary = {staffOperator.Salary}, WorkingPhone = {staffOperator.WorkingPhone} WHERE OperatorId = {id}");
+                $"UPDATE \"Operators\" SET \"DepartmentId\" = {staffOperator.DepartmentId}, \"LastName\" = {staffOperator.LastName}, \"FirstName\" = {staffOperator.FirstName}, \"MiddleName\" = {staffOperator.MiddleName}, \"DateOfBirth\" = {staffOperator.DateOfBirth}, \"Region\" = {staffOperator.Region}, \"City\" = {staffOperator.City}, \"Street\" = {staffOperator.Street}, \"Building\" = {staffOperator.Building}, \"Flat\" = {staffOperator.Flat}, \"Beginning\" = {staffOperator.Beginning}, \"Ending\" = {staffOperator.Ending}, \"Salary\" = {staffOperator.Salary}, \"WorkingPhone\" = {staffOperator.WorkingPhone} WHERE \"OperatorId\" = {id}");
 
             try
             {
@@ -81,7 +81,7 @@ namespace TaxiServiceAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<StaffOperator>> PostOperator(StaffOperator staffOperator)
         {
-            await _context.Database.ExecuteSqlInterpolatedAsync($"INSERT INTO Operators (DepartmentId, LastName, FirstName, MiddleName, DateOfBirth, Region, City, Street, Building, Flat, Beginning, Ending, Salary, WorkingPhone) VALUES ({staffOperator.DepartmentId}, {staffOperator.LastName}, {staffOperator.FirstName}, {staffOperator.MiddleName}, {staffOperator.DateOfBirth}, {staffOperator.Region}, {staffOperator.City}, {staffOperator.Street}, {staffOperator.Building}, {staffOperator.Flat}, {staffOperator.Beginning}, {staffOperator.Ending}, {staffOperator.Salary}, {staffOperator.WorkingPhone})");
+            await _context.Database.ExecuteSqlInterpolatedAsync($"INSERT INTO \"Operators\" (\"DepartmentId\", \"LastName\", \"FirstName\", \"MiddleName\", \"DateOfBirth\", \"Region\", \"City\", \"Street\", \"Building\", \"Flat\", \"Beginning\", \"Ending\", \"Salary\", \"WorkingPhone\") VALUES ({staffOperator.DepartmentId}, {staffOperator.LastName}, {staffOperator.FirstName}, {staffOperator.MiddleName}, {staffOperator.DateOfBirth}, {staffOperator.Region}, {staffOperator.City}, {staffOperator.Street}, {staffOperator.Building}, {staffOperator.Flat}, {staffOperator.Beginning}, {staffOperator.Ending}, {staffOperator.Salary}, {staffOperator.WorkingPhone})");
 
             await _context.SaveChangesAsync();
 
@@ -92,7 +92,7 @@ namespace TaxiServiceAPI.Controllers
         public async Task<ActionResult<StaffOperator>> GetOperatorFromPhone(GetPersonByPhone phone)
         {
             var staffOperator = await _context.Operators.FromSqlInterpolated(
-            $"SELECT * FROM Operators AS O WHERE EXISTS(SELECT * FROM OperatorPhones AS OP WHERE O.OperatorId = OP.OperatorId AND OP.PhoneNumber = {phone.Phone})").FirstOrDefaultAsync();
+            $"SELECT * FROM \"Operators\" AS O WHERE EXISTS(SELECT * FROM \"OperatorPhones\" AS OP WHERE O.\"OperatorId\" = OP.\"OperatorId\" AND OP.\"PhoneNumber\" = {phone.Phone})").FirstOrDefaultAsync();
 
             if (staffOperator == null) return NotFound();
 
@@ -109,7 +109,7 @@ namespace TaxiServiceAPI.Controllers
             }
 
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM Operators WHERE OperatorId = {id}");
+               $"DELETE FROM \"Operators\" WHERE \"OperatorId\" = {id}");
             await _context.SaveChangesAsync();
 
             return staffOperator;

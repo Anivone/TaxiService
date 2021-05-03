@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using TaxiServiceAPI.Data.Models;
 
 namespace TaxiServiceAPI.Controllers
 {
+    [EnableCors("CorsAPI")]
     [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -40,7 +42,9 @@ namespace TaxiServiceAPI.Controllers
                 Role = userForRegister.Role
             };
 
+            Console.WriteLine("Creating user...");
             var createdUser = await _repo.Register(userToCreate, userForRegister.Password);
+            Console.WriteLine("Created User: " + createdUser);
 
             return StatusCode(201);
         }

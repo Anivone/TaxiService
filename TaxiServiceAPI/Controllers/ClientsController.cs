@@ -25,14 +25,16 @@ namespace TaxiServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
-            return await _context.Clients.FromSqlRaw("SELECT * FROM Clients").ToListAsync();
+            // return await _context.Clients.FromSqlRaw("SELECT * FROM \"Clients\"").ToListAsync();
+            return await _context.Clients.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Client>> GetClient(int id)
         {
-            var client = await _context.Clients.FromSqlInterpolated(
-                $"SELECT * FROM Clients WHERE ClientId = {id}").FirstOrDefaultAsync();
+            var client = await _context.Clients.FirstOrDefaultAsync(x => x.ClientId == id);
+            // var client = await _context.Clients.FromSqlInterpolated(
+            //     $"SELECT * FROM \"Clients\" WHERE ClientId = {id}").FirstOrDefaultAsync();
 
             if (client == null)
             {
@@ -45,8 +47,9 @@ namespace TaxiServiceAPI.Controllers
         [HttpPost("phone")]
         public async Task<ActionResult<Client>> GetClientByPhone(GetPersonByPhone phone)
         {
-            var client = await _context.Clients.FromSqlInterpolated(
-                $"SELECT * FROM Clients WHERE PhoneNumber = {phone.Phone}").FirstOrDefaultAsync();
+            var client = await _context.Clients.FirstOrDefaultAsync(x => x.PhoneNumber == phone.Phone);
+            // var client = await _context.Clients.FromSqlInterpolated(
+            // $"SELECT * FROM \"Clients\" WHERE PhoneNumber = {phone.Phone}").FirstOrDefaultAsync();
 
             if (client == null) return NotFound();
 
@@ -61,10 +64,18 @@ namespace TaxiServiceAPI.Controllers
                 return BadRequest();
             }
 
-            await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE Clients SET PhoneNumber = {client.PhoneNumber}, FirstName = {client.FirstName}, LastName = {client.LastName}, MiddleName = {client.MiddleName}, DateOfRegistration = {client.DateOfRegistration}, Email = {client.Email}, CreditCardNum = {client.CreditCardNum} WHERE ClientId = {id}");
+
+            // await _context.Database.ExecuteSqlInterpolatedAsync(
+            // $"UPDATE \"Clients\" SET \"PhoneNumber\" = {client.PhoneNumber}, \"FirstName\" = {client.FirstName}, \"LastName\" = {client.LastName}, \"MiddleName\" = {client.MiddleName}, \"DateOfRegistration\" = {client.DateOfRegistration}, \"Email\" = {client.Email}, \"CreditCardNum\" = {client.CreditCardNum} WHERE \"ClientId\" = {id}");
             try
             {
+                var dbClient = await _context.Clients.FirstOrDefaultAsync(x => x.ClientId == id);
+
+                if (dbClient != null)
+                {
+                    dbClient = client;
+                }
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -85,11 +96,12 @@ namespace TaxiServiceAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Client>> PostClient(Client client)
         {
-            await _context.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO Clients (PhoneNumber, FirstName, LastName, MiddleName, DateOfRegistration, Email, CreditCardNum) VALUES ({client.PhoneNumber}, {client.FirstName}, {client.LastName}, {client.MiddleName}, {client.DateOfRegistration}, {client.Email}, {client.CreditCardNum})");
+            // await _context.Database.ExecuteSqlInterpolatedAsync(
+            // $"INSERT INTO \"Clients\" (\"PhoneNumber\", \"FirstName\", \"LastName\", \"MiddleName\", \"DateOfRegistration\", \"Email\", \"CreditCardNum\") VALUES ({client.PhoneNumber}, {client.FirstName}, {client.LastName}, {client.MiddleName}, {client.DateOfRegistration}, {client.Email}, {client.CreditCardNum})");
+            await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClient", new { id = client.ClientId }, client);
+            return CreatedAtAction("GetClient", new {id = client.ClientId}, client);
         }
 
         [HttpDelete("{id}")]
@@ -101,8 +113,9 @@ namespace TaxiServiceAPI.Controllers
                 return NotFound();
             }
 
-            await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"DELETE FROM Clients WHERE ClientId = {id}");
+            // await _context.Database.ExecuteSqlInterpolatedAsync(
+            // $"DELETE FROM \"Clients\" WHERE \"ClientId\" = {id}");
+            _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
 
             return client;
